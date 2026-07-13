@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLM-125M · Supervised Fine-Tuning — Data-Scaling Study</title>
+<meta name="description" content="A cumulative data-scaling study fine-tuning a 125M from-scratch legal/financial base model with a Gemini teacher. Day-1 results, catastrophic-forgetting analysis, and per-run reports.">
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#121722; --panel2:#161c28; --line:#232c3d;
+    --ink:#e6ebf5; --mut:#93a1b8; --dim:#6b7890;
+    --accent:#5eead4; --accent2:#7aa2ff; --warn:#f6b26b; --bad:#f2777a; --good:#8bd450;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:light){
+    :root{--bg:#f6f8fc;--panel:#fff;--panel2:#f0f3f9;--line:#dfe6f1;--ink:#141a25;--mut:#4a5670;--dim:#7b869c;--accent:#0f9d8f;--accent2:#3b62d6;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+    -webkit-font-smoothing:antialiased}
+  a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+  header{padding:64px 0 34px;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 14px}
+  h1{font-size:clamp(28px,5vw,44px);line-height:1.12;margin:0 0 14px;letter-spacing:-.02em}
+  .sub{font-size:18px;color:var(--mut);max-width:70ch;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:22px;font-family:var(--mono);font-size:12.5px}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--mut)}
+  .chip b{color:var(--ink);font-weight:600}
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:22px;margin:0 0 6px;letter-spacing:-.01em}
+  h2 .n{font-family:var(--mono);color:var(--dim);font-size:15px;margin-right:10px}
+  .lead{color:var(--mut);margin:0 0 22px;max-width:74ch}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px}
+  .tile .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+  .tile .v{font-size:27px;font-weight:650;margin-top:6px;letter-spacing:-.02em}
+  .tile .d{font-size:12.5px;margin-top:3px;font-family:var(--mono)}
+  .up{color:var(--bad)}.down{color:var(--good)}.flat{color:var(--mut)}
+  table{width:100%;border-collapse:collapse;margin:6px 0;font-size:14.5px;overflow:hidden;
+    border:1px solid var(--line);border-radius:12px}
+  .scroll{overflow-x:auto}
+  th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line)}
+  th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--mut);font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  td.mono,th.mono{font-family:var(--mono)}
+  .num{font-family:var(--mono)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .callout{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-left:3px solid var(--warn);border-radius:12px;padding:16px 18px;margin:18px 0}
+  .callout b{color:var(--warn)}
+  .gen{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+  .gen .q{font-weight:600}.gen .a{font-family:var(--mono);font-size:13px;color:var(--mut);margin-top:5px;white-space:pre-wrap}
+  .bars{display:grid;gap:10px;margin-top:8px}
+  .bar{display:grid;grid-template-columns:120px 1fr auto;align-items:center;gap:12px;font-size:13.5px}
+  .bar .lab{font-family:var(--mono);color:var(--mut)}
+  .track{height:10px;background:var(--panel2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+  .fill{height:100%;border-radius:6px}
+  .muted{color:var(--dim);font-size:13px}
+  ul.tight{margin:8px 0;padding-left:20px}ul.tight li{margin:4px 0;color:var(--mut)}
+  footer{padding:34px 0 70px;color:var(--dim);font-size:13px}
+  code{font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);
+    padding:1.5px 6px;border-radius:6px;font-size:.9em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="tag">Research Log · Supervised Fine-Tuning</p>
+  <h1>Teaching a 125M base model to follow instructions</h1>
+  <p class="sub">A cumulative <b>data-scaling study</b>: each round adds 1,000 teacher-generated
+  QnA pairs, re-fine-tunes the from-scratch <a href="https://huggingface.co/Ace-2504/slm-125m-base">SLM-125M</a>
+  base model from scratch, and tracks task quality <em>and</em> catastrophic forgetting against a fixed benchmark.</p>
+  <div class="meta">
+    <span class="chip">base&nbsp;<b>SLM-125M</b> (125.8M, 1024 ctx)</span>
+    <span class="chip">teacher&nbsp;<b>gemini-3.1-flash-lite</b></span>
+    <span class="chip">GPU&nbsp;<b>Modal L4</b></span>
+    <span class="chip">method&nbsp;<b>full fine-tune</b></span>
+    <span class="chip">status&nbsp;<b>Day 1 of N</b></span>
+  </div>
+</header>
+
+<section>
+  <h2><span class="n">01</span>Day-1 result at a glance</h2>
+  <p class="lead">One epoch-set (3 epochs) of full fine-tuning on 1,000 grounded QnA pairs. Perplexity
+  improves sharply; answer quality does not yet — the expected signature of an undertrained small model.</p>
+  <div class="tiles">
+    <div class="tile"><div class="k">SFT-eval perplexity</div><div class="v">8.60</div><div class="d down">▼ from 24.44 · 2.8× better</div></div>
+    <div class="tile"><div class="k">Retention ppl</div><div class="v">12.05</div><div class="d up">▲ +6.1% vs base 11.35</div></div>
+    <div class="tile"><div class="k">Judge score /5</div><div class="v">1.32</div><div class="d up">▲ from 1.00 · still low</div></div>
+    <div class="tile"><div class="k">Train compute</div><div class="v">79 s</div><div class="d flat">189 steps · L4</div></div>
+    <div class="tile"><div class="k">Run cost</div><div class="v">$0.029</div><div class="d flat">teacher $0 (free tier)</div></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">02</span>The scaling curve so far</h2>
+  <p class="lead">Every point trains <em>from the base model</em> on the cumulative set and is scored on the
+  same frozen 100-pair eval and 50-question judge set, so points are directly comparable.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Day</th><th>Train pairs</th><th>SFT-eval ppl</th><th>Retention ppl</th><th>Forgetting</th><th>Judge /5</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">0 (base)</td><td class="num">0</td><td class="num">24.44</td><td class="num">11.35</td><td class="num flat">—</td><td class="num">1.00</td></tr>
+      <tr><td class="mono">1</td><td class="num">1,000</td><td class="num">8.60</td><td class="num">12.05</td><td class="num up">+6.1%</td><td class="num">1.32</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">Retention perplexity is measured on the original pretraining validation set — the same metric
+  that produced the base model's 11.35 — so it is a true catastrophic-forgetting gauge, not a proxy.</p>
+</section>
+
+<section>
+  <h2><span class="n">03</span>Data loss / catastrophic forgetting</h2>
+  <p class="lead">"Does fine-tuning erode what the base model knew?" Measured directly every run.</p>
+  <div class="bars">
+    <div class="bar"><span class="lab">base</span><div class="track"><div class="fill" style="width:94%;background:var(--good)"></div></div><span class="num">11.35</span></div>
+    <div class="bar"><span class="lab">day 1</span><div class="track"><div class="fill" style="width:100%;background:var(--warn)"></div></div><span class="num">12.05</span></div>
+  </div>
+  <div class="callout">
+    <b>Verdict: mild (+6.1%).</b> A retention-perplexity rise is <em>partly expected</em> — the model shifts
+    toward the chat distribution (<code>&lt;|user|&gt;</code>/<code>&lt;|assistant|&gt;</code> framing). The rise is small
+    and controlled, not catastrophic. Validation: the day-0 baseline reproduced the base perplexity to
+    four significant figures (11.3546 vs the known 11.35).
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">04</span>The honest finding</h2>
+  <p class="lead">Perplexity is not quality. At 1,000 pairs the model learns the <em>format</em> of an
+  assistant turn, but its <em>answers</em> are still weak — repetition and question-echo dominate.</p>
+  <div class="gen"><div class="q">Q · What is the standard of proof in a civil lawsuit?</div>
+    <div class="a">The standard of proof in a civil lawsuit is the standard of proof in a civil lawsuit.</div></div>
+  <div class="gen"><div class="q">Q · Summarize what a 10-K annual report contains.</div>
+    <div class="a">Summarize what a 10-K annual report contains.</div></div>
+  <div class="gen"><div class="q">Q · What does it mean for a contract clause to be severable?</div>
+    <div class="a">The contract clause is not severable, and the parties are bound by the terms of the contract.</div></div>
+  <p class="muted">This is not a failure — it is the signal the study exists to measure. The core question is
+  whether the judge score climbs as cumulative data grows across subsequent days.</p>
+</section>
+
+<section>
+  <h2><span class="n">05</span>Dataset (day 1)</h2>
+  <p class="lead">1,000 filtered, deduplicated, grounded pairs synthesized from the same corpus the base was
+  pretrained on (US case law, SEC filings, educational web), then balanced to a fixed mix.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Task</th><th>n</th><th>Mode</th><th>n</th><th>Domain</th><th>n</th></tr></thead>
+    <tbody>
+      <tr><td>QA</td><td class="num">550</td><td>closed-book</td><td class="num">417</td><td>SEC</td><td class="num">420</td></tr>
+      <tr><td>Summarize</td><td class="num">200</td><td>RAFT (context)</td><td class="num">133</td><td>case-law</td><td class="num">352</td></tr>
+      <tr><td>Extract→JSON</td><td class="num">150</td><td>context</td><td class="num">450</td><td>fineweb-edu</td><td class="num">228</td></tr>
+      <tr><td>Rewrite</td><td class="num">100</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">Generation used 345 teacher requests → 1,721 raw pairs → 1,000 after format, grounding,
+  exact + embedding dedup, and balancing. A fixed 100-pair eval set was chunk-quarantined (zero leakage).</p>
+</section>
+
+<section>
+  <h2><span class="n">06</span>Method</h2>
+  <ul class="tight">
+    <li><b>Base:</b> LlamaForCausalLM, 12L / 768d / 12h, 125.8M params, vocab 16,384, context 1,024, tied embeddings — pretrained from scratch on 2.04B tokens (val ppl 11.35).</li>
+    <li><b>Teacher:</b> <code>gemini-3.1-flash-lite</code> generates grounded QnA whose answers are stated only in the source passage; free tier, $0.</li>
+    <li><b>Training:</b> full fine-tune, 3 epochs, batch 16, LR 3e-5→3e-6 cosine, AdamW, bf16, assistant-only loss masking, seed 1337.</li>
+    <li><b>Design:</b> each day re-initialises from the base checkpoint on the cumulative dataset — the only variable is dataset size, so the curve isolates the effect of data.</li>
+    <li><b>Eval:</b> SFT-eval perplexity (task fit) · retention perplexity on pretraining val (forgetting) · Gemini-as-judge 1–5 (answer quality) · fixed greedy sample generations.</li>
+  </ul>
+  <div class="panel" style="margin-top:16px">
+    <b>Runtime (day 1):</b> <span class="num">79 s</span> train · <span class="num">11.5 GB</span> peak GPU ·
+    <span class="num">2,254</span> supervised tok/s · <span class="num">178,635</span> supervised tokens · Modal L4 @ $0.80/hr → <span class="num">~$0.029</span>.
+  </div>
+</section>
+
+<footer>
+  <p>SLM-125M supervised fine-tuning · a research project by
+  <a href="https://github.com/Ace-2504">@Ace-2504</a>.
+  Base model: <a href="https://huggingface.co/Ace-2504/slm-125m-base">Ace-2504/slm-125m-base</a> ·
+  Code &amp; per-run reports: <a href="https://github.com/Ace-2504/fine-tuned-125m-slm">Ace-2504/fine-tuned-125m-slm</a>.</p>
+  <p class="muted">Generated from <code>reports/run-01.md</code>. Numbers reflect Day 1 of an ongoing study; this page updates as the curve grows.</p>
+</footer>
+
+</div>
+</body>
+</html>

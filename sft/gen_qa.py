@@ -98,17 +98,45 @@ def _append_raw(fh, rec: dict) -> None:
     fh.flush()
 
 
+def _existing_call_counts(day: int) -> dict:
+    """Calls already completed for `day` (from raw.jsonl) -> lets a resumed run top up only
+    the remainder instead of re-generating a full day after an RPD wall."""
+    done = {"qa": 0, "summarize": 0, "extract": 0, "rewrite": 0, "refusal": 0}
+    if not C.RAW_JSONL.exists():
+        return done
+    pairs = {k: 0 for k in done}
+    with open(C.RAW_JSONL, encoding="utf-8") as f:
+        for line in f:
+            r = json.loads(line)
+            if r.get("day") != day:
+                continue
+            cat = ("refusal" if (r["task"] == "qa" and r["answer"] == NOT_STATED)
+                   else r["task"])
+            pairs[cat] = pairs.get(cat, 0) + 1
+    # every call yields ~5 pairs (QA_PER_CHUNK for qa; GEN_BATCH passages for aux/refusal)
+    for k in done:
+        done[k] = pairs[k] // 5
+    return done
+
+
 def run(day: int, smoke: int | None) -> None:
     rng = random.Random(C.SEED + day)
     tokenizer = load_tokenizer()
     teacher = TeacherClient()
     qa_schema, batch_ans_schema, batch_q_schema = _schemas()
 
-    calls = plan(smoke)
+    full = plan(smoke)
+    if smoke:
+        calls = full
+    else:
+        done = _existing_call_counts(day)
+        calls = {k: max(0, full[k] - done.get(k, 0)) for k in full}
+        if any(done.values()):
+            print(f"resuming day {day}: already done {done} calls; remaining {calls}", flush=True)
     # chunks needed: qa(1 each) + aux/refusal (GEN_BATCH each)
     n_chunks = calls["qa"] + GEN_BATCH * (calls["summarize"] + calls["extract"]
                                           + calls["rewrite"] + calls["refusal"])
-    print(f"day {day}: planned calls={calls} (~{sum(calls.values())} requests), "
+    print(f"day {day}: calls={calls} (~{sum(calls.values())} requests), "
           f"sampling {n_chunks} chunks", flush=True)
 
     used = set(_load_json(C.CHUNKS_USED_PATH, []))

@@ -80,12 +80,32 @@ civil lawsuit."*). At 1,000 pairs the 125M model learns the **chat format** but 
 **answer content** — classic undertraining. This is exactly the signal the scaling study exists
 to measure.
 
+## Day 2 — 2026-07-15
+
+**Generation:** hit the shared free-tier **RPD wall** partway (Day-1 + reports had drained the
+day's ~500 quota) — 680 raw QA pairs, saved cleanly. Added an **intra-day top-up resume** to
+`gen_qa.py` (commit `1c8af61`); after the quota reset, a resume issued only the remaining ~209
+requests → Day-2 raw complete (~1,717 pairs, full task coverage). Cost $0.
+
+**Build:** cumulative raw 3,438 → **2,000** train pairs (qa 1100 / summarize 400 / extract 300 /
+rewrite 200; sec 834 / case 717 / edu 449; day1 913 + day2 1087). Eval set stayed frozen.
+
+**Training** (Modal L4, `reports/run-02.md`): 375 steps (3 ep), 164 s, $0.049.
+
+**Result:** SFT-eval ppl 8.60 → **8.00**; retention 12.05 → **12.42** (+9.5% vs base, still mild);
+**Gemini-judge 1.32 → 1.50**. Samples marginally better — the severability answer flipped from
+wrong ("not severable") to essentially correct — but recall questions still degenerate (the
+closed-book limitation flagged in `training-feedback/day1.md`).
+
 ## Scaling curve (so far)
 
 | Day | Train pairs | SFT-eval ppl | Retention ppl (Δ vs base) | Judge /5 |
 | --- | --- | --- | --- | --- |
 | 0 (base) | 0 | 24.44 | 11.35 (—) | 1.00 |
 | 1 | 1,000 | 8.60 | 12.05 (+6.1%) | 1.32 |
+| 2 | 2,000 | 8.00 | 12.42 (+9.5%) | 1.50 |
 
-**Next:** Day 2 generation (+1,000 → 2,000 cumulative) → retrain from base → compare. Watch
-whether the judge score climbs with data (the core question of the study).
+**Read so far:** the judge score **is** climbing with data (1.00 → 1.32 → 1.50), but slowly, while
+forgetting creeps up (+6.1% → +9.5%). Trend is consistent with the Day-1 feedback: the closed-book
+QA share caps quality. **Next:** Day 3 (+1,000 → 3,000), or act on `training-feedback/day1.md`
+(grounded-heavy v2 + decoding fix) if the slow climb persists.

@@ -97,15 +97,31 @@ rewrite 200; sec 834 / case 717 / edu 449; day1 913 + day2 1087). Eval set staye
 wrong ("not severable") to essentially correct — but recall questions still degenerate (the
 closed-book limitation flagged in `training-feedback/day1.md`).
 
-## Scaling curve (so far)
+## Day 3 — 2026-07-15
+
+**Generation:** completed in one shot (no RPD wall) — 1,725 raw pairs, 345 requests. Free-tier RPD is
+higher than the earlier ~500 estimate. **Build:** cumulative raw 5,163 → **3,000** train pairs
+(qa 1650 / summarize 600 / extract 450 / rewrite 300; day1 859 + day2 1070 + day3 1071). Eval frozen.
+
+**Training** (Modal L4, `reports/run-03.md`): 564 steps (3 ep), 241 s, $0.064.
+
+**Result — the plateau:** SFT-eval ppl 8.00 → **7.70** (still slowly dropping); retention 12.42 →
+**12.60** (**+11.0%** vs base — now "notable", crossed 10%); **Gemini-judge 1.50 → 1.46** (flat/dip,
+within noise). Doubling→tripling data did NOT raise the judge. Samples mixed: standard-of-proof became
+**correct** ("preponderance of the evidence"), but the 10-K summary still echoes and severability got
+muddier.
+
+## Scaling curve
 
 | Day | Train pairs | SFT-eval ppl | Retention ppl (Δ vs base) | Judge /5 |
 | --- | --- | --- | --- | --- |
 | 0 (base) | 0 | 24.44 | 11.35 (—) | 1.00 |
 | 1 | 1,000 | 8.60 | 12.05 (+6.1%) | 1.32 |
 | 2 | 2,000 | 8.00 | 12.42 (+9.5%) | 1.50 |
+| 3 | 3,000 | 7.70 | 12.60 (+11.0%) | 1.46 |
 
-**Read so far:** the judge score **is** climbing with data (1.00 → 1.32 → 1.50), but slowly, while
-forgetting creeps up (+6.1% → +9.5%). Trend is consistent with the Day-1 feedback: the closed-book
-QA share caps quality. **Next:** Day 3 (+1,000 → 3,000), or act on `training-feedback/day1.md`
-(grounded-heavy v2 + decoding fix) if the slow climb persists.
+**Conclusion (current mix):** the judge **plateaus at ~1.5/5** by Day 2–3 while perplexity keeps
+inching down and forgetting keeps climbing (now "notable"). This is the clean answer to "is it just
+volume?" — **no**. More data on the closed-book-heavy mix buys distribution fit and forgetting, not
+answer quality. Strongly validates the **v2 pivot** (`training-feedback/day2.md`): grounded-heavy mix
++ per-mode judge + decoding fix. Continuing Day 4+ on this mix is not worthwhile.

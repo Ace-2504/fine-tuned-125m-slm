@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SLM-125M · Supervised Fine-Tuning — Data-Scaling Study</title>
-<meta name="description" content="A cumulative data-scaling study fine-tuning a 125M from-scratch legal/financial base model with a Gemini teacher. Days 1-2 results, catastrophic-forgetting analysis, and per-run reports.">
+<meta name="description" content="A cumulative data-scaling study fine-tuning a 125M from-scratch legal/financial base model with a Gemini teacher. Days 1-3: the judge score plateaus while forgetting grows.">
 <style>
   :root{
     --bg:#0b0e14; --panel:#121722; --panel2:#161c28; --line:#232c3d;
@@ -17,13 +17,11 @@
     :root{--bg:#f6f8fc;--panel:#fff;--panel2:#f0f3f9;--line:#dfe6f1;--ink:#141a25;--mut:#4a5670;--dim:#7b869c;--accent:#0f9d8f;--accent2:#3b62d6;}
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
-    -webkit-font-smoothing:antialiased}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
   .wrap{max-width:920px;margin:0 auto;padding:0 22px}
   header{padding:64px 0 34px;border-bottom:1px solid var(--line)}
-  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--accent);margin:0 0 14px}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
   h1{font-size:clamp(28px,5vw,44px);line-height:1.12;margin:0 0 14px;letter-spacing:-.02em}
   .sub{font-size:18px;color:var(--mut);max-width:70ch;margin:0}
   .meta{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:22px;font-family:var(--mono);font-size:12.5px}
@@ -39,19 +37,16 @@
   .tile .v{font-size:27px;font-weight:650;margin-top:6px;letter-spacing:-.02em}
   .tile .d{font-size:12.5px;margin-top:3px;font-family:var(--mono)}
   .up{color:var(--bad)}.down{color:var(--good)}.flat{color:var(--mut)}
-  table{width:100%;border-collapse:collapse;margin:6px 0;font-size:14.5px;overflow:hidden;
-    border:1px solid var(--line);border-radius:12px}
+  table{width:100%;border-collapse:collapse;margin:6px 0;font-size:14.5px;overflow:hidden;border:1px solid var(--line);border-radius:12px}
   .scroll{overflow-x:auto}
   th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line)}
-  th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.04em;
-    text-transform:uppercase;color:var(--mut);font-weight:600}
+  th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);font-weight:600}
   tbody tr:last-child td{border-bottom:none}
   tbody tr.latest{background:rgba(122,162,255,.07)}
   td.mono,th.mono{font-family:var(--mono)}
   .num{font-family:var(--mono)}
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
-  .callout{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
-    border-left:3px solid var(--warn);border-radius:12px;padding:16px 18px;margin:18px 0}
+  .callout{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:12px;padding:16px 18px;margin:18px 0}
   .callout b{color:var(--warn)}
   .gen{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
   .gen .q{font-weight:600}.gen .a{font-family:var(--mono);font-size:13px;color:var(--mut);margin-top:5px;white-space:pre-wrap}
@@ -63,8 +58,7 @@
   .muted{color:var(--dim);font-size:13px}
   ul.tight{margin:8px 0;padding-left:20px}ul.tight li{margin:4px 0;color:var(--mut)}
   footer{padding:34px 0 70px;color:var(--dim);font-size:13px}
-  code{font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);
-    padding:1.5px 6px;border-radius:6px;font-size:.9em}
+  code{font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);padding:1.5px 6px;border-radius:6px;font-size:.9em}
 </style>
 </head>
 <body>
@@ -80,22 +74,22 @@
     <span class="chip">base&nbsp;<b>SLM-125M</b> (125.8M, 1024 ctx)</span>
     <span class="chip">teacher&nbsp;<b>gemini-3.1-flash-lite</b></span>
     <span class="chip">GPU&nbsp;<b>Modal L4</b></span>
-    <span class="chip">method&nbsp;<b>full fine-tune</b></span>
-    <span class="chip">status&nbsp;<b>Day 2 of N</b></span>
+    <span class="chip">status&nbsp;<b>Day 3 of N</b></span>
     <a class="chip" href="feedback.html" style="color:var(--accent2);border-color:var(--accent2)">→&nbsp;training feedback</a>
   </div>
 </header>
 
 <section>
-  <h2><span class="n">01</span>Latest — Day 2 (2,000 cumulative pairs)</h2>
-  <p class="lead">The headline question of the study: does the judge score climb with data? So far —
-  yes, but slowly, while forgetting creeps up. Values below are Day 2, with the change from Day 1.</p>
+  <h2><span class="n">01</span>The finding: quality plateaus, forgetting doesn't</h2>
+  <p class="lead">Three rounds in, the headline is clear. Adding data keeps improving <em>perplexity</em> and
+  keeps eroding the base model — but <b>answer quality (the judge) has flattened at ~1.5/5</b>. On this
+  task mix, more data is no longer buying quality.</p>
   <div class="tiles">
-    <div class="tile"><div class="k">Judge score /5</div><div class="v">1.50</div><div class="d down">▲ 1.00 → 1.32 → 1.50</div></div>
-    <div class="tile"><div class="k">SFT-eval perplexity</div><div class="v">8.00</div><div class="d down">▼ from 8.60 · base 24.44</div></div>
-    <div class="tile"><div class="k">Retention ppl</div><div class="v">12.42</div><div class="d up">▲ +9.5% vs base 11.35</div></div>
-    <div class="tile"><div class="k">Train compute</div><div class="v">164 s</div><div class="d flat">375 steps · L4</div></div>
-    <div class="tile"><div class="k">Run cost</div><div class="v">$0.049</div><div class="d flat">teacher $0 (free tier)</div></div>
+    <div class="tile"><div class="k">Judge score /5</div><div class="v">1.46</div><div class="d flat">1.32 → 1.50 → 1.46 · plateau</div></div>
+    <div class="tile"><div class="k">SFT-eval ppl</div><div class="v">7.70</div><div class="d down">▼ still inching down</div></div>
+    <div class="tile"><div class="k">Retention ppl</div><div class="v">12.60</div><div class="d up">▲ +11.0% · now "notable"</div></div>
+    <div class="tile"><div class="k">Cumulative pairs</div><div class="v">3,000</div><div class="d flat">days 1–3</div></div>
+    <div class="tile"><div class="k">Study cost</div><div class="v">~$0.17</div><div class="d flat">GPU · teacher $0</div></div>
   </div>
 </section>
 
@@ -108,60 +102,57 @@
     <tbody>
       <tr><td class="mono">0 (base)</td><td class="num">0</td><td class="num">24.44</td><td class="num">11.35</td><td class="num flat">—</td><td class="num">1.00</td></tr>
       <tr><td class="mono">1</td><td class="num">1,000</td><td class="num">8.60</td><td class="num">12.05</td><td class="num up">+6.1%</td><td class="num">1.32</td></tr>
-      <tr class="latest"><td class="mono">2</td><td class="num">2,000</td><td class="num">8.00</td><td class="num">12.42</td><td class="num up">+9.5%</td><td class="num">1.50</td></tr>
+      <tr><td class="mono">2</td><td class="num">2,000</td><td class="num">8.00</td><td class="num">12.42</td><td class="num up">+9.5%</td><td class="num">1.50</td></tr>
+      <tr class="latest"><td class="mono">3</td><td class="num">3,000</td><td class="num">7.70</td><td class="num">12.60</td><td class="num up">+11.0%</td><td class="num">1.46</td></tr>
     </tbody>
   </table></div>
-  <p class="muted">Retention perplexity is measured on the original pretraining validation set — the same metric
-  that produced the base model's 11.35 — so it is a true catastrophic-forgetting gauge, not a proxy.</p>
+  <p class="muted">Judge deltas: +0.32, +0.18, −0.04 — a textbook plateau. Perplexity keeps falling
+  (distribution fit) and retention keeps rising (forgetting) — the two things that <em>don't</em> plateau.</p>
 </section>
 
 <section>
   <h2><span class="n">03</span>Data loss / catastrophic forgetting</h2>
-  <p class="lead">"Does fine-tuning erode what the base model knew?" Measured directly every run. The rise is
-  slow and controlled — the chat-distribution shift, not a collapse.</p>
+  <p class="lead">"Does fine-tuning erode what the base model knew?" Measured directly every run — and it
+  grows monotonically with data, now past the 10% "notable" line.</p>
   <div class="bars">
-    <div class="bar"><span class="lab">base</span><div class="track"><div class="fill" style="width:91%;background:var(--good)"></div></div><span class="num">11.35</span></div>
-    <div class="bar"><span class="lab">day 1</span><div class="track"><div class="fill" style="width:97%;background:var(--warn)"></div></div><span class="num">12.05</span></div>
-    <div class="bar"><span class="lab">day 2</span><div class="track"><div class="fill" style="width:100%;background:var(--warn)"></div></div><span class="num">12.42</span></div>
+    <div class="bar"><span class="lab">base</span><div class="track"><div class="fill" style="width:90%;background:var(--good)"></div></div><span class="num">11.35</span></div>
+    <div class="bar"><span class="lab">day 1</span><div class="track"><div class="fill" style="width:96%;background:var(--warn)"></div></div><span class="num">12.05</span></div>
+    <div class="bar"><span class="lab">day 2</span><div class="track"><div class="fill" style="width:98%;background:var(--warn)"></div></div><span class="num">12.42</span></div>
+    <div class="bar"><span class="lab">day 3</span><div class="track"><div class="fill" style="width:100%;background:var(--bad)"></div></div><span class="num">12.60</span></div>
   </div>
   <div class="callout">
-    <b>Verdict: mild, slowly growing (+6.1% → +9.5%).</b> A retention-perplexity rise is <em>partly
-    expected</em> — the model shifts toward the chat distribution (<code>&lt;|user|&gt;</code>/<code>&lt;|assistant|&gt;</code>
-    framing). Validation: the day-0 baseline reproduced the base perplexity to four significant figures
-    (11.3546 vs the known 11.35).
+    <b>Verdict: notable and growing (+6.1% → +9.5% → +11.0%).</b> Each round trades more forgetting for no
+    judge gain — the worst of both curves. Baseline validation held: day-0 reproduced the base perplexity
+    to four significant figures (11.3546 vs the known 11.35).
   </div>
 </section>
 
 <section>
-  <h2><span class="n">04</span>The honest finding</h2>
-  <p class="lead">Perplexity is not quality. Doubling the data nudged the judge from 1.32 to 1.50 and improved
-  some answers (severability flipped from wrong to essentially correct) — but recall questions still degenerate.</p>
-  <div class="gen"><div class="q">Q · What does it mean for a contract clause to be severable?</div>
-    <div class="a">Day 1: "…is not severable, and the parties are bound by the terms of the contract."  →  Day 2: "The contract clause is severable from the other provisions of the contract."  ✓ closer</div></div>
+  <h2><span class="n">04</span>Why it plateaus</h2>
+  <p class="lead">Perplexity is not quality. ~40% of training is closed-book QA — recall a document fact
+  from a single exposure, which a 125M model largely can't do. Common facts slowly land; specific ones don't.</p>
   <div class="gen"><div class="q">Q · What is the standard of proof in a civil lawsuit?</div>
-    <div class="a">Day 2: "…is not a standard of proof, but is a standard of proof that is applied to a case."  (still circular)</div></div>
+    <div class="a">Day 1–2: circular repetition  →  Day 3: "…is the preponderance of the evidence standard."  ✓ a common fact finally learned</div></div>
   <div class="gen"><div class="q">Q · Summarize what a 10-K annual report contains.</div>
-    <div class="a">Day 2: "Summarize the report to include a 10-K annual report."  (still echoes the prompt)</div></div>
-  <p class="muted">The slow climb matches the known limitation: ~40% of training is closed-book QA, which asks a
-  125M model to recall long-tail facts from a single exposure — the hardest thing to teach via SFT.
-  Grounded (context-in-prompt) tasks are learnable; recall is not. This is logged as feedback for a possible v2.</p>
+    <div class="a">Day 3: "Summarize the annual report for the year ended December 31, 1999."  (still echoes / no real summary)</div></div>
+  <div class="gen"><div class="q">Q · What does it mean for a contract clause to be severable?</div>
+    <div class="a">Day 3: "The contract clause must be severable, and the parties must be bound by the terms…"  (muddled)</div></div>
+  <p class="muted">The judge set is drawn mostly from closed-book recall — the one thing this model can't
+  learn — so it measures the model's <em>worst</em> skill while the learnable grounded tasks (summarize/extract
+  /rewrite/RAFT) go under-measured. See the <a href="feedback.html">training feedback</a> for the fix.</p>
 </section>
 
 <section>
-  <h2><span class="n">05</span>Dataset (Day 2, cumulative)</h2>
-  <p class="lead">2,000 filtered, deduplicated, grounded pairs synthesized from the same corpus the base was
-  pretrained on (US case law, SEC filings, educational web), balanced to a fixed mix.</p>
-  <div class="scroll"><table>
-    <thead><tr><th>Task</th><th>n</th><th>Mode</th><th>n</th><th>Domain</th><th>n</th></tr></thead>
-    <tbody>
-      <tr><td>QA</td><td class="num">1,100</td><td>closed-book</td><td class="num">847</td><td>SEC</td><td class="num">834</td></tr>
-      <tr><td>Summarize</td><td class="num">400</td><td>RAFT (context)</td><td class="num">253</td><td>case-law</td><td class="num">717</td></tr>
-      <tr><td>Extract→JSON</td><td class="num">300</td><td>context</td><td class="num">900</td><td>fineweb-edu</td><td class="num">449</td></tr>
-      <tr><td>Rewrite</td><td class="num">200</td><td></td><td></td><td></td><td></td></tr>
-    </tbody>
-  </table></div>
-  <p class="muted">Generation used the free-tier teacher across two days (Day 2 hit the daily request cap partway
-  and resumed after reset via an intra-day top-up). A fixed 100-pair eval set is chunk-quarantined (zero leakage).</p>
+  <h2><span class="n">05</span>What next — the v2 pivot</h2>
+  <p class="lead">The study answered its question: on this mix, scaling data plateaus quality. The evidence now
+  points to a design change rather than more days.</p>
+  <ul class="tight">
+    <li><b>Rebalance to grounded tasks</b> — context-in-prompt QA + summarize/extract/rewrite, which a 125M model
+    <em>can</em> learn — and restrict closed-book QA to general knowledge. (Restarts the curve as v2.)</li>
+    <li><b>Report the judge per mode</b> (grounded vs recall) so scoring reflects what the model can actually do.</li>
+    <li><b>Fix decoding</b> — repetition penalty + no-repeat-ngram (removes greedy loops; comparability-safe).</li>
+    <li><b>Bound forgetting</b> if continuing the current mix — mix in a little raw pretraining data (replay).</li>
+  </ul>
 </section>
 
 <section>
@@ -174,8 +165,8 @@
     <li><b>Eval:</b> SFT-eval perplexity (task fit) · retention perplexity on pretraining val (forgetting) · Gemini-as-judge 1–5 (answer quality) · fixed greedy sample generations.</li>
   </ul>
   <div class="panel" style="margin-top:16px">
-    <b>Runtime (day 2):</b> <span class="num">164 s</span> train · <span class="num">375</span> steps ·
-    Modal L4 @ $0.80/hr → <span class="num">~$0.049</span>. Cumulative study spend to date: <span class="num">~$0.16</span> (teacher $0).
+    <b>Day-3 run:</b> 3,000 pairs · <span class="num">564</span> steps · <span class="num">241 s</span> · Modal L4 → <span class="num">~$0.064</span>.
+    Cumulative GPU spend across days 0–3: <span class="num">~$0.17</span> (teacher $0, free tier).
   </div>
 </section>
 
@@ -183,8 +174,9 @@
   <p>SLM-125M supervised fine-tuning · a research project by
   <a href="https://github.com/Ace-2504">@Ace-2504</a>.
   Base model: <a href="https://huggingface.co/Ace-2504/slm-125m-base">Ace-2504/slm-125m-base</a> ·
-  Code &amp; per-run reports: <a href="https://github.com/Ace-2504/fine-tuned-125m-slm">Ace-2504/fine-tuned-125m-slm</a>.</p>
-  <p class="muted">Generated from <code>reports/run-01.md</code> and <code>run-02.md</code>. Numbers reflect Days 1–2 of an ongoing study; this page updates as the curve grows.</p>
+  Code &amp; per-run reports: <a href="https://github.com/Ace-2504/fine-tuned-125m-slm">Ace-2504/fine-tuned-125m-slm</a> ·
+  <a href="feedback.html">training feedback</a>.</p>
+  <p class="muted">Generated from <code>reports/run-01…03.md</code>. Days 1–3 of an ongoing study; this page updates as the curve grows.</p>
 </footer>
 
 </div>

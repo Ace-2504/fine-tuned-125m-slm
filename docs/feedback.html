@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLM-125M SFT · Training Feedback (Day 1 &amp; Day 2)</title>
+<meta name="description" content="Issues and findings recognized from each round of the SLM-125M supervised fine-tuning data-scaling study, Day 1 and Day 2 side by side.">
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#121722; --panel2:#161c28; --line:#232c3d;
+    --ink:#e6ebf5; --mut:#93a1b8; --dim:#6b7890;
+    --accent:#5eead4; --accent2:#7aa2ff; --warn:#f6b26b; --bad:#f2777a; --good:#8bd450;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:light){
+    :root{--bg:#f6f8fc;--panel:#fff;--panel2:#f0f3f9;--line:#dfe6f1;--ink:#141a25;--mut:#4a5670;--dim:#7b869c;--accent:#0f9d8f;--accent2:#3b62d6;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+  header{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  .nav{font-family:var(--mono);font-size:12.5px;margin:0 0 18px}
+  h1{font-size:clamp(26px,4.5vw,38px);line-height:1.14;margin:0 0 12px;letter-spacing:-.02em}
+  .sub{font-size:17px;color:var(--mut);max-width:74ch;margin:0}
+  .curve{margin:26px 0 0}
+  table{width:100%;border-collapse:collapse;font-size:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .scroll{overflow-x:auto}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{background:var(--panel2);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+  tbody tr:last-child td{border-bottom:none}
+  .num{font-family:var(--mono)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:34px 0}
+  @media (max-width:760px){.cols{grid-template-columns:1fr}}
+  .col{min-width:0}
+  .colhead{display:flex;align-items:baseline;gap:10px;margin:0 0 4px}
+  .colhead h2{font-size:20px;margin:0;letter-spacing:-.01em}
+  .colhead .d{font-family:var(--mono);font-size:12px;color:var(--dim)}
+  .colsub{color:var(--mut);font-size:13.5px;margin:0 0 16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px 16px;margin:0 0 12px}
+  .card h3{font-size:15px;margin:0 0 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .sev{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid var(--line)}
+  .sev.high{color:var(--bad);border-color:rgba(242,119,122,.4)}
+  .sev.med{color:var(--warn);border-color:rgba(246,178,107,.4)}
+  .sev.low{color:var(--mut)}
+  .card p{margin:6px 0;font-size:13.5px;color:var(--mut)}
+  .card .fix{color:var(--ink)}
+  .card .fix b{color:var(--accent)}
+  code{font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);padding:1px 5px;border-radius:5px;font-size:.88em}
+  .rec{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:18px 20px;margin:6px 0 40px}
+  .rec h2{margin:0 0 8px;font-size:19px}
+  .rec ol{margin:8px 0 0;padding-left:20px;color:var(--mut)}.rec li{margin:5px 0}
+  footer{padding:8px 0 70px;color:var(--dim);font-size:13px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="tag">Research Log · Training Feedback</p>
+  <p class="nav"><a href="./">← back to the scaling-study report</a></p>
+  <h1>Issues recognized from each round</h1>
+  <p class="sub">Per-round feedback for the SLM-125M supervised fine-tuning study — what each training
+  run revealed, its severity, and the fix. Day 1 gives snapshots; Day 2 adds trends.</p>
+  <div class="curve scroll"><table>
+    <thead><tr><th>Day</th><th>Pairs</th><th>SFT-eval ppl</th><th>Retention ppl</th><th>Forgetting</th><th>Judge /5</th></tr></thead>
+    <tbody>
+      <tr><td class="num">0</td><td class="num">0</td><td class="num">24.44</td><td class="num">11.35</td><td class="num">—</td><td class="num">1.00</td></tr>
+      <tr><td class="num">1</td><td class="num">1,000</td><td class="num">8.60</td><td class="num">12.05</td><td class="num">+6.1%</td><td class="num">1.32</td></tr>
+      <tr><td class="num">2</td><td class="num">2,000</td><td class="num">8.00</td><td class="num">12.42</td><td class="num">+9.5%</td><td class="num">1.50</td></tr>
+    </tbody>
+  </table></div>
+</header>
+
+<div class="cols">
+
+  <!-- DAY 1 -->
+  <div class="col">
+    <div class="colhead"><h2>Day 1</h2><span class="d">1,000 pairs · snapshots</span></div>
+    <p class="colsub">First run: perplexity dropped sharply (24.44→8.60) but the judge stayed at 1.32 with
+    degenerate generations. Two root causes surfaced.</p>
+
+    <div class="card">
+      <h3><span class="sev med">medium</span> Greedy-decoding artifact</h3>
+      <p>Eval generations use pure greedy decoding, no repetition control → textbook repetition loops
+      (<em>"the standard of proof … is the standard of proof …"</em>). Partly a decoding pathology, not
+      pure capability.</p>
+      <p class="fix"><b>Fix:</b> add <code>no_repeat_ngram_size=3</code> + <code>repetition_penalty≈1.3</code>.
+      Comparability-<b>safe</b> (doesn't change weights). Run first as a diagnostic.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="sev high">high</span> Closed-book QA is unlearnable at 125M</h3>
+      <p>80% of QA is closed-book — recall a long-tail document fact from a <em>single</em> exposure,
+      effectively impossible for a 125M model. The judge set is drawn mostly from these, so we grade the
+      model almost entirely on the one thing it can't learn.</p>
+      <p class="fix"><b>Fix:</b> rebalance toward <b>grounded</b> tasks (context in the prompt) + general
+      knowledge. <b>Breaks the curve</b> → restart as v2 (cheap now).</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="sev low">minor</span> Rigor</h3>
+      <p>Decontamination skipped (HF 503) — retry to cache the eval n-grams. Consider a stronger judge
+      model (<code>gemini-3-flash-preview</code>).</p>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="col">
+    <div class="colhead"><h2>Day 2</h2><span class="d">2,000 pairs · trends</span></div>
+    <p class="colsub">Second point enables trend analysis. Doubling data moved the judge only +0.18 and
+    perplexity is flattening, while forgetting grows.</p>
+
+    <div class="card">
+      <h3><span class="sev high">high</span> Data volume is a weak, diminishing lever</h3>
+      <p>2× data → judge +0.18 (1.32→1.50), ppl −0.60 (near-flat). Extrapolated, a usable ~3/5 judge would
+      need ~8+ more days, and it won't be linear. The <b>mix</b>, not volume, is the constraint — Day-1's
+      hypothesis, now trend-backed.</p>
+      <p class="fix"><b>Direction:</b> evidence now <b>favors the v2 pivot</b> over scaling the current mix.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="sev med">medium</span> Forgetting grows monotonically with data</h3>
+      <p>Retention rises every round: +6.1% → +9.5% (~+0.37 ppl per +1,000 pairs). By ~Day 5 that's
+      "notable," ~Day 8 "severe" — scaling trades growing forgetting for shrinking judge gains.</p>
+      <p class="fix"><b>Fix (if continuing):</b> mix a small fraction of raw pretraining windows into SFT
+      (<b>replay</b>) and/or lower the LR.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="sev high">high</span> Measurement blind spot</h3>
+      <p>The judge tests mostly closed-book <em>recall</em> — the unlearnable task — so 1.50 is dominated by
+      the model's worst skill while learnable grounded tasks are under-measured. (Day 2's grounded
+      severability answer became correct; the two recall answers stayed degenerate.)</p>
+      <p class="fix"><b>Fix:</b> report the judge <b>per mode</b> (grounded vs recall). Cheap; likely shows the
+      model is decent at what it can actually learn.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="rec">
+  <h2>Recommended direction</h2>
+  <ol>
+    <li><b>Instrument the measurement</b> — per-mode judge (Day-2 #3) + the decoding fix (Day-1 #1). Both cheap and comparability-safe; re-score Days 0–2.</li>
+    <li><b>Pivot to v2</b> — grounded-heavy mix. The Day-2 trend now favors this over scaling the current mix. Run Day 3 only as an explicit volume-plateau confirmation.</li>
+    <li><b>If continuing the current mix</b> beyond ~Day 3, add <b>replay</b> to bound forgetting.</li>
+  </ol>
+</div>
+
+<footer>
+  <p>Generated from <code>sft/training-feedback/day1.md</code> and <code>day2.md</code> ·
+  <a href="./">scaling-study report</a> ·
+  <a href="https://github.com/Ace-2504/fine-tuned-125m-slm">source</a>.
+  An ongoing study by <a href="https://github.com/Ace-2504">@Ace-2504</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>

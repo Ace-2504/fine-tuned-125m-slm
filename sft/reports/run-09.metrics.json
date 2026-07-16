@@ -1,0 +1,1536 @@
+{
+  "day": 9,
+  "device": "cuda",
+  "gpu": "NVIDIA L4",
+  "train_examples": 8998,
+  "epochs": 3,
+  "baseline": false,
+  "batch_size": 16,
+  "total_steps": 1689,
+  "warmup_steps": 84,
+  "lr_peak": 2.9999999999999997e-05,
+  "lr_min": 3e-06,
+  "weight_decay": 0.0,
+  "seed": 1337,
+  "supervised_tokens": 1626135,
+  "train_wall_s": 717.8,
+  "total_wall_s": 763.1,
+  "tokens_per_sec": 2265.6,
+  "peak_gpu_mem_gb": 13.47,
+  "final_train_loss": 1.6759381294250488,
+  "sft_eval_loss": 1.9529,
+  "sft_eval_perplexity": 7.0489,
+  "retention_loss": 2.579,
+  "retention_perplexity": 13.1838,
+  "base_retention_perplexity": 11.35,
+  "metrics_steps": [
+    {
+      "step": 1,
+      "epoch": 0,
+      "lr": 3.571428571428571e-07,
+      "train_loss": 3.2546703815460205,
+      "grad_norm": 11.3125
+    },
+    {
+      "step": 10,
+      "epoch": 0,
+      "lr": 3.571428571428571e-06,
+      "train_loss": 3.2434654235839844,
+      "grad_norm": 11.5625
+    },
+    {
+      "step": 20,
+      "epoch": 0,
+      "lr": 7.142857142857142e-06,
+      "train_loss": 3.132411479949951,
+      "grad_norm": 9.125
+    },
+    {
+      "step": 30,
+      "epoch": 0,
+      "lr": 1.0714285714285714e-05,
+      "train_loss": 3.0521717071533203,
+      "grad_norm": 7.875
+    },
+    {
+      "step": 40,
+      "epoch": 0,
+      "lr": 1.4285714285714284e-05,
+      "train_loss": 2.8097262382507324,
+      "grad_norm": 8.125
+    },
+    {
+      "step": 50,
+      "epoch": 0,
+      "lr": 1.7857142857142855e-05,
+      "train_loss": 2.5641000270843506,
+      "grad_norm": 4.71875
+    },
+    {
+      "step": 60,
+      "epoch": 0,
+      "lr": 2.1428571428571428e-05,
+      "train_loss": 2.2211546897888184,
+      "grad_norm": 4.125
+    },
+    {
+      "step": 70,
+      "epoch": 0,
+      "lr": 2.4999999999999998e-05,
+      "train_loss": 2.371708393096924,
+      "grad_norm": 4.875
+    },
+    {
+      "step": 80,
+      "epoch": 0,
+      "lr": 2.8571428571428567e-05,
+      "train_loss": 2.0412020683288574,
+      "grad_norm": 3.828125
+    },
+    {
+      "step": 90,
+      "epoch": 0,
+      "lr": 2.9999353468056855e-05,
+      "train_loss": 2.3353865146636963,
+      "grad_norm": 3.875
+    },
+    {
+      "step": 100,
+      "epoch": 0,
+      "lr": 2.999418158406448e-05,
+      "train_loss": 2.2471601963043213,
+      "grad_norm": 4.875
+    },
+    {
+      "step": 110,
+      "epoch": 0,
+      "lr": 2.9983839797536397e-05,
+      "train_loss": 2.052276611328125,
+      "grad_norm": 3.859375
+    },
+    {
+      "step": 120,
+      "epoch": 0,
+      "lr": 2.996833207062683e-05,
+      "train_loss": 2.1370551586151123,
+      "grad_norm": 3.5625
+    },
+    {
+      "step": 130,
+      "epoch": 0,
+      "lr": 2.994766434466953e-05,
+      "train_loss": 1.9479531049728394,
+      "grad_norm": 3.578125
+    },
+    {
+      "step": 140,
+      "epoch": 0,
+      "lr": 2.992184453790158e-05,
+      "train_loss": 2.157078981399536,
+      "grad_norm": 4.6875
+    },
+    {
+      "step": 150,
+      "epoch": 0,
+      "lr": 2.9890882542429707e-05,
+      "train_loss": 2.2329742908477783,
+      "grad_norm": 3.9375
+    },
+    {
+      "step": 160,
+      "epoch": 0,
+      "lr": 2.9854790220440423e-05,
+      "train_loss": 1.9438222646713257,
+      "grad_norm": 3.609375
+    },
+    {
+      "step": 170,
+      "epoch": 0,
+      "lr": 2.981358139965539e-05,
+      "train_loss": 2.4111974239349365,
+      "grad_norm": 3.734375
+    },
+    {
+      "step": 180,
+      "epoch": 0,
+      "lr": 2.976727186803373e-05,
+      "train_loss": 1.9738831520080566,
+      "grad_norm": 3.359375
+    },
+    {
+      "step": 190,
+      "epoch": 0,
+      "lr": 2.9715879367723295e-05,
+      "train_loss": 1.8490227460861206,
+      "grad_norm": 3.921875
+    },
+    {
+      "step": 200,
+      "epoch": 0,
+      "lr": 2.9659423588263324e-05,
+      "train_loss": 2.1239638328552246,
+      "grad_norm": 3.8125
+    },
+    {
+      "step": 210,
+      "epoch": 0,
+      "lr": 2.9597926159040927e-05,
+      "train_loss": 2.0963432788848877,
+      "grad_norm": 3.71875
+    },
+    {
+      "step": 220,
+      "epoch": 0,
+      "lr": 2.9531410641004455e-05,
+      "train_loss": 2.4024181365966797,
+      "grad_norm": 4.5
+    },
+    {
+      "step": 230,
+      "epoch": 0,
+      "lr": 2.9459902517636794e-05,
+      "train_loss": 1.75795316696167,
+      "grad_norm": 3.46875
+    },
+    {
+      "step": 240,
+      "epoch": 0,
+      "lr": 2.9383429185192092e-05,
+      "train_loss": 1.984740138053894,
+      "grad_norm": 4.0625
+    },
+    {
+      "step": 250,
+      "epoch": 0,
+      "lr": 2.930201994219971e-05,
+      "train_loss": 2.17518949508667,
+      "grad_norm": 3.40625
+    },
+    {
+      "step": 260,
+      "epoch": 0,
+      "lr": 2.921570597823934e-05,
+      "train_loss": 2.0175626277923584,
+      "grad_norm": 5.4375
+    },
+    {
+      "step": 270,
+      "epoch": 0,
+      "lr": 2.9124520361991602e-05,
+      "train_loss": 1.802879810333252,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 280,
+      "epoch": 0,
+      "lr": 2.902849802856877e-05,
+      "train_loss": 2.0239906311035156,
+      "grad_norm": 3.640625
+    },
+    {
+      "step": 290,
+      "epoch": 0,
+      "lr": 2.8927675766130387e-05,
+      "train_loss": 2.106048345565796,
+      "grad_norm": 4.0625
+    },
+    {
+      "step": 300,
+      "epoch": 0,
+      "lr": 2.8822092201788965e-05,
+      "train_loss": 2.2117373943328857,
+      "grad_norm": 3.484375
+    },
+    {
+      "step": 310,
+      "epoch": 0,
+      "lr": 2.871178778681111e-05,
+      "train_loss": 2.2747886180877686,
+      "grad_norm": 4.28125
+    },
+    {
+      "step": 320,
+      "epoch": 0,
+      "lr": 2.8596804781119833e-05,
+      "train_loss": 2.0716397762298584,
+      "grad_norm": 4.625
+    },
+    {
+      "step": 330,
+      "epoch": 0,
+      "lr": 2.8477187237103858e-05,
+      "train_loss": 2.3656089305877686,
+      "grad_norm": 4.25
+    },
+    {
+      "step": 340,
+      "epoch": 0,
+      "lr": 2.8352980982740246e-05,
+      "train_loss": 2.0449118614196777,
+      "grad_norm": 3.265625
+    },
+    {
+      "step": 350,
+      "epoch": 0,
+      "lr": 2.8224233604036742e-05,
+      "train_loss": 1.7377703189849854,
+      "grad_norm": 3.609375
+    },
+    {
+      "step": 360,
+      "epoch": 0,
+      "lr": 2.8090994426800586e-05,
+      "train_loss": 2.127502918243408,
+      "grad_norm": 4.0
+    },
+    {
+      "step": 370,
+      "epoch": 0,
+      "lr": 2.795331449774075e-05,
+      "train_loss": 1.8387022018432617,
+      "grad_norm": 3.578125
+    },
+    {
+      "step": 380,
+      "epoch": 0,
+      "lr": 2.7811246564910913e-05,
+      "train_loss": 1.989431381225586,
+      "grad_norm": 3.984375
+    },
+    {
+      "step": 390,
+      "epoch": 0,
+      "lr": 2.766484505750053e-05,
+      "train_loss": 2.1212236881256104,
+      "grad_norm": 3.53125
+    },
+    {
+      "step": 400,
+      "epoch": 0,
+      "lr": 2.7514166064981917e-05,
+      "train_loss": 2.2589361667633057,
+      "grad_norm": 3.53125
+    },
+    {
+      "step": 410,
+      "epoch": 0,
+      "lr": 2.735926731562121e-05,
+      "train_loss": 2.2248330116271973,
+      "grad_norm": 4.21875
+    },
+    {
+      "step": 420,
+      "epoch": 0,
+      "lr": 2.72002081543614e-05,
+      "train_loss": 2.0745580196380615,
+      "grad_norm": 3.96875
+    },
+    {
+      "step": 430,
+      "epoch": 0,
+      "lr": 2.7037049520086117e-05,
+      "train_loss": 2.3353073596954346,
+      "grad_norm": 3.71875
+    },
+    {
+      "step": 440,
+      "epoch": 0,
+      "lr": 2.6869853922272637e-05,
+      "train_loss": 2.1064066886901855,
+      "grad_norm": 4.1875
+    },
+    {
+      "step": 450,
+      "epoch": 0,
+      "lr": 2.66986854170432e-05,
+      "train_loss": 2.3036434650421143,
+      "grad_norm": 4.25
+    },
+    {
+      "step": 460,
+      "epoch": 0,
+      "lr": 2.6523609582623775e-05,
+      "train_loss": 2.1680445671081543,
+      "grad_norm": 3.59375
+    },
+    {
+      "step": 470,
+      "epoch": 0,
+      "lr": 2.6344693494219675e-05,
+      "train_loss": 1.895806908607483,
+      "grad_norm": 3.484375
+    },
+    {
+      "step": 480,
+      "epoch": 0,
+      "lr": 2.616200569831765e-05,
+      "train_loss": 1.9690361022949219,
+      "grad_norm": 4.40625
+    },
+    {
+      "step": 490,
+      "epoch": 0,
+      "lr": 2.5975616186424287e-05,
+      "train_loss": 1.990667700767517,
+      "grad_norm": 5.03125
+    },
+    {
+      "step": 500,
+      "epoch": 0,
+      "lr": 2.578559636825082e-05,
+      "train_loss": 1.694337010383606,
+      "grad_norm": 3.859375
+    },
+    {
+      "step": 510,
+      "epoch": 0,
+      "lr": 2.559201904435457e-05,
+      "train_loss": 1.9786421060562134,
+      "grad_norm": 4.40625
+    },
+    {
+      "step": 520,
+      "epoch": 0,
+      "lr": 2.5394958378247497e-05,
+      "train_loss": 1.9729682207107544,
+      "grad_norm": 3.46875
+    },
+    {
+      "step": 530,
+      "epoch": 0,
+      "lr": 2.5194489867982702e-05,
+      "train_loss": 2.317075729370117,
+      "grad_norm": 4.3125
+    },
+    {
+      "step": 540,
+      "epoch": 0,
+      "lr": 2.499069031722944e-05,
+      "train_loss": 1.9466733932495117,
+      "grad_norm": 3.390625
+    },
+    {
+      "step": 550,
+      "epoch": 0,
+      "lr": 2.4783637805848117e-05,
+      "train_loss": 2.4366695880889893,
+      "grad_norm": 4.0
+    },
+    {
+      "step": 560,
+      "epoch": 0,
+      "lr": 2.4573411659976218e-05,
+      "train_loss": 1.9783402681350708,
+      "grad_norm": 3.796875
+    },
+    {
+      "step": 570,
+      "epoch": 1,
+      "lr": 2.436009242163682e-05,
+      "train_loss": 1.7365068197250366,
+      "grad_norm": 3.5625
+    },
+    {
+      "step": 580,
+      "epoch": 1,
+      "lr": 2.4143761817881283e-05,
+      "train_loss": 2.091559410095215,
+      "grad_norm": 3.9375
+    },
+    {
+      "step": 590,
+      "epoch": 1,
+      "lr": 2.3924502729477862e-05,
+      "train_loss": 1.7580323219299316,
+      "grad_norm": 3.3125
+    },
+    {
+      "step": 600,
+      "epoch": 1,
+      "lr": 2.3702399159158422e-05,
+      "train_loss": 1.9629353284835815,
+      "grad_norm": 3.34375
+    },
+    {
+      "step": 610,
+      "epoch": 1,
+      "lr": 2.3477536199435166e-05,
+      "train_loss": 1.675366759300232,
+      "grad_norm": 3.25
+    },
+    {
+      "step": 620,
+      "epoch": 1,
+      "lr": 2.3249999999999996e-05,
+      "train_loss": 1.7961004972457886,
+      "grad_norm": 3.46875
+    },
+    {
+      "step": 630,
+      "epoch": 1,
+      "lr": 2.3019877734718706e-05,
+      "train_loss": 1.8213626146316528,
+      "grad_norm": 3.625
+    },
+    {
+      "step": 640,
+      "epoch": 1,
+      "lr": 2.278725756823286e-05,
+      "train_loss": 1.9185806512832642,
+      "grad_norm": 4.0
+    },
+    {
+      "step": 650,
+      "epoch": 1,
+      "lr": 2.2552228622182123e-05,
+      "train_loss": 1.843929648399353,
+      "grad_norm": 3.4375
+    },
+    {
+      "step": 660,
+      "epoch": 1,
+      "lr": 2.231488094105987e-05,
+      "train_loss": 2.232954263687134,
+      "grad_norm": 4.21875
+    },
+    {
+      "step": 670,
+      "epoch": 1,
+      "lr": 2.207530545771524e-05,
+      "train_loss": 1.7516814470291138,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 680,
+      "epoch": 1,
+      "lr": 2.1833593958514926e-05,
+      "train_loss": 1.6470730304718018,
+      "grad_norm": 3.484375
+    },
+    {
+      "step": 690,
+      "epoch": 1,
+      "lr": 2.158983904817784e-05,
+      "train_loss": 1.9479806423187256,
+      "grad_norm": 4.1875
+    },
+    {
+      "step": 700,
+      "epoch": 1,
+      "lr": 2.1344134114296333e-05,
+      "train_loss": 1.7508738040924072,
+      "grad_norm": 4.09375
+    },
+    {
+      "step": 710,
+      "epoch": 1,
+      "lr": 2.1096573291557492e-05,
+      "train_loss": 1.7691221237182617,
+      "grad_norm": 4.03125
+    },
+    {
+      "step": 720,
+      "epoch": 1,
+      "lr": 2.0847251425678134e-05,
+      "train_loss": 1.714287281036377,
+      "grad_norm": 3.140625
+    },
+    {
+      "step": 730,
+      "epoch": 1,
+      "lr": 2.0596264037067442e-05,
+      "train_loss": 2.0568430423736572,
+      "grad_norm": 3.609375
+    },
+    {
+      "step": 740,
+      "epoch": 1,
+      "lr": 2.034370728423112e-05,
+      "train_loss": 1.9780668020248413,
+      "grad_norm": 3.828125
+    },
+    {
+      "step": 750,
+      "epoch": 1,
+      "lr": 2.008967792693106e-05,
+      "train_loss": 2.1457955837249756,
+      "grad_norm": 4.21875
+    },
+    {
+      "step": 760,
+      "epoch": 1,
+      "lr": 1.983427328911464e-05,
+      "train_loss": 2.124933958053589,
+      "grad_norm": 3.734375
+    },
+    {
+      "step": 770,
+      "epoch": 1,
+      "lr": 1.9577591221627894e-05,
+      "train_loss": 1.767256736755371,
+      "grad_norm": 3.8125
+    },
+    {
+      "step": 780,
+      "epoch": 1,
+      "lr": 1.931973006472685e-05,
+      "train_loss": 1.8575551509857178,
+      "grad_norm": 3.1875
+    },
+    {
+      "step": 790,
+      "epoch": 1,
+      "lr": 1.9060788610401255e-05,
+      "train_loss": 1.775377869606018,
+      "grad_norm": 3.15625
+    },
+    {
+      "step": 800,
+      "epoch": 1,
+      "lr": 1.8800866064525362e-05,
+      "train_loss": 2.073150157928467,
+      "grad_norm": 4.3125
+    },
+    {
+      "step": 810,
+      "epoch": 1,
+      "lr": 1.8540062008850063e-05,
+      "train_loss": 1.4789400100708008,
+      "grad_norm": 3.5625
+    },
+    {
+      "step": 820,
+      "epoch": 1,
+      "lr": 1.827847636285105e-05,
+      "train_loss": 1.5420875549316406,
+      "grad_norm": 4.4375
+    },
+    {
+      "step": 830,
+      "epoch": 1,
+      "lr": 1.801620934544758e-05,
+      "train_loss": 1.9320502281188965,
+      "grad_norm": 4.09375
+    },
+    {
+      "step": 840,
+      "epoch": 1,
+      "lr": 1.7753361436606506e-05,
+      "train_loss": 1.694532871246338,
+      "grad_norm": 3.71875
+    },
+    {
+      "step": 850,
+      "epoch": 1,
+      "lr": 1.7490033338846302e-05,
+      "train_loss": 1.868902564048767,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 860,
+      "epoch": 1,
+      "lr": 1.7226325938655864e-05,
+      "train_loss": 1.948390245437622,
+      "grad_norm": 3.5625
+    },
+    {
+      "step": 870,
+      "epoch": 1,
+      "lr": 1.6962340267842743e-05,
+      "train_loss": 1.554016351699829,
+      "grad_norm": 3.578125
+    },
+    {
+      "step": 880,
+      "epoch": 1,
+      "lr": 1.6698177464825775e-05,
+      "train_loss": 2.219709873199463,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 890,
+      "epoch": 1,
+      "lr": 1.6433938735886845e-05,
+      "train_loss": 1.8365612030029297,
+      "grad_norm": 4.8125
+    },
+    {
+      "step": 900,
+      "epoch": 1,
+      "lr": 1.616972531639664e-05,
+      "train_loss": 1.5800832509994507,
+      "grad_norm": 3.109375
+    },
+    {
+      "step": 910,
+      "epoch": 1,
+      "lr": 1.5905638432029256e-05,
+      "train_loss": 1.9350879192352295,
+      "grad_norm": 3.4375
+    },
+    {
+      "step": 920,
+      "epoch": 1,
+      "lr": 1.5641779259980574e-05,
+      "train_loss": 1.757584810256958,
+      "grad_norm": 4.28125
+    },
+    {
+      "step": 930,
+      "epoch": 1,
+      "lr": 1.53782488902051e-05,
+      "train_loss": 1.7978266477584839,
+      "grad_norm": 3.984375
+    },
+    {
+      "step": 940,
+      "epoch": 1,
+      "lr": 1.5115148286686355e-05,
+      "train_loss": 2.2562248706817627,
+      "grad_norm": 3.671875
+    },
+    {
+      "step": 950,
+      "epoch": 1,
+      "lr": 1.4852578248755425e-05,
+      "train_loss": 2.1522483825683594,
+      "grad_norm": 3.890625
+    },
+    {
+      "step": 960,
+      "epoch": 1,
+      "lr": 1.4590639372472653e-05,
+      "train_loss": 1.910024642944336,
+      "grad_norm": 3.515625
+    },
+    {
+      "step": 970,
+      "epoch": 1,
+      "lr": 1.432943201208718e-05,
+      "train_loss": 1.8830302953720093,
+      "grad_norm": 3.59375
+    },
+    {
+      "step": 980,
+      "epoch": 1,
+      "lr": 1.4069056241589153e-05,
+      "train_loss": 2.0986886024475098,
+      "grad_norm": 4.375
+    },
+    {
+      "step": 990,
+      "epoch": 1,
+      "lr": 1.3809611816369273e-05,
+      "train_loss": 1.9821640253067017,
+      "grad_norm": 4.09375
+    },
+    {
+      "step": 1000,
+      "epoch": 1,
+      "lr": 1.3551198135000426e-05,
+      "train_loss": 2.1580004692077637,
+      "grad_norm": 3.75
+    },
+    {
+      "step": 1010,
+      "epoch": 1,
+      "lr": 1.3293914201156039e-05,
+      "train_loss": 1.6868488788604736,
+      "grad_norm": 3.84375
+    },
+    {
+      "step": 1020,
+      "epoch": 1,
+      "lr": 1.3037858585679672e-05,
+      "train_loss": 1.6239827871322632,
+      "grad_norm": 3.890625
+    },
+    {
+      "step": 1030,
+      "epoch": 1,
+      "lr": 1.2783129388820494e-05,
+      "train_loss": 1.7368135452270508,
+      "grad_norm": 3.109375
+    },
+    {
+      "step": 1040,
+      "epoch": 1,
+      "lr": 1.252982420264903e-05,
+      "train_loss": 2.2225263118743896,
+      "grad_norm": 3.84375
+    },
+    {
+      "step": 1050,
+      "epoch": 1,
+      "lr": 1.2278040073667585e-05,
+      "train_loss": 2.0299227237701416,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 1060,
+      "epoch": 1,
+      "lr": 1.2027873465629727e-05,
+      "train_loss": 1.6392135620117188,
+      "grad_norm": 4.46875
+    },
+    {
+      "step": 1070,
+      "epoch": 1,
+      "lr": 1.1779420222582995e-05,
+      "train_loss": 2.0644595623016357,
+      "grad_norm": 3.921875
+    },
+    {
+      "step": 1080,
+      "epoch": 1,
+      "lr": 1.1532775532149048e-05,
+      "train_loss": 1.8370929956436157,
+      "grad_norm": 4.0625
+    },
+    {
+      "step": 1090,
+      "epoch": 1,
+      "lr": 1.1288033889055298e-05,
+      "train_loss": 1.8886487483978271,
+      "grad_norm": 3.84375
+    },
+    {
+      "step": 1100,
+      "epoch": 1,
+      "lr": 1.1045289058932025e-05,
+      "train_loss": 2.280144691467285,
+      "grad_norm": 4.40625
+    },
+    {
+      "step": 1110,
+      "epoch": 1,
+      "lr": 1.0804634042388777e-05,
+      "train_loss": 1.9411524534225464,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 1120,
+      "epoch": 1,
+      "lr": 1.0566161039383934e-05,
+      "train_loss": 2.2853522300720215,
+      "grad_norm": 3.671875
+    },
+    {
+      "step": 1130,
+      "epoch": 2,
+      "lr": 1.032996141390093e-05,
+      "train_loss": 1.8030648231506348,
+      "grad_norm": 3.6875
+    },
+    {
+      "step": 1140,
+      "epoch": 2,
+      "lr": 1.0096125658944858e-05,
+      "train_loss": 1.7093786001205444,
+      "grad_norm": 3.3125
+    },
+    {
+      "step": 1150,
+      "epoch": 2,
+      "lr": 9.864743361872687e-06,
+      "train_loss": 1.763635277748108,
+      "grad_norm": 3.328125
+    },
+    {
+      "step": 1160,
+      "epoch": 2,
+      "lr": 9.635903170070462e-06,
+      "train_loss": 1.56942880153656,
+      "grad_norm": 3.21875
+    },
+    {
+      "step": 1170,
+      "epoch": 2,
+      "lr": 9.409692756990664e-06,
+      "train_loss": 1.725607991218567,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 1180,
+      "epoch": 2,
+      "lr": 9.186198788562676e-06,
+      "train_loss": 2.205113172531128,
+      "grad_norm": 3.859375
+    },
+    {
+      "step": 1190,
+      "epoch": 2,
+      "lr": 8.965506889989241e-06,
+      "train_loss": 1.945168137550354,
+      "grad_norm": 4.28125
+    },
+    {
+      "step": 1200,
+      "epoch": 2,
+      "lr": 8.747701612941688e-06,
+      "train_loss": 1.3583297729492188,
+      "grad_norm": 3.078125
+    },
+    {
+      "step": 1210,
+      "epoch": 2,
+      "lr": 8.532866403166397e-06,
+      "train_loss": 1.8235493898391724,
+      "grad_norm": 3.453125
+    },
+    {
+      "step": 1220,
+      "epoch": 2,
+      "lr": 8.321083568515e-06,
+      "train_loss": 1.9694604873657227,
+      "grad_norm": 3.765625
+    },
+    {
+      "step": 1230,
+      "epoch": 2,
+      "lr": 8.112434247410535e-06,
+      "train_loss": 1.4913307428359985,
+      "grad_norm": 3.28125
+    },
+    {
+      "step": 1240,
+      "epoch": 2,
+      "lr": 7.906998377761616e-06,
+      "train_loss": 1.8575187921524048,
+      "grad_norm": 3.5
+    },
+    {
+      "step": 1250,
+      "epoch": 2,
+      "lr": 7.704854666336546e-06,
+      "train_loss": 2.165919065475464,
+      "grad_norm": 3.453125
+    },
+    {
+      "step": 1260,
+      "epoch": 2,
+      "lr": 7.50608055860912e-06,
+      "train_loss": 2.101649522781372,
+      "grad_norm": 4.5
+    },
+    {
+      "step": 1270,
+      "epoch": 2,
+      "lr": 7.310752209087656e-06,
+      "train_loss": 1.9845640659332275,
+      "grad_norm": 3.859375
+    },
+    {
+      "step": 1280,
+      "epoch": 2,
+      "lr": 7.118944452138583e-06,
+      "train_loss": 1.7468781471252441,
+      "grad_norm": 3.84375
+    },
+    {
+      "step": 1290,
+      "epoch": 2,
+      "lr": 6.930730773315873e-06,
+      "train_loss": 1.937383770942688,
+      "grad_norm": 4.0
+    },
+    {
+      "step": 1300,
+      "epoch": 2,
+      "lr": 6.746183281207173e-06,
+      "train_loss": 1.8267430067062378,
+      "grad_norm": 3.484375
+    },
+    {
+      "step": 1310,
+      "epoch": 2,
+      "lr": 6.565372679807482e-06,
+      "train_loss": 1.6616218090057373,
+      "grad_norm": 4.0625
+    },
+    {
+      "step": 1320,
+      "epoch": 2,
+      "lr": 6.388368241431018e-06,
+      "train_loss": 1.7458239793777466,
+      "grad_norm": 4.0625
+    },
+    {
+      "step": 1330,
+      "epoch": 2,
+      "lr": 6.215237780171508e-06,
+      "train_loss": 1.9818190336227417,
+      "grad_norm": 3.578125
+    },
+    {
+      "step": 1340,
+      "epoch": 2,
+      "lr": 6.046047625921217e-06,
+      "train_loss": 1.9435720443725586,
+      "grad_norm": 3.6875
+    },
+    {
+      "step": 1350,
+      "epoch": 2,
+      "lr": 5.880862598958582e-06,
+      "train_loss": 1.9856152534484863,
+      "grad_norm": 3.5625
+    },
+    {
+      "step": 1360,
+      "epoch": 2,
+      "lr": 5.71974598511419e-06,
+      "train_loss": 2.1328201293945312,
+      "grad_norm": 3.765625
+    },
+    {
+      "step": 1370,
+      "epoch": 2,
+      "lr": 5.562759511524682e-06,
+      "train_loss": 2.094215154647827,
+      "grad_norm": 3.9375
+    },
+    {
+      "step": 1380,
+      "epoch": 2,
+      "lr": 5.409963322983791e-06,
+      "train_loss": 1.770656704902649,
+      "grad_norm": 3.859375
+    },
+    {
+      "step": 1390,
+      "epoch": 2,
+      "lr": 5.261415958899596e-06,
+      "train_loss": 1.6787642240524292,
+      "grad_norm": 3.5
+    },
+    {
+      "step": 1400,
+      "epoch": 2,
+      "lr": 5.117174330866886e-06,
+      "train_loss": 1.858250379562378,
+      "grad_norm": 3.828125
+    },
+    {
+      "step": 1410,
+      "epoch": 2,
+      "lr": 4.9772937008631225e-06,
+      "train_loss": 1.4987506866455078,
+      "grad_norm": 4.25
+    },
+    {
+      "step": 1420,
+      "epoch": 2,
+      "lr": 4.841827660076415e-06,
+      "train_loss": 1.6543601751327515,
+      "grad_norm": 3.5625
+    },
+    {
+      "step": 1430,
+      "epoch": 2,
+      "lr": 4.710828108373641e-06,
+      "train_loss": 1.9820873737335205,
+      "grad_norm": 4.34375
+    },
+    {
+      "step": 1440,
+      "epoch": 2,
+      "lr": 4.584345234416508e-06,
+      "train_loss": 1.7383555173873901,
+      "grad_norm": 4.09375
+    },
+    {
+      "step": 1450,
+      "epoch": 2,
+      "lr": 4.462427496433227e-06,
+      "train_loss": 2.0808868408203125,
+      "grad_norm": 3.609375
+    },
+    {
+      "step": 1460,
+      "epoch": 2,
+      "lr": 4.34512160365317e-06,
+      "train_loss": 1.8311794996261597,
+      "grad_norm": 3.0
+    },
+    {
+      "step": 1470,
+      "epoch": 2,
+      "lr": 4.232472498411578e-06,
+      "train_loss": 1.859304428100586,
+      "grad_norm": 3.796875
+    },
+    {
+      "step": 1480,
+      "epoch": 2,
+      "lr": 4.12452333893121e-06,
+      "train_loss": 1.6538958549499512,
+      "grad_norm": 4.25
+    },
+    {
+      "step": 1490,
+      "epoch": 2,
+      "lr": 4.021315482787545e-06,
+      "train_loss": 1.6206754446029663,
+      "grad_norm": 3.890625
+    },
+    {
+      "step": 1500,
+      "epoch": 2,
+      "lr": 3.922888471063817e-06,
+      "train_loss": 1.9593415260314941,
+      "grad_norm": 3.59375
+    },
+    {
+      "step": 1510,
+      "epoch": 2,
+      "lr": 3.8292800132020006e-06,
+      "train_loss": 1.767120599746704,
+      "grad_norm": 3.703125
+    },
+    {
+      "step": 1520,
+      "epoch": 2,
+      "lr": 3.7405259725555462e-06,
+      "train_loss": 1.627568244934082,
+      "grad_norm": 3.203125
+    },
+    {
+      "step": 1530,
+      "epoch": 2,
+      "lr": 3.656660352649379e-06,
+      "train_loss": 1.7991048097610474,
+      "grad_norm": 4.375
+    },
+    {
+      "step": 1540,
+      "epoch": 2,
+      "lr": 3.5777152841524295e-06,
+      "train_loss": 1.4335333108901978,
+      "grad_norm": 3.9375
+    },
+    {
+      "step": 1550,
+      "epoch": 2,
+      "lr": 3.5037210125677154e-06,
+      "train_loss": 1.631416916847229,
+      "grad_norm": 3.46875
+    },
+    {
+      "step": 1560,
+      "epoch": 2,
+      "lr": 3.4347058866446525e-06,
+      "train_loss": 2.154867649078369,
+      "grad_norm": 4.15625
+    },
+    {
+      "step": 1570,
+      "epoch": 2,
+      "lr": 3.3706963475180557e-06,
+      "train_loss": 1.8064779043197632,
+      "grad_norm": 3.796875
+    },
+    {
+      "step": 1580,
+      "epoch": 2,
+      "lr": 3.311716918577997e-06,
+      "train_loss": 1.75780189037323,
+      "grad_norm": 4.59375
+    },
+    {
+      "step": 1590,
+      "epoch": 2,
+      "lr": 3.2577901960743716e-06,
+      "train_loss": 1.9623959064483643,
+      "grad_norm": 4.0
+    },
+    {
+      "step": 1600,
+      "epoch": 2,
+      "lr": 3.208936840459808e-06,
+      "train_loss": 1.9277831315994263,
+      "grad_norm": 4.125
+    },
+    {
+      "step": 1610,
+      "epoch": 2,
+      "lr": 3.165175568474226e-06,
+      "train_loss": 1.9975004196166992,
+      "grad_norm": 3.59375
+    },
+    {
+      "step": 1620,
+      "epoch": 2,
+      "lr": 3.1265231459740464e-06,
+      "train_loss": 1.9480918645858765,
+      "grad_norm": 3.625
+    },
+    {
+      "step": 1630,
+      "epoch": 2,
+      "lr": 3.0929943815088556e-06,
+      "train_loss": 1.6358413696289062,
+      "grad_norm": 4.5625
+    },
+    {
+      "step": 1640,
+      "epoch": 2,
+      "lr": 3.064602120647934e-06,
+      "train_loss": 1.8847956657409668,
+      "grad_norm": 3.734375
+    },
+    {
+      "step": 1650,
+      "epoch": 2,
+      "lr": 3.0413572410588527e-06,
+      "train_loss": 1.6915150880813599,
+      "grad_norm": 3.328125
+    },
+    {
+      "step": 1660,
+      "epoch": 2,
+      "lr": 3.0232686483400123e-06,
+      "train_loss": 2.0918757915496826,
+      "grad_norm": 3.96875
+    },
+    {
+      "step": 1670,
+      "epoch": 2,
+      "lr": 3.010343272608723e-06,
+      "train_loss": 2.2671151161193848,
+      "grad_norm": 3.59375
+    },
+    {
+      "step": 1680,
+      "epoch": 2,
+      "lr": 3.0025860658461275e-06,
+      "train_loss": 2.0300846099853516,
+      "grad_norm": 4.03125
+    },
+    {
+      "step": 1689,
+      "epoch": 2,
+      "lr": 3.000025861475893e-06,
+      "train_loss": 1.6759381294250488,
+      "grad_norm": 5.4375
+    }
+  ],
+  "judge": [
+    {
+      "question": "When was NeoPharm, Inc. founded?",
+      "reference": "NeoPharm, Inc. was founded on June 15, 1990.",
+      "answer": "NeoPharm, Inc. was founded in 1919.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nenough, remember something that Dr. Cunningham said. His congenital brain damage is consistent with other murderers. He tested like a murderer. Is it surprising then that he has these problems? Could anyone who commits two premeditated murders for the purpose of obtaining things be mentally normal? Does depression or reactive attachment disorder, any of those things or their treatability reduce Scott's moral culpability for this \"'His blame, his mental state did not prevent him from committing these two premeditated murders, did not keep him from placing those kids in danger, did not keep \"'Besides, remember Dr. Cunningham. He described Gavin as a poor historian. Remember how well this poor historian described the layout of the Brittain residence for Holtz and Oliver, how he drew it out in excruciating detail. This is a man who is in command of all of his senses on September 13, 1996. He was in the Brittain home long enough to commit the layout to memory. He may have mental problems, but they weigh little compared to the weight of the aggravating circumstances.'\" (Emphasis added.) Scott, While acknowledging some statements suggested the defendant's evidence was not mitigating because it did not excuse or justify the crimes, we held this argument was \"In the case at hand, however, the prosecutor did not argue Scott's mental illness should not be considered because it did not excuse or justify the crime. Read in context, the argument was that Scott's mental illness was not as severe as he made it out to be, because it did not 'prevent' him from committing the crimes. Granted, there is some suggestion in the statement that Scott's mental illness did not excuse his culpability. However, taken in context, these statements did not contravene the 'considerable latitude' prosecutors are allowed in commenting on the evidence.\" 286 Kan. at 118 (citing Kleypas Finally, in Cheever I, this court examined two penalty-phase closing argument statements. The first addressed\n\nQuestion: What was the prosecutor's stance regarding the impact of Scott's mental state on the premeditated murders?",
+      "reference": "The prosecutor argued that Scott's mental state did not prevent him from committing two premeditated murders or from placing children in danger.",
+      "answer": "The prosecutor's stance was not a stance regarding Scott's mental illness, but a stance regarding the evidence of mental illness.",
+      "mode": ""
+    },
+    {
+      "question": "Which two types of privileges share the same waiver provision defined in A.R.S. \u00a7 12-2236?",
+      "reference": "The waiver provision of A.R.S. \u00a7 12-2236 applies equally to both the attorney-client privilege and the doctor-patient privilege.",
+      "answer": "The first type of privileges is the right to be free from unreasonable searches and seizures.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nbuildings, carried at $0 and $7,395,000 respectively; and a hotel property carried at $0 and $6,477,000, respectively. The Trust's hotel property, with a carrying value of $3,182,000 at December 31, 1995, was returned to the lender through foreclosure proceedings in February 1996. No gain or loss was recorded on the foreclosure of the Casa Grande Motor Inn. At December 31, 1996 and 1995, the Trust had $14,115,000 and $0, respectively, invested in mortgage-backed securities classified as \"available-for-sale.\" Statement of Financial Accounting Standards No. 115, \"Accounting for Certain Investments in Debt and Equity Securities,\" (\"SFAS 115\") issued in May 1993 requires that at the date of acquisition and at each reporting date, debt and equity securities be classified as \"held-to-maturity,\" \"trading\" or \"available for sale.\" Investments in debt securities in which the Trust has the positive intent and ability to hold to maturity are required to be classified as \"held-to-maturity.\" \"Held-to-maturity\" securities are required to be stated at cost and adjusted for amortization of premiums and discounts to maturity in the statement of financial position. Investments in debt and equity securities that are not classified as \"held-to-maturity\" and equity securities that have readily determinable fair values are to be classified as \"trading\" or \"available-for-sale\" and are measured at fair value in the statement of financial position. Securities that are bought and held principally for the purpose of selling them in the near term are classified as \"trading.\" Unrealized holding gains and losses for \"trading\" securities are included in earnings. CALIFORNIA REAL ESTATE INVESTMENT TRUST AND SUBSIDIARY NOTES TO CONSOLIDATED FINANCIAL STATEMENTS 4. Investment in Marketable Securities, continued: Investments that are not classified as \"held-to-maturity\" or \"trading\" securities are classified as \"available-for-sale.\" Unrealized holding gains and losses for \"available-for-sale\"\n\nQuestion: According to the accounting standards described, what are the distinct measurement requirements for securities classified as 'held-to-maturity' versus those classified as 'trading' or 'available-for-sale'?",
+      "reference": "Held-to-maturity securities must be stated at cost and adjusted for amortization of premiums and discounts to maturity, whereas trading and available-for-sale securities are measured at fair value.",
+      "answer": "The Trust's hotel property is classified as \"held-to-maturity\" and is valued at cost.",
+      "mode": ""
+    },
+    {
+      "question": "What case did Crum cite to argue against the search, and why did the court find it inapplicable?",
+      "reference": "Crum cited Coates, but the court found it legally and factually dissimilar because that case involved an underage driver with a Xanax pill, and the search involved a trunk.",
+      "answer": "The court ruled that the search was not authorized under the Fourth Amendment to the United States Constitution, and the search was not authorized under the Fourth Amendment.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nThe Company accomplishes this by soliciting zip code information from customers at the time of their purchases. This information is input into the MIS system and is used to determine the geographical area where the most likely potential customers live. With this information, in conjunction with major seasonal events, each store effects approximately 11 to 13 direct mailings per year to residents in those targeted areas, Investment in Infrastructure to Support Growth. As the Company has increased its base of Company-owned Super Stores, it has made additions to its management team. During 1997, the Company added key people and additional support in the Company's MIS, real estate, merchandising, franchise, human resources, administrative support and construction departments. The Company continues to make additions to its management team in an effort to realize its expansion plans for Company-owned stores. The Company's expansion strategy is to increase its market share in existing markets and to penetrate new markets with a goal of maintaining a leading position as a category-dominant retailer of party supplies merchandise. Over the next few years, the Company intends to continue to devote greater resources to the opening of Company-owned stores and therefore believes that for the next several years its revenue growth increasingly will be derived from the opening of Company-owned, rather than franchise Super Stores. The Company is experienced in overseeing a large number of stores that are geographically disbursed. The Company believes that there is an extensive number of suitable locations available for future sites. As of February 28, 1998, the Company has opened 7 Company-owned stores in 1998. In 1997, the Company opened 57 Company-owned stores and acquired 24 franchise stores, and its franchises opened an additional 19 stores. In 1996, the Company opened 20 Company-owned stores and its franchisees opened an additional 32 stores. Based on its current planning and\n\nQuestion: Which specific management departments received additional support and personnel during 1997?",
+      "reference": "The company added key people and support to its MIS, real estate, merchandising, franchise, human resources, administrative support, and construction departments.",
+      "answer": "The Company has increased its base of Company-owned stores by opening new stores and acquiring new stores.",
+      "mode": ""
+    },
+    {
+      "question": "What is the purpose of the Gazzili Fun Page in the GazziliScience app?",
+      "reference": "The Gazzili Fun Page serves as a reward area that kids can enjoy once they have successfully completed all six activities within the app.",
+      "answer": "The Gazzili Fun Page is a reference to the Gazzili Fun Page in the GazziliScience app.",
+      "mode": ""
+    },
+    {
+      "question": "What evidence is considered by the court when reviewing the sufficiency of a verdict as referenced in Smith v. State?",
+      "reference": "The court considers only the sufficiency of the evidence that was originally presented to and considered by the jurors in arriving at the verdict.",
+      "answer": "The court determines the sufficiency of the evidence by considering the evidence in the light most favorable to the State, together with all reasonable inferences that can be drawn therefrom.",
+      "mode": ""
+    },
+    {
+      "question": "What are the two primary operating segments of the Company?",
+      "reference": "The Company's operating segments are contract drilling and marine transportation.",
+      "answer": "The Company operates in one industry segment, the design, manufacture, and sale of a broad range of products for the automotive, industrial, and medical markets.",
+      "mode": ""
+    },
+    {
+      "question": "Why did McDaniel request the transcripts of Gookin's guilty plea hearing in his 2014 petition?",
+      "reference": "McDaniel contended that during his guilty plea hearing, Gookin admitted to killing the victim, which constituted exculpatory evidence that was withheld by the State.",
+      "answer": "McDaniel requested the transcripts of his guilty plea hearing in his 2014 petition.",
+      "mode": ""
+    },
+    {
+      "question": "What entity is responsible for road maintenance, making it a nondelegable duty?",
+      "reference": "The county is responsible for road maintenance, which is classified as a nondelegable duty.",
+      "answer": "The entity is responsible for road maintenance, making it a nondelegable duty.",
+      "mode": ""
+    },
+    {
+      "question": "In which Florida basic trading areas does Fortunet Communications, L.P. hold licenses to provide PCS services?",
+      "reference": "Fortunet Communications, L.P. holds licenses to provide PCS services in the basic trading areas of Tallahassee, Panama City, and Ocala, Florida.",
+      "answer": "Fortunet Communications, L.P. holds licenses to provide PCS services in Florida.",
+      "mode": ""
+    },
+    {
+      "question": "What specific condition must be met for Mark Murphy's suspension stay to commence, according to the court's initial order?",
+      "reference": "The stay of the respondent's suspension can only commence once a probation plan has been approved by the Disciplinary Administrator's office.",
+      "answer": "The court must determine whether the suspension is temporary or permanent.",
+      "mode": ""
+    },
+    {
+      "question": "What documentation must be filed if a defendant refuses to accept delivery of a mailed process?",
+      "reference": "The plaintiff must file a return of the Post Office Department stating the defendant refused to accept delivery and an affidavit of compliance.",
+      "answer": "A defendant must file a notice of intent to accept delivery within 30 days of the date of the order.",
+      "mode": ""
+    },
+    {
+      "question": "How did the average price per mcf and barrel for the Partnership compare between 1996 and 1997?",
+      "reference": "In 1996, the Partnership was paid an average of $2.31 per mcf and $16.37 per barrel, whereas in 1997, those prices increased to $3.15 per mcf and $19.64 per barrel.",
+      "answer": "The average price per mcf and barrel for the Partnership was $1.00 and $1.00, respectively.",
+      "mode": ""
+    },
+    {
+      "question": "What were the primary criticisms raised by opponents of the redesigned Socialist Worker?",
+      "reference": "Critics argued that the paper gave insufficient attention to industrial struggles, oversimplified important political questions to the point of diluting content, and focused too much on enthusing about the ANL instead of advocating for the Socialist Workers Party's distinctive politics.",
+      "answer": "The criticisms were raised by opponents of the redesigned Socialist Worker, which was criticized by the majority of the members of the Socialist Worker, and the criticisms were raised by opponents of the redesigned Socialist Worker.",
+      "mode": ""
+    },
+    {
+      "question": "What are the three specific regions being studied in the 'Back to the future' seed bank project?",
+      "reference": "The three regions being studied are continental Europe, the European Alps, and the Mediterranean region.",
+      "answer": "The three regions are the 'Back to the future' seed bank project, which is the 'Back to the future' seed bank project.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nView your list of saved words. (You can log in using Facebook.) : a natural substance (called a vitamin) that is found in certain foods (such as milk, eggs, and leafy vegetables) and that helps your body to be healthy : a yellow crystalline compound C17H20N4O6 of the vitamin B complex that occurs both free (as in milk) and combined (as in liver) as a component of coenzymes (as FMN) which are essential to normal metabolism \u2014called also vitamin B2 : a yellow crystalline compound C17H20N4O6 that is a growth-promoting member of the vitamin B complex and occurs both free (as in milk) and combined (as in liver)\u2014called also lactoflavin, ovoflavin, vitamin B2 Yellow, water-soluble organic compound, abundant in whey and egg white. It has a complex structure incorporating three rings. Green plants and most microorganisms can synthesize it; animals need to acquire it in their diet. It exists in combined forms as coenzymes and functions in the metabolism of carbohydrates and amino acids. A syndrome resembling pellagra is thought to result from riboflavin deficiency. See alsoflavin.\n\nQuestion: Besides being known as vitamin B2, what are two other names for riboflavin?",
+      "reference": "Two other names for riboflavin are lactoflavin and ovoflavin.",
+      "answer": "Being riboflavin is a natural substance that is found in certain foods, including milk, eggs, and leafy vegetables.",
+      "mode": ""
+    },
+    {
+      "question": "What action did the court take regarding the taxes that were collected while the sales tax on cable television was considered illegal?",
+      "reference": "The court remanded the case to the chancellor with instructions to refund the illegally collected taxes to the taxpayers who had paid them.",
+      "answer": "The court determined that the tax was not illegal because the tax was not collected by the purchaser.",
+      "mode": ""
+    },
+    {
+      "question": "What happened to the SSGI-UST Acquisition Corporation following its merger with U.S. Technologies, Inc.?",
+      "reference": "Upon the completion of the merger in April 1998, U.S. Technologies, Inc. remained as the surviving corporation, while SSGI-UST Acquisition Corporation ceased to exist.",
+      "answer": "The SSGI-UST Acquisition Corporation merged with and into U.S. Technologies, Inc. in a transaction accounted for as a pooling of interests.",
+      "mode": ""
+    },
+    {
+      "question": "To what extent is the Company reliant on its patent portfolio for its business operations?",
+      "reference": "While the Company believes its patents are important and seeks patent protection for new product developments, it does not consider itself materially dependent upon any single patent.",
+      "answer": "The Company relies on trade secrets, know-how, continuing technological innovation, and the protection of proprietary technology to protect its proprietary technology.",
+      "mode": ""
+    },
+    {
+      "question": "How does an elevated level of VLDL cholesterol affect the overall cardiovascular risk profile and HDL levels?",
+      "reference": "An elevated VLDL level suggests a dangerous small particle LDL pattern, and it typically causes a decrease in HDL (good) cholesterol levels, creating a dual negative impact on cardiovascular health.",
+      "answer": "VLDL cholesterol is a risk factor for which the body's own cholesterol is considered adequate.",
+      "mode": ""
+    },
+    {
+      "question": "Why does the court find that changing the defendant's sentence to run concurrently rather than consecutively does not prejudice the State?",
+      "reference": "The court reasons that the defendant will serve the rest of his life in jail regardless of the sentencing structure, making the distinction between consecutive and concurrent natural-life sentences effectively moot as the actual duration is governed by the laws of nature.",
+      "answer": "The court finds that the defendant's sentence is not disproportionate to the crime for which he was convicted, and the court's decision to change the sentence is not an abuse of discretion.",
+      "mode": ""
+    },
+    {
+      "question": "What is the name of the case that the defendants unsuccessfully used to support their position regarding the zoning board of appeals?",
+      "reference": "The defendants relied on Nielsen v. Board of Appeals on Zoning, but the court ruled that the case did not support their position.",
+      "answer": "The defendants unsuccessfully used to support their position that the board of appeals was not a proper party to the case.",
+      "mode": ""
+    },
+    {
+      "question": "If Carole Jean Halverson is reinstated, what are the primary obligations she must fulfill during her two-year probation period?",
+      "reference": "During the two-year probation, she must cooperate fully with the Director's Office regarding compliance monitoring, respond promptly to official correspondence, cooperate with investigations into unprofessional conduct, provide necessary authorizations for information release, and abide by the Minnesota Rules of Professional Conduct.",
+      "answer": "Mr. Halverson must fulfill the conditions of her probation, including the requirement that she complete a minimum of two years of probation.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nstability of the finance companies and requires payment within two days of product shipment. If these arrangements are terminated, the Company would have to develop alternative financing arrangements. In conjunction with these arrangements, the Company has inventory repurchase agreements with the finance companies that would require it to repurchase certain inventory which might be repossessed from the Network by the finance companies. To date, such repurchases have been insignificant. On October 22, 1993, the Company executed a $20 million guarantee to an inventory finance company on behalf of FNOW, which remained outstanding at January 28, 1995. In December 1994, several purported class action lawsuits were filed in the United States District Court for the Eastern District of Pennsylvania (Civil Action Nos. 94-3753, 94-CV-7410, 94-CV-7388, and 94-CV-7405) against the Company and certain directors and officers; these lawsuits have been consolidated with a class action lawsuit filed several years ago against the Company, certain directors and officers, and the Company's auditors (who are not named in the most recent complaint) in the United States District Court for the Eastern District of Pennsylvania (Civil Action No. 92-CV-1905). A purported derivative lawsuit was also filed in December 1994 in the Court of Common Pleas of Philadelphia County (No. 803) against the Company and certain of its directors and officers. These lawsuits allege violations of certain disclosure and related provisions of the federal securities laws and breach of fiduciary duties, including allegations relating to the Company's practices regarding vendor marketing funds, and seek damages in unspecified amounts as well as other monetary and equitable relief. In addition, the Company has been contacted by the Philadelphia office of the Securities and Exchange Commission regarding a preliminary, informal inquiry. The Company believes that all such allegations and lawsuits are without merit\n\nQuestion: Beyond the class action and derivative lawsuits, what additional legal or regulatory interaction has the Company faced regarding its practices?",
+      "reference": "The Philadelphia office of the Securities and Exchange Commission has contacted the Company regarding a preliminary, informal inquiry.",
+      "answer": "The Company has been contacted by the Philadelphia office of the Securities and Exchange Commission regarding a preliminary, informal inquiry.",
+      "mode": ""
+    },
+    {
+      "question": "Why is acrylic preferred over other materials for custom laser-cut museum puzzles?",
+      "reference": "Acrylic is used because the pieces are highly durable, waterproof, and can endure repeated handling without the image fading, the pieces wearing out, or the edges becoming frayed.",
+      "answer": "Acrylic is a natural, natural, and natural material that is used in the manufacture of glass, glass, and glassware.",
+      "mode": ""
+    },
+    {
+      "question": "What standard did the company use to account for income taxes during the 1992 and 1993 fiscal years?",
+      "reference": "The company accounted for income taxes under SFAS No. 96 during the 1993 and 1992 fiscal years.",
+      "answer": "The company used the income tax rate to calculate the provision for income taxes for the 1992 and 1993 fiscal years.",
+      "mode": ""
+    },
+    {
+      "question": "How does McClain Industries, Inc. differentiate its depreciation computation methods between financial reporting and federal income tax purposes?",
+      "reference": "McClain Industries, Inc. primarily uses the straight-line method for book purposes and accelerated methods for federal income tax purposes.",
+      "answer": "The Company uses the straight-line method for financial reporting purposes, which requires the use of the straight-line method for financial reporting.",
+      "mode": ""
+    },
+    {
+      "question": "According to the passage, what is the numerical value of the word 'marsh' in Pythagorean Numerology?",
+      "reference": "The numerical value of marsh in Pythagorean Numerology is 5.",
+      "answer": "The numerical value of the word 'marsh' in Pythagorean Numerology is: 'marsh of the earth'.",
+      "mode": ""
+    },
+    {
+      "question": "In the case of Fertterer, what was the vote split regarding whether the 1989 version of Title 87, MCA, provided an exclusive remedy for illegal game taking?",
+      "reference": "The Court split by a four to three vote on the issue of whether the 1989 version of Title 87, MCA, provided the exclusive remedy for the illegal taking of game.",
+      "answer": "The vote split was approved by the voters.",
+      "mode": ""
+    },
+    {
+      "question": "What reason did the district judge give for asking defense counsel to speed up his voir dire questioning during the trial of Kahler?",
+      "reference": "The district judge stated that the court was running behind schedule and that they needed to move through the questioning a little faster.",
+      "answer": "The district judge asked defense counsel if he had any questions about the case, and the district judge responded that he had no questions.",
+      "mode": ""
+    },
+    {
+      "question": "What is the current status of the Partnership's counterparty relationships regarding forward contracts?",
+      "reference": "Currently, the Partnership deals solely with DWR as its counterparty on forward contracts.",
+      "answer": "The counterparty relationship is defined as the existence of a contract, the existence of a contract, or the existence of a contract.",
+      "mode": ""
+    },
+    {
+      "question": "Under what circumstances are Trustees required to exercise their power of sale and distribution of Trust assets?",
+      "reference": "Trustees are not required to exercise powers of sale and distribution unless it is necessary to serve the interests of both the term beneficiaries and the reversionary beneficiary.",
+      "answer": "The Trustees are required to sell Trust assets to meet the obligations of the Trust, and the Trustee is required to sell Trust assets to satisfy the obligations of the Trust.",
+      "mode": ""
+    },
+    {
+      "question": "How did Capstraw's explanation for his arm injuries differ between his police interview and his trial testimony?",
+      "reference": "In the police interview, Capstraw claimed Amber attacked him with a knife, causing the cuts on his arm. At trial, he testified that he intentionally cut himself with a kitchen knife in an attempt to commit suicide after discovering Amber was dead.",
+      "answer": "Capstraw's testimony was based on his own observations and his own observations, which were based on his own observations and his own observations.",
+      "mode": ""
+    },
+    {
+      "question": "Under what authority and timeline does the suspension order against John Scott Benton become effective?",
+      "reference": "As stated in SCR 3.390(a), the order takes effect on the 10th day following its entry by the Court.",
+      "answer": "The suspension order against John Scott Benton is effective until the expiration of the suspension period.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nOvulation Chart Menstruation is a process of shedding blood from the uterus that usually begins for women between the age of 11 and 14 years and continues till menopause. It indicates the start of a reproductive life in women. Menstrual cycle may range from 21 to 45 days. The average length of a cycle is 28 days. At the time of menstrual period, a woman may experience abdominal cramping, lower back pain, bloating and sore breasts, mood swings, irritability, headache and fatigue. Most women will have symptoms of premenstrual syndrome (PMS), which include emotional and physical symptoms that start one or two weeks before the menstrual period. Do you know these facts about menstruation? - Most women bleed only about 80 ml or less during their periods. - At the time of ovulation you may have slight spotting and /or pain. - Do you know why women don't get periods during pregnancy? When you get pregnant, hormones released in the body prevent endometrium from shedding off as bleeding and ensure thick lining of the uterus, which provides protection and nourishment to the fetus. - Menstrual cycle starts with menarche and ends with menopause. Do you know what exactly happens during each menstrual cycle? - Menstrual period starts as hormone (progesterone and estrogen) levels drop and uterine lining (endometrium) breaks down. Bleeding may last for 3 to 5 days though it can vary from 2 to 7 days. - Around 7th day, Follicle Stimulating Hormone (FSH) stimulates follicles containing egg to develop on the ovary. - This is the time period during which one of the follicles mature and inner lining of the uterine wall thickens and nourishes with blood and nutrients thus making uterus suitable for the implantation of a fertilized egg. - As the level of luteinizing hormone (LH) rises at the middle of the cycle, ovulation takes place. - During this phase, matured follicles rupture and release an egg from the ovary. - An egg can stay in the fallopian tube for only 24 hours. This is the\n\nQuestion: Detail the sequence of hormonal and physical events that occur from the 7th day of the menstrual cycle through the process of ovulation.",
+      "reference": "Around the 7th day, Follicle Stimulating Hormone stimulates follicles to develop on the ovary, while the uterine wall thickens and fills with blood and nutrients to support potential implantation. As the level of luteinizing hormone rises around the middle of the cycle, ovulation occurs, causing a matured follicle to rupture and release an egg.",
+      "answer": "The text discusses the history of menstruation and the history of menstruation.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nenvironmental actions involving Armco -------------------------- relate to alleged contamination at off-site treatment and disposal sites. Other claims sometimes arise from contractual obligations for properties Armco previously owned or leased and from regulatory actions. In most of these cases, Armco is one of many companies who have been identified as potentially responsible parties (\"PRPs\"). In a few instances, Armco is one of only a few parties or is alleged to be solely liable. It is routinely asserted that joint and several liability will be applied in such cases; thus, a single party could be held liable for all costs related to a site. However, Armco's experience has been that liability is apportioned on the basis of volume and/or toxicity of materials sent to a site and Armco expects that any ultimate liability would be apportioned among Armco and other financially viable parties. Armco intends to assert all meritorious legal and equitable defenses that are available to it with respect to environmental matters. Based on Armco's analysis of the claims against it for contamination, including the presence of other PRPs, Armco's experience in resolving similar claims, and in some instances the type of contamination and expected remediation costs, Armco does not believe that its liability, if any, for these claims would materially impact its consolidated financial position or liquidity. However, it is possible that due to fluctuations in Armco's operating results, future developments with respect to such matters could have a material effect on the results of operations in future interim or annual periods. On February 27, 1995, the Ohio Environmental Protection Agency (\"OEPA\") issued a Notice of Violation (\"NOV\") to Armco's Zanesville Operations alleging noncompliance with both a 1993 Order and various state regulations regarding hazardous waste management. Armco continues to work with OEPA to achieve final resolution of this matter. No proposed penalties were\n\nQuestion: What is the primary basis on which Armco believes environmental liability is typically apportioned among multiple parties?",
+      "reference": "Armco's experience suggests that liability is apportioned based on the volume and/or toxicity of the materials that each party sent to a specific site.",
+      "answer": "The primary basis is the existence of liability for environmental matters.",
+      "mode": ""
+    },
+    {
+      "question": "Which legal principle established in Whipple v. Farrar supports the notion that courts of chancery should retain jurisdiction once gained?",
+      "reference": "The principle is that where a court of chancery has gained jurisdiction of a cause for any purpose of relief, it will retain it for the purpose of giving full relief.",
+      "answer": "The court of chancery has jurisdiction over the subject matter of the suit, and the court of chancery has jurisdiction over the subject matter of the suit.",
+      "mode": ""
+    },
+    {
+      "question": "What is the recommended legal disposition regarding the Appellate Court's dismissal of the appeal in the Chester zoning case?",
+      "reference": "The recommended action is to reverse the judgment of the Appellate Court that dismissed the appeal, and remand the case to that court with directions to reverse the trial court's judgment and remand the matter back to the trial court.",
+      "answer": "The Appellate Court dismissed the appeal in the Chester zoning case, and the Appellate Court dismissed the appeal in the Chester zoning case.",
+      "mode": ""
+    },
+    {
+      "question": "If you are unsure whether a piece of content is appropriate to share online, what is the best course of action?",
+      "reference": "When in doubt about whether or not to share something online, the best course of action is to not share it at all, because the internet does not have a delete button.",
+      "answer": "The best course of action is to share the content in a single piece of content, which is then shared with other users.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nnegative effects. One of the most notable is anxiety. Anxiety is defined as a consistently occurring feeling of nervousness. When left untreated, this condition can make kids socially and academically incapable. For example, these students may become afraid of approaching classmates or taking exams. Thus, it is important for parents to know the different reasons why social media makes students anxious: Because of social media, students are more likely encouraged to compare themselves to their peers. It may be difficult for them not to do so since their friends are bound to post pictures of their achievements. Additionally, a lot of online users tend to like these images. Thus, the popularity of these people skyrocket. As a result of these experiences, kids can find it hard to avoid basing their self-esteem on the approval of others. Fear of missing out (FOMO) refers to the tendency to feel restless when missing out on your peers\u2019 experiences. Students may feel that their friends live more rewarding lives. Social media apps have made FOMO more widespread due to several reasons. One, internet users tend to manipulate their reputation and portray their day-to-day living in an exaggerated manner. Two, being constantly reminded of the events they cannot attend can impact their self-image. FOMO contributes to student anxiety, mainly because it can make them develop unrealistic expectations of what a \u201cgood life\u201d really is. They find it more difficult to enjoy the present since they will always be thinking of the things and experiences they lack. Loneliness contributes to anxiety because it fuels their insecurities. Social media can make people feel isolated by reminding them of the online connections they do not have. Some of their classmates may have two thousand friends, while they don\u2019t even have half of that. Lastly, these online apps take time away from real-life social interactions. Students can find it harder to make friends and develop meaningful relationships.\n\nQuestion: How does social media contribute to student anxiety by influencing self-esteem?",
+      "reference": "Social media encourages students to compare themselves to their peers. Because friends frequently post images of their achievements that garner many likes, students often struggle to avoid basing their self-esteem on the approval of others.",
+      "answer": "Periodic anxiety is a common symptom of anxiety, which is characterized by a lack of self-esteem.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nplc, the Company, as guarantor, and Chemical Bank, as trustee (Current Report on Form 8-K dated December 1, 1993). 4.8 Voting Agreement dated March 5, 1991 among the Company, State Street Bank and Trust Company and Other Persons Signing Similar Voting Agreements (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 4.9 Instruments defining the Rights of Security Holders, Including Indentures - In addition to Exhibits 4.1 through 4.8 herein, pursuant to paragraph (b)(4)(iii)(A) of Item 601 of Regulation S-K, the Registrant hereby undertakes to furnish to the Securities and Exchange Commission upon request copies of the instruments defining the rights of holders of long-term debt securities of the Registrant and its subsidiaries, none of which instruments authorizes the issuance of an amount of securities that exceeds 10% of the total assets of the Registrant and its subsidiaries on a consolidated basis. 10.1+ Form of Agreement under the Morgan Stanley & Co. Incorporated Owners' and Select Earners' Plan (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.2+ Form of Agreement under the Morgan Stanley Group Inc. Officers' and Select Earners' Plan (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.3+ Morgan Stanley & Co. Incorporated Excess Benefit Plan, as amended and restated to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.4+ Morgan Stanley & Co. Incorporated Supplemental Executive Retirement Plan, as amended to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.5+ Morgan Stanley Group Inc. 1986 Stock Option Plan, as amended and restated to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.6+ Morgan Stanley Group Inc. Performance Unit Plan, as amended and restated to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). - --------------- + Management Contract or compensatory\n\nQuestion: Does the Registrant have an obligation to provide instruments defining the rights of long-term debt security holders to the Securities and Exchange Commission?",
+      "reference": "Yes, pursuant to paragraph (b)(4)(iii)(A) of Item 601 of Regulation S-K, the Registrant undertakes to furnish these instruments to the Securities and Exchange Commission upon request.",
+      "answer": "The Registrant has an obligation to provide instruments defining the rights of holders of long-term debt securities of the Registrant and its subsidiaries.",
+      "mode": ""
+    },
+    {
+      "question": "What factors contribute to the observed inequities in access to tobacco cessation support and tobacco use rates among different communities?",
+      "reference": "Inequities are driven by structural racism, community disinvestment, and historical marketing tactics by tobacco companies that specifically target under-resourced communities and communities of color.",
+      "answer": "The prevalence of tobacco use in the United States has been declining since the 1970s, with the number of tobacco cessation support and tobacco use rates increasing in the United States.",
+      "mode": ""
+    },
+    {
+      "question": "How did the revenue growth of HyperFeed compare between 1995 and 1999?",
+      "reference": "HyperFeed's revenues grew from $13.4 million in 1995 to $33.1 million in 1999.",
+      "answer": "The revenue growth was driven by the acquisition of HyperFeed, which added $1.2 million in revenue in 1999.",
+      "mode": ""
+    },
+    {
+      "question": "How many children do Ruby and Kevin Franke have?",
+      "reference": "Ruby and Kevin Franke have six children.",
+      "answer": "The Ruby and Kevin Franke children have a very strong relationship with Ruby and Kevin Franke, and they have a strong relationship with Ruby and Kevin Franke.",
+      "mode": ""
+    },
+    {
+      "question": "What are the two reportable product segments of the Company within the rigid packaging industry?",
+      "reference": "The two reportable product segments are Glass Containers and Plastics Packaging.",
+      "answer": "The Company's product segment consists of the manufacture of a broad line of high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-performance, high-",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nnot be meaningful because the only \"business\" of the Trust is the collection on the Mortgage Loans and distribution of payments on the Certificates to Certificateholders. This information is accurately summarized in the Monthly Reports to Certificateholders, which are filed on Form 8-K. There is no additional relevant information to report in response to Item 101 of Regulation S-K. The Depositor owns no property. The Lehman Home Equity Loan Trust 1997-2 Home Equity Loan Asset-Backed Certificates, Series 1997-2, in the aggregate, represent the beneficial ownership in a Trust consisting primarily of the Mortgage Loans. The Trust will acquire title to real estate only upon default of the mortgagors under the Mortgage Loan. Therefore, this item is inapplicable. ITEM 4. Submission of Matters to a Vote of Security Holders. No matters were submitted to a vote of Certificateholders during the fiscal year covered by this report. ITEM 5. Market for Depositor's Common Equity and Related Stockholder Matters. The Lehman Home Equity Loan Trust 1997-2 Home Equity Loan Asset-Backed Certificates, Series 1997-2 represent, in the aggregate, the beneficial ownership in a trust fund consisting primarily of the Mortgage Loans. The Certificates are owned by Certificateholders as trust beneficiaries. Strictly speaking, Depositor has no \"common equity,\" but for purposes of this Item only, Depositor's Home Equity Loan Asset-Backed Certificates are treated as \"common equity.\" (a) Market Information. There is no established public trading market for Depositor's Notes. Depositor believes the Notes are traded primarily in intra-dealer markets and non-centralized inter-dealer markets. (b) Holders. The number of registered holders of all classes of Certificates on December 31, 1997 was 4. (c) Dividends. Not applicable. The information regarding dividend required by sub-paragraph (c) of Item 201 of Regulation S-K is inapplicable because the Trust does not pay dividends. However, information as\n\nQuestion: Why is the information regarding dividends required by Item 201 of Regulation S-K considered inapplicable for the Lehman Home Equity Loan Trust 1997-2?",
+      "reference": "The information is inapplicable because the Trust does not pay dividends to its Certificateholders.",
+      "answer": "The information regarding dividend required by Item 201 of Regulation S-K is inapplicable because the Trust does not pay dividends.",
+      "mode": ""
+    },
+    {
+      "question": "Context:\nnumber of shares o Company Common Stock issued in the Acquisitions of Fridcorp and Hydel was, in each case, determined through arms-length negotiations. Superior Magnetics, Inc. (\"SMI\") was formed by the Company to acquire the operating assets of the business operations of Denison Magnetics of Texas Instruments Incorporated on November 30, 1992 for cash and deferred payments of approximately $2,900,000. Precision Techniques, Inc. (\"Precision\") consists of a painting facility which was acquired for Logic in January 1995 for cash of $400,000. The Company presently is the owner of 100% of Test Switch, which currently owns 80% of ABI and 100% of Hydel, which currently owns 100% of Hydel Engineering; and the Company owns 100% of Logic, Precision, Reynolds, Fridcorp and SMI; and, through such subsidiaries, operates in five distinct business segments: (1) the manufacture and sale of electrical switching devices, electric meter enclosures and pole-line hardware for the electric utility industry and the general public (Test Switch, Hydel and Hydel Engineering); (2) the design and manufacture of defense electronic components (SMI); (3) the manufacture and sale of natural gas measurement, metering and odorization equipment (Reynolds); (4) the manufactureand sale of precision metal enclosures for telecommunication and computer equipment (Logic and Precision); and (5) the manufacture of vacuum-form and injection-mold products (Fridcorp). Effective January 31, 1993, the Company discontinued the operations of its 80% owned ABI which previously was engaged in the manufacture and sale of brass and bronze ingots. Certain reclassifications have been made to the 1994 and 1993 consolidated financial statements to conform to the 1995 presentation. The 1994 financial statements have been restated, as explained in Note 16. The consolidated financial statements include the accounts of the Company and its subsidiaries. All significant intercompany accounts and transactions have been\n\nQuestion: What is the current ownership structure regarding Test Switch, ABI, and Hydel?",
+      "reference": "The Company owns 100% of Test Switch, which currently owns 80% of ABI and 100% of Hydel. Additionally, Hydel currently owns 100% of Hydel Engineering.",
+      "answer": "not stated in the context",
+      "mode": ""
+    },
+    {
+      "question": "Context:\npolicy, either to defend or indemnify plaintiff, on the ground that the injury did not occur by reason of the use of the premises as a retail grocery store. The New York court held that \"the coverage of [the] policy [included] injuries caused by the negligent acts of employees on the premises while the premises [were] being used by the insured for the declared purposes but where the insured's employees are temporarily acting outside the scope of their employment without notice to or approval by the employer. Any exclusion from coverage of such an ordinary risk of the use of premises for business purposes must be by clear and unequivocal language.\" 254 App.Div. 280, 4 N.Y.S.2d 710. *877 Regardless of the soundness of the Grand Union decision, we find it to be clearly distinguishable from the circumstances of the instant case. First, we note that the language defining coverage in the Grand Union policy is broader than the language of the instant policy. It is intended to cover the business premises and \"injuries suffered by reason of [its] ownership, care, maintenance, occupation or use\" of those premises, not simply \"the conduct of the business.\" Second, while we might agree with the New York court that \"[t]he risk of injuries caused by employees is just as much one of the ordinary business risks of a business where the employees are engaged in a frolic as where they are acting fully within the scope of their employment,\" 254 App.Div. 280, 4 N.Y.S.2d 710, we do not believe there exists the same degree of expectancy or foreseeability by the insurer when the frolic is that of the sole proprietor of the insured business. Finally, even were we to adopt appellants' position and extend coverage to the immediate, injury-producing act, regardless of whether it deviates from the scope of the insured's business, so long as the principal activity of the insured is the conduct of his business, respondent must still prevail. Vermont Isaacson's deposition testimony indicates\n\nQuestion: What specific justification did the insurance company provide for refusing to defend or indemnify the plaintiff in the Grand Union case?",
+      "reference": "The insurance company refused to defend or indemnify the plaintiff on the ground that the injury did not occur by reason of the use of the premises as a retail grocery store.",
+      "answer": "The company provided a defense to the plaintiff's claim, which was denied because the plaintiff's employer failed to provide notice to the insurer of the insured's use of premises.",
+      "mode": ""
+    }
+  ],
+  "samples": [
+    {
+      "prompt": "What is the standard of proof in a civil lawsuit?",
+      "answer": "The standard of proof in a civil lawsuit is the preponderance of the evidence."
+    },
+    {
+      "prompt": "Summarize what a 10-K annual report contains.",
+      "answer": "Summarize the annual report for the year ended December 31, 1998, and the annual report for the year ended December 31, 1999."
+    },
+    {
+      "prompt": "What does it mean for a contract clause to be severable?",
+      "answer": "The contract clause must be severable, and the remainder of the contract must be severable."
+    }
+  ],
+  "container_wall_s": 784.1,
+  "modal_gpu": "L4"
+}

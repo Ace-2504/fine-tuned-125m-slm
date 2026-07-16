@@ -71,6 +71,12 @@
       <tr><td class="num">2</td><td class="num">2,000</td><td class="num">8.00</td><td class="num">12.42</td><td class="num">+9.5%</td><td class="num">1.50</td></tr>
       <tr><td class="num">3</td><td class="num">3,000</td><td class="num">7.70</td><td class="num">12.60</td><td class="num">+11.0%</td><td class="num">1.46</td></tr>
       <tr><td class="num">4</td><td class="num">4,000</td><td class="num">7.51</td><td class="num">12.74</td><td class="num">+12.2%</td><td class="num">1.50</td></tr>
+      <tr><td class="num">5</td><td class="num">5,000</td><td class="num">7.37</td><td class="num">12.90</td><td class="num">+13.6%</td><td class="num">1.52</td></tr>
+      <tr><td class="num">6</td><td class="num">6,000</td><td class="num">7.28</td><td class="num">12.95</td><td class="num">+14.1%</td><td class="num">1.54</td></tr>
+      <tr><td class="num">7</td><td class="num">7,000</td><td class="num">7.20</td><td class="num">13.00</td><td class="num">+14.6%</td><td class="num">1.60</td></tr>
+      <tr><td class="num">8</td><td class="num">8,000</td><td class="num">7.12</td><td class="num">13.10</td><td class="num">+15.4%</td><td class="num">1.60</td></tr>
+      <tr><td class="num">9</td><td class="num">9,000</td><td class="num">7.05</td><td class="num">13.18</td><td class="num">+16.2%</td><td class="num">1.54</td></tr>
+      <tr><td class="num">10</td><td class="num">10,000</td><td class="num">7.01</td><td class="num">13.20</td><td class="num">+16.3%</td><td class="num">1.54</td></tr>
     </tbody>
   </table></div>
 </header>
@@ -171,20 +177,55 @@
     </div>
   </div>
 
+  <!-- DAY 10 -->
+  <div class="col">
+    <div class="colhead"><h2>Day 10 · FINAL</h2><span class="d">10,000 pairs · study closed</span></div>
+    <p class="colsub">Ran rounds 5–10 with the method frozen to test the plateau at full 10× scale.
+    The plateau held; the study is closed as a negative result.</p>
+
+    <div class="card">
+      <h3><span class="sev high">decisive</span> Plateau holds at 10× scale</h3>
+      <p>Judge: 1.00 · 1.32 · <b>1.50</b> · 1.46 · 1.50 · 1.52 · 1.54 · 1.60 · 1.60 · 1.54 · <b>1.54</b>.
+      All gain arrived by round 2. From 2k → 10k (<b>5× more data</b>) the judge moved <b>+0.04</b>,
+      wandering 1.46–1.60 and ending where it started.</p>
+      <p class="fix"><b>Predicted before the run:</b> judge ≈1.5, retention ≈+18–20%. <b>Realized:</b>
+      judge 1.54, retention +16.3%. The plateau model called it.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="sev high">decisive</span> Forgetting tripled — the only real effect</h3>
+      <p>Retention rose <b>monotonically in all ten rounds</b>: 11.35 → <b>13.20 (+16.3%)</b>, nearly
+      tripling from +6.1%. Data volume had a large, consistent effect on exactly one metric — the one we
+      didn't want.</p>
+      <p class="fix"><b>Every round past round 2 was pure cost.</b></p>
+    </div>
+
+    <div class="card">
+      <h3><span class="sev high">high</span> Quality regressed at scale</h3>
+      <p>The "standard of proof" probe was <b>correct at rounds 3–8</b> ("preponderance of the evidence")
+      and <b>regressed to circular nonsense at round 10</b>. More data made a previously-correct answer
+      worse — drift overwriting earlier wins.</p>
+      <p class="fix"><b>Verdict:</b> v1 <b>CLOSED</b>. Do not run round 11+.</p>
+    </div>
+  </div>
+
 </div>
 
 <div class="rec">
-  <h2>Recommended direction (after Day 4)</h2>
+  <h2>Final verdict — v1 closed</h2>
   <ol>
-    <li><b>Stop scaling v1.</b> Days 1–4 answer the question conclusively: on this mix, data volume does not
-    buy answer quality — it buys forgetting. A clean negative result.</li>
-    <li><b>Don't push to 10k on v1.</b> Our own curve predicts judge ~1.5 and retention ~+18–20%. The only
-    reason would be the rhetorical "we scaled 10× and it stayed flat."</li>
-    <li><b>The only real lever left is the mix</b> — i.e. <b>v2</b> (grounded-heavy, currently parked).
-    Every round of feedback (Days 1, 2, 4) independently reached the same conclusion.</li>
-    <li><b>If any further v1 rounds happen</b>, replay becomes mandatory to bound forgetting — but it caps
-    damage, it does not create quality.</li>
+    <li><b>The question is answered.</b> Ten rounds, method frozen, 10× data: <em>on a closed-book-heavy
+    mix, SFT data volume does not buy answer quality in a 125M model — it buys catastrophic forgetting.</em>
+    A clean, publishable negative result.</li>
+    <li><b>v1 is closed.</b> There is nothing left to learn on the data-volume axis; round 11+ would add
+    forgetting for noise.</li>
+    <li><b>The one untested lever is the mix</b> — <b>v2</b> (grounded/open-book, shipped and parked).
+    Every round of feedback (1, 2, 3, 4, 10) independently converged here.</li>
+    <li><b>Secondary levers are damage control, not upside:</b> replay bounds forgetting; the decoding fix
+    removes repetition loops. Neither creates quality.</li>
   </ol>
+  <p class="muted" style="margin-top:12px">Full study cost: ~$1.14 GPU + ~$3.50 teacher ≈ <b>$4.60</b> for
+  11 training runs and 10,000 teacher-generated pairs.</p>
 </div>
 
 <footer>

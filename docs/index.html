@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SLM-125M · Supervised Fine-Tuning — Data-Scaling Study</title>
-<meta name="description" content="A cumulative data-scaling study fine-tuning a 125M from-scratch legal/financial base model with a Gemini teacher. Days 1-3: the judge score plateaus while forgetting grows.">
+<title>SLM-125M · SFT Data-Scaling Study — we scaled 10× and quality didn't move</title>
+<meta name="description" content="A 10-round cumulative data-scaling study fine-tuning a 125M from-scratch legal/financial base model with a Gemini teacher. Scaling SFT data 10x did not improve answer quality — it tripled catastrophic forgetting.">
 <style>
   :root{
     --bg:#0b0e14; --panel:#121722; --panel2:#161c28; --line:#232c3d;
@@ -37,12 +37,13 @@
   .tile .v{font-size:27px;font-weight:650;margin-top:6px;letter-spacing:-.02em}
   .tile .d{font-size:12.5px;margin-top:3px;font-family:var(--mono)}
   .up{color:var(--bad)}.down{color:var(--good)}.flat{color:var(--mut)}
-  table{width:100%;border-collapse:collapse;margin:6px 0;font-size:14.5px;overflow:hidden;border:1px solid var(--line);border-radius:12px}
+  table{width:100%;border-collapse:collapse;margin:6px 0;font-size:14px;overflow:hidden;border:1px solid var(--line);border-radius:12px}
   .scroll{overflow-x:auto}
-  th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line)}
-  th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);font-weight:600}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{background:var(--panel2);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);font-weight:600}
   tbody tr:last-child td{border-bottom:none}
   tbody tr.latest{background:rgba(122,162,255,.07)}
+  tbody tr.mark{background:rgba(94,234,212,.06)}
   td.mono,th.mono{font-family:var(--mono)}
   .num{font-family:var(--mono)}
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -50,13 +51,13 @@
   .callout b{color:var(--warn)}
   .gen{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
   .gen .q{font-weight:600}.gen .a{font-family:var(--mono);font-size:13px;color:var(--mut);margin-top:5px;white-space:pre-wrap}
-  .bars{display:grid;gap:10px;margin-top:8px}
-  .bar{display:grid;grid-template-columns:120px 1fr auto;align-items:center;gap:12px;font-size:13.5px}
-  .bar .lab{font-family:var(--mono);color:var(--mut)}
-  .track{height:10px;background:var(--panel2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+  .spark{display:grid;gap:7px;margin-top:10px}
+  .row{display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:10px;font-size:13px}
+  .row .lab{font-family:var(--mono);color:var(--dim);font-size:12px}
+  .track{height:9px;background:var(--panel2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
   .fill{height:100%;border-radius:6px}
   .muted{color:var(--dim);font-size:13px}
-  ul.tight{margin:8px 0;padding-left:20px}ul.tight li{margin:4px 0;color:var(--mut)}
+  ul.tight{margin:8px 0;padding-left:20px}ul.tight li{margin:5px 0;color:var(--mut)}
   footer{padding:34px 0 70px;color:var(--dim);font-size:13px}
   code{font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);padding:1.5px 6px;border-radius:6px;font-size:.9em}
 </style>
@@ -65,122 +66,135 @@
 <div class="wrap">
 
 <header>
-  <p class="tag">Research Log · Supervised Fine-Tuning</p>
-  <h1>Teaching a 125M base model to follow instructions</h1>
-  <p class="sub">A cumulative <b>data-scaling study</b>: each round adds 1,000 teacher-generated
-  QnA pairs, re-fine-tunes the from-scratch <a href="https://huggingface.co/Ace-2504/slm-125m-base">SLM-125M</a>
-  base model from scratch, and tracks task quality <em>and</em> catastrophic forgetting against a fixed benchmark.</p>
+  <p class="tag">Research Log · Supervised Fine-Tuning · Study complete</p>
+  <h1>We scaled SFT data 10× and quality didn't move</h1>
+  <p class="sub">A ten-round data-scaling study on a 125M from-scratch base model
+  (<a href="https://huggingface.co/Ace-2504/slm-125m-base">SLM-125M</a>). Each round added 1,000
+  teacher-written QnA pairs and re-fine-tuned from scratch. Going from 1,000 → 10,000 pairs left
+  answer quality flat at ~1.5/5 — and <b>tripled catastrophic forgetting</b>.</p>
   <div class="meta">
     <span class="chip">base&nbsp;<b>SLM-125M</b> (125.8M, 1024 ctx)</span>
     <span class="chip">teacher&nbsp;<b>gemini-3.1-flash-lite</b></span>
     <span class="chip">GPU&nbsp;<b>Modal L4</b></span>
-    <span class="chip">status&nbsp;<b>Day 4 · plateau confirmed</b></span>
+    <span class="chip">rounds&nbsp;<b>10 · 10,000 pairs</b></span>
+    <span class="chip">cost&nbsp;<b>~$4.60</b></span>
     <a class="chip" href="feedback.html" style="color:var(--accent2);border-color:var(--accent2)">→&nbsp;training feedback</a>
   </div>
 </header>
 
 <section>
-  <h2><span class="n">01</span>The finding: quality plateaus, forgetting doesn't</h2>
-  <p class="lead">Four rounds in, the result is settled. The judge has been <b>flat across three
-  consecutive rounds</b> (1.50 → 1.46 → 1.50) while forgetting has <b>doubled</b>. On this task mix,
-  more data buys distribution fit and erosion of the base model — <em>not</em> answer quality.</p>
+  <h2><span class="n">01</span>The result</h2>
+  <p class="lead">All the quality gain arrived by round 2. The following <b>5× increase in data</b>
+  (2,000 → 10,000) moved the judge by <b>+0.04</b> — noise. Meanwhile every extra round reliably made
+  the model forget more of what it originally knew.</p>
   <div class="tiles">
-    <div class="tile"><div class="k">Judge score /5</div><div class="v">1.50</div><div class="d flat">1.32 → 1.50 → 1.46 → 1.50 · flat</div></div>
-    <div class="tile"><div class="k">SFT-eval ppl</div><div class="v">7.51</div><div class="d down">▼ still inching down</div></div>
-    <div class="tile"><div class="k">Retention ppl</div><div class="v">12.74</div><div class="d up">▲ +12.2% · doubled since day 1</div></div>
-    <div class="tile"><div class="k">Cumulative pairs</div><div class="v">4,000</div><div class="d flat">days 1–4</div></div>
-    <div class="tile"><div class="k">Study cost</div><div class="v">~$0.26</div><div class="d flat">GPU + teacher</div></div>
+    <div class="tile"><div class="k">Judge @ 10k</div><div class="v">1.54</div><div class="d flat">= 1.50 @ 2k · flat</div></div>
+    <div class="tile"><div class="k">Data increase</div><div class="v">10×</div><div class="d flat">1,000 → 10,000 pairs</div></div>
+    <div class="tile"><div class="k">Forgetting</div><div class="v">+16.3%</div><div class="d up">▲ tripled from +6.1%</div></div>
+    <div class="tile"><div class="k">SFT-eval ppl</div><div class="v">7.01</div><div class="d down">▼ fell every round</div></div>
+    <div class="tile"><div class="k">Total cost</div><div class="v">~$4.60</div><div class="d flat">11 runs · 10k pairs</div></div>
   </div>
 </section>
 
 <section>
-  <h2><span class="n">02</span>The scaling curve</h2>
-  <p class="lead">Every point trains <em>from the base model</em> on the cumulative set and is scored on the
-  same frozen 100-pair eval and 50-question judge set, so points are directly comparable.</p>
+  <h2><span class="n">02</span>The scaling curve (all 10 rounds)</h2>
+  <p class="lead">Every point re-trains <em>from the base model</em> on the cumulative set, scored on the
+  same frozen 100-pair eval and 50-question judge set. Method frozen throughout — only dataset size varies.</p>
   <div class="scroll"><table>
-    <thead><tr><th>Day</th><th>Train pairs</th><th>SFT-eval ppl</th><th>Retention ppl</th><th>Forgetting</th><th>Judge /5</th></tr></thead>
+    <thead><tr><th>Round</th><th>Pairs</th><th>SFT-eval ppl</th><th>Retention ppl</th><th>Forgetting</th><th>Judge /5</th></tr></thead>
     <tbody>
       <tr><td class="mono">0 (base)</td><td class="num">0</td><td class="num">24.44</td><td class="num">11.35</td><td class="num flat">—</td><td class="num">1.00</td></tr>
       <tr><td class="mono">1</td><td class="num">1,000</td><td class="num">8.60</td><td class="num">12.05</td><td class="num up">+6.1%</td><td class="num">1.32</td></tr>
-      <tr><td class="mono">2</td><td class="num">2,000</td><td class="num">8.00</td><td class="num">12.42</td><td class="num up">+9.5%</td><td class="num">1.50</td></tr>
+      <tr class="mark"><td class="mono">2</td><td class="num">2,000</td><td class="num">8.00</td><td class="num">12.42</td><td class="num up">+9.5%</td><td class="num"><b>1.50</b> ← gain ends here</td></tr>
       <tr><td class="mono">3</td><td class="num">3,000</td><td class="num">7.70</td><td class="num">12.60</td><td class="num up">+11.0%</td><td class="num">1.46</td></tr>
-      <tr class="latest"><td class="mono">4</td><td class="num">4,000</td><td class="num">7.51</td><td class="num">12.74</td><td class="num up">+12.2%</td><td class="num">1.50</td></tr>
+      <tr><td class="mono">4</td><td class="num">4,000</td><td class="num">7.51</td><td class="num">12.74</td><td class="num up">+12.2%</td><td class="num">1.50</td></tr>
+      <tr><td class="mono">5</td><td class="num">5,000</td><td class="num">7.37</td><td class="num">12.90</td><td class="num up">+13.6%</td><td class="num">1.52</td></tr>
+      <tr><td class="mono">6</td><td class="num">6,000</td><td class="num">7.28</td><td class="num">12.95</td><td class="num up">+14.1%</td><td class="num">1.54</td></tr>
+      <tr><td class="mono">7</td><td class="num">7,000</td><td class="num">7.20</td><td class="num">13.00</td><td class="num up">+14.6%</td><td class="num">1.60</td></tr>
+      <tr><td class="mono">8</td><td class="num">8,000</td><td class="num">7.12</td><td class="num">13.10</td><td class="num up">+15.4%</td><td class="num">1.60</td></tr>
+      <tr><td class="mono">9</td><td class="num">9,000</td><td class="num">7.05</td><td class="num">13.18</td><td class="num up">+16.2%</td><td class="num">1.54</td></tr>
+      <tr class="latest"><td class="mono">10</td><td class="num">10,000</td><td class="num">7.01</td><td class="num">13.20</td><td class="num up">+16.3%</td><td class="num">1.54</td></tr>
     </tbody>
   </table></div>
-  <p class="muted">Judge deltas: +0.32, +0.18, −0.04, +0.04 — a textbook plateau. <b>All the gain arrived by
-  Day 2</b>; 4× the Day-1 data bought +0.18 total and nothing since. Perplexity keeps falling
-  (distribution fit) and retention keeps rising (forgetting) — the two things that <em>don't</em> plateau.</p>
+  <p class="muted">Judge across rounds: 1.00 · 1.32 · <b>1.50</b> · 1.46 · 1.50 · 1.52 · 1.54 · 1.60 · 1.60 · 1.54 · 1.54 —
+  it wanders between 1.46 and 1.60 and ends where it started. The round-7/8 peak did not hold.</p>
 </section>
 
 <section>
-  <h2><span class="n">03</span>Data loss / catastrophic forgetting</h2>
-  <p class="lead">"Does fine-tuning erode what the base model knew?" Measured directly every run — and it
-  grows monotonically with data, now past the 10% "notable" line.</p>
-  <div class="bars">
-    <div class="bar"><span class="lab">base</span><div class="track"><div class="fill" style="width:90%;background:var(--good)"></div></div><span class="num">11.35</span></div>
-    <div class="bar"><span class="lab">day 1</span><div class="track"><div class="fill" style="width:96%;background:var(--warn)"></div></div><span class="num">12.05</span></div>
-    <div class="bar"><span class="lab">day 2</span><div class="track"><div class="fill" style="width:98%;background:var(--warn)"></div></div><span class="num">12.42</span></div>
-    <div class="bar"><span class="lab">day 3</span><div class="track"><div class="fill" style="width:99%;background:var(--bad)"></div></div><span class="num">12.60</span></div>
-    <div class="bar"><span class="lab">day 4</span><div class="track"><div class="fill" style="width:100%;background:var(--bad)"></div></div><span class="num">12.74</span></div>
+  <h2><span class="n">03</span>The only thing data reliably bought: forgetting</h2>
+  <p class="lead">Retention perplexity on the original pretraining validation set — the same metric that
+  produced the base model's 11.35 — rose in <b>every single one of ten rounds</b>.</p>
+  <div class="spark">
+    <div class="row"><span class="lab">base</span><div class="track"><div class="fill" style="width:86%;background:var(--good)"></div></div><span class="num">11.35</span></div>
+    <div class="row"><span class="lab">1k</span><div class="track"><div class="fill" style="width:91%;background:var(--warn)"></div></div><span class="num">12.05</span></div>
+    <div class="row"><span class="lab">3k</span><div class="track"><div class="fill" style="width:95%;background:var(--warn)"></div></div><span class="num">12.60</span></div>
+    <div class="row"><span class="lab">5k</span><div class="track"><div class="fill" style="width:98%;background:var(--bad)"></div></div><span class="num">12.90</span></div>
+    <div class="row"><span class="lab">10k</span><div class="track"><div class="fill" style="width:100%;background:var(--bad)"></div></div><span class="num">13.20</span></div>
   </div>
   <div class="callout">
-    <b>Verdict: notable and doubling (+6.1% → +9.5% → +11.0% → +12.2%).</b> Forgetting has doubled since
-    Day 1 while the judge gained nothing since Day 2 — every round past Day 2 is <em>pure downside</em>.
-    Baseline validation held: day-0 reproduced the base perplexity to four significant figures
+    <b>Forgetting nearly tripled: +6.1% → +16.3%.</b> Data volume had a large, consistent, monotonic
+    effect on exactly one metric — and it was the one we didn't want. Every round past round 2 was pure
+    cost. Baseline validation held: round 0 reproduced the base perplexity to four significant figures
     (11.3546 vs the known 11.35).
   </div>
 </section>
 
 <section>
-  <h2><span class="n">04</span>Why it plateaus</h2>
-  <p class="lead">Perplexity is not quality. ~40% of training is closed-book QA — recall a document fact
-  from a single exposure, which a 125M model largely can't do. Common facts slowly land; specific ones don't.</p>
+  <h2><span class="n">04</span>Quality actually regressed at scale</h2>
+  <p class="lead">The sharpest illustration of the whole study — one fixed probe, tracked across rounds:</p>
   <div class="gen"><div class="q">Q · What is the standard of proof in a civil lawsuit?</div>
-    <div class="a">Day 1–2: circular repetition  →  Day 3: "…is the preponderance of the evidence standard."  ✓ a common fact finally learned</div></div>
-  <div class="gen"><div class="q">Q · Summarize what a 10-K annual report contains.</div>
-    <div class="a">Day 3: "Summarize the annual report for the year ended December 31, 1999."  (still echoes / no real summary)</div></div>
-  <div class="gen"><div class="q">Q · What does it mean for a contract clause to be severable?</div>
-    <div class="a">Day 3: "The contract clause must be severable, and the parties must be bound by the terms…"  (muddled)</div></div>
-  <p class="muted">The judge set is drawn mostly from closed-book recall — the one thing this model can't
-  learn — so it measures the model's <em>worst</em> skill while the learnable grounded tasks (summarize/extract
-  /rewrite/RAFT) go under-measured. See the <a href="feedback.html">training feedback</a> for the fix.</p>
+    <div class="a">rounds 1–2:  degenerate repetition
+rounds 3–8:  "…is the preponderance of the evidence standard."   ✓ correct
+round 10:    "A civil action is a civil action for the recovery of money, which is generally a civil action for the recovery of money."   ✗ regressed</div></div>
+  <p class="muted"><b>More data made a previously-correct answer worse.</b> Consistent with accumulating
+  drift: the model is pulled away from its pretrained knowledge (retention +16.3%) faster than extra
+  closed-book examples can teach it anything, so earlier wins get overwritten.</p>
 </section>
 
 <section>
-  <h2><span class="n">05</span>What next — the v2 pivot</h2>
-  <p class="lead">The study answered its question: on this mix, scaling data plateaus quality. The evidence now
-  points to a design change rather than more days.</p>
-  <ul class="tight">
-    <li><b>Rebalance to grounded tasks</b> — context-in-prompt QA + summarize/extract/rewrite, which a 125M model
-    <em>can</em> learn — and restrict closed-book QA to general knowledge. (Restarts the curve as v2.)</li>
-    <li><b>Report the judge per mode</b> (grounded vs recall) so scoring reflects what the model can actually do.</li>
-    <li><b>Fix decoding</b> — repetition penalty + no-repeat-ngram (removes greedy loops; comparability-safe).</li>
-    <li><b>Bound forgetting</b> if continuing the current mix — mix in a little raw pretraining data (replay).</li>
-  </ul>
+  <h2><span class="n">05</span>Perplexity is not quality</h2>
+  <p class="lead">SFT-eval perplexity improved in <b>all ten rounds</b> — 8.60 → 8.00 → 7.70 → 7.51 → 7.37
+  → 7.28 → 7.20 → 7.12 → 7.05 → <b>7.01</b> — a clean monotonic decline, while the judge sat flat and the
+  samples regressed.</p>
+  <p class="muted">Ten rounds of unambiguous evidence that perplexity measures <em>distribution fit</em>, not
+  answer quality. Had we reported it as the headline metric, it would have told the exact opposite story —
+  a tidy reminder to pick the metric that matches the claim.</p>
 </section>
 
 <section>
-  <h2><span class="n">06</span>Method</h2>
+  <h2><span class="n">06</span>Why — and what's actually left</h2>
+  <p class="lead">~40% of v1's training is <b>closed-book QA</b>: recall a document fact from a single
+  exposure. A 125M model can't store long-tail facts that way, so no amount of supervision installs them.</p>
   <ul class="tight">
-    <li><b>Base:</b> LlamaForCausalLM, 12L / 768d / 12h, 125.8M params, vocab 16,384, context 1,024, tied embeddings — pretrained from scratch on 2.04B tokens (val ppl 11.35).</li>
-    <li><b>Teacher:</b> <code>gemini-3.1-flash-lite</code> generates grounded QnA whose answers are stated only in the source passage; free tier, $0.</li>
-    <li><b>Training:</b> full fine-tune, 3 epochs, batch 16, LR 3e-5→3e-6 cosine, AdamW, bf16, assistant-only loss masking, seed 1337.</li>
-    <li><b>Design:</b> each day re-initialises from the base checkpoint on the cumulative dataset — the only variable is dataset size, so the curve isolates the effect of data.</li>
-    <li><b>Eval:</b> SFT-eval perplexity (task fit) · retention perplexity on pretraining val (forgetting) · Gemini-as-judge 1–5 (answer quality) · fixed greedy sample generations.</li>
+    <li><b>Common facts do land</b> — "preponderance of the evidence" was learned by round 3 (it recurs across the corpus). <b>Long-tail facts never do</b> — a single company's 1997 sales figure, seen once.</li>
+    <li>The judge set is drawn mostly from that unlearnable recall, so it measures the model's <em>worst</em> skill while the learnable grounded tasks go under-measured.</li>
+    <li><b>The one untested lever is the mix</b> — an open-book ("read this and answer") recipe, which the model <em>can</em> learn. Shipped and parked as <b>v2</b>.</li>
   </ul>
   <div class="panel" style="margin-top:16px">
-    <b>Day-4 run:</b> 4,000 pairs · <span class="num">750</span> steps · <span class="num">331 s</span> · Modal L4 → <span class="num">~$0.085</span>.
-    Cumulative spend across days 0–4: <span class="num">~$0.26</span> (GPU + teacher; days 1–3 teacher was free tier, day 4 billed ≈$0.50).
+    <b>Verdict:</b> v1 is closed as a clean negative result — <em>on a closed-book-heavy mix, SFT data volume
+    does not buy answer quality in a 125M model; it buys catastrophic forgetting.</em> Every round of
+    feedback (rounds 1, 2, 3, 4, 10) independently converged on the same conclusion.
   </div>
+</section>
+
+<section>
+  <h2><span class="n">07</span>Method</h2>
+  <ul class="tight">
+    <li><b>Base:</b> LlamaForCausalLM, 12L / 768d / 12h, 125.8M params, vocab 16,384, context 1,024, tied embeddings — pretrained from scratch on 2.04B tokens (val ppl 11.35).</li>
+    <li><b>Teacher:</b> <code>gemini-3.1-flash-lite</code> writes QnA grounded in passages from the same corpus the base was pretrained on (US case law, SEC filings, educational web).</li>
+    <li><b>Training:</b> full fine-tune (no LoRA), 3 epochs, batch 16, LR 3e-5→3e-6 cosine, AdamW, bf16, assistant-only loss masking, seed 1337 — <b>frozen across all 10 rounds</b>.</li>
+    <li><b>Design:</b> each round re-initialises from the base checkpoint on the cumulative dataset, so the curve isolates the effect of data alone.</li>
+    <li><b>Eval:</b> SFT-eval perplexity · retention perplexity on the pretraining val set (forgetting) · Gemini-as-judge 1–5 · fixed greedy sample generations. Eval set frozen at round 1 and chunk-quarantined (zero leakage).</li>
+  </ul>
 </section>
 
 <footer>
   <p>SLM-125M supervised fine-tuning · a research project by
   <a href="https://github.com/Ace-2504">@Ace-2504</a>.
   Base model: <a href="https://huggingface.co/Ace-2504/slm-125m-base">Ace-2504/slm-125m-base</a> ·
-  Code &amp; per-run reports: <a href="https://github.com/Ace-2504/fine-tuned-125m-slm">Ace-2504/fine-tuned-125m-slm</a> ·
+  Code &amp; all 11 per-run reports: <a href="https://github.com/Ace-2504/fine-tuned-125m-slm">Ace-2504/fine-tuned-125m-slm</a> ·
   <a href="feedback.html">training feedback</a>.</p>
-  <p class="muted">Generated from <code>reports/run-01…03.md</code>. Days 1–3 of an ongoing study; this page updates as the curve grows.</p>
+  <p class="muted">v1 study complete (10 rounds, 10,000 pairs). Generated from <code>reports/run-00…10.md</code>.</p>
 </footer>
 
 </div>

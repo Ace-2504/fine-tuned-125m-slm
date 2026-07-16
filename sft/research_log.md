@@ -124,21 +124,45 @@ judge 1.46 → **1.50**. The judge is **flat across three consecutive rounds** (
 forgetting has **doubled** since Day 1. Stop rule (flat ±0.05 × 2 rounds) fired. See
 `training-feedback/day4.md`.
 
-## Scaling curve
+## Days 5–10 — 2026-07-16/17 (chained, method frozen)
+
+Run automatically via `chain_days.sh 5 10` (generate → build → upload → train → report per day),
+method **frozen** so only dataset size varies. All six rounds completed cleanly; a report exists for
+every day (`reports/run-05…10.md`). Final dataset: **9,999 pairs**, balanced (qa 5500 / sum 2000 /
+ext 1499 / rew 1000), ~1,000 per day across all 10 days.
+
+## Scaling curve — FINAL (v1, 10 rounds, 0 → 10,000 pairs)
 
 | Day | Train pairs | SFT-eval ppl | Retention ppl (Δ vs base) | Judge /5 |
 | --- | --- | --- | --- | --- |
 | 0 (base) | 0 | 24.44 | 11.35 (—) | 1.00 |
 | 1 | 1,000 | 8.60 | 12.05 (+6.1%) | 1.32 |
-| 2 | 2,000 | 8.00 | 12.42 (+9.5%) | 1.50 |
+| 2 | 2,000 | 8.00 | 12.42 (+9.5%) | **1.50** |
 | 3 | 3,000 | 7.70 | 12.60 (+11.0%) | 1.46 |
 | 4 | 4,000 | 7.51 | 12.74 (+12.2%) | 1.50 |
+| 5 | 5,000 | 7.37 | 12.90 (+13.6%) | 1.52 |
+| 6 | 6,000 | 7.28 | 12.95 (+14.1%) | 1.54 |
+| 7 | 7,000 | 7.20 | 13.00 (+14.6%) | 1.60 |
+| 8 | 8,000 | 7.12 | 13.10 (+15.4%) | 1.60 |
+| 9 | 9,000 | 7.05 | 13.18 (+16.2%) | 1.54 |
+| 10 | **10,000** | **7.01** | **13.20 (+16.3%)** | **1.54** |
 
-**Conclusion (current mix):** the judge **plateaus at ~1.5/5** by Day 2–3 while perplexity keeps
-inching down and forgetting keeps climbing (now "notable"). This is the clean answer to "is it just
-volume?" — **no**. More data on the closed-book-heavy mix buys distribution fit and forgetting, not
-answer quality. Strongly validates the **v2 pivot** (`training-feedback/day2.md`): grounded-heavy mix
-+ per-mode judge + decoding fix. Continuing Day 4+ on this mix is not worthwhile.
+**FINAL CONCLUSION — v1 (definitive):**
+
+- **Judge:** 1.32 (1k) → 1.54 (10k). **Essentially all gain arrived by Day 2** (1.50). From 2k → 10k
+  — a **5× increase in data** — the judge moved **+0.04**, wandering 1.46–1.60 (peak 1.60 at Days 7–8,
+  back to 1.54). That is **noise around ~1.5, not a trend**.
+- **Retention:** rose **monotonically every single round**, 11.35 → **13.20 (+16.3%)** — forgetting
+  nearly **tripled** while quality stood still. This is the only variable that responded to data.
+- **SFT-eval ppl:** fell monotonically 8.60 → **7.01**, proving conclusively that **perplexity does not
+  measure answer quality** here.
+- **Regression at scale:** the fixed sample *"standard of proof"* was **correct at Days 3–8**
+  ("preponderance of the evidence") and **regressed to degenerate circularity at Day 10** — more data
+  made a previously-correct answer worse, consistent with accumulating drift/forgetting.
+- **Cost:** ~$1.14 GPU + ~$3.50 teacher ≈ **$4.6** for 10 rounds.
+
+**The question is answered: scaling data 10× on the closed-book-heavy mix does not buy answer
+quality — it buys forgetting.** A clean negative result. The remaining lever is the **mix** (v2).
 
 ---
 

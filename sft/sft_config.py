@@ -69,9 +69,12 @@ MAX_SEQ_LEN = base_config.SEQ_LEN     # 1024 — hard context ceiling
 TEACHER_MODEL = "gemini-3.1-flash-lite"
 TEACHER_MODEL_HIGHQ = "gemini-3-flash-preview"   # stronger alt if RPD allows / for hard slice
 TEACHER_THINKING_BULK = False         # off for bulk QA; on only for the Evol-Instruct slice
-FREE_TIER_RPM = 10                    # requests/min (paces the generator) — verify empirically
-FREE_TIER_RPD = 500                   # requests/day (shared across flash/flash-lite)
-REQUEST_MIN_INTERVAL_S = 6.5          # ~60/RPM with margin
+# Billing is ENABLED on this key (2026-07-15) -> no RPD wall, and paid-tier RPM is far above the
+# free tier's ~10. Pacing drops from 6.5 s to 0.5 s (~120 RPM), making a 1,000-pair day ~13 min
+# (latency-bound) instead of ~53 min. Backoff still absorbs any 429. Override with GEMINI_MIN_INTERVAL.
+FREE_TIER_RPM = 10                    # free-tier reference (no longer binding)
+FREE_TIER_RPD = 500                   # free-tier reference (no longer binding — billing on)
+REQUEST_MIN_INTERVAL_S = float(os.environ.get("GEMINI_MIN_INTERVAL", "0.5"))
 MAX_RETRIES = 6                       # exponential backoff on 429/5xx
 FALLBACK_TEACHER = "groq/llama-3.3-70b-versatile"   # only if backend is switched
 

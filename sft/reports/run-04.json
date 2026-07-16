@@ -1,0 +1,917 @@
+{
+  "day": 4,
+  "baseline": false,
+  "sft_eval_perplexity": 7.5055,
+  "retention_perplexity": 12.7373,
+  "base_retention_perplexity": 11.35,
+  "forgetting_pct_vs_base": 12.22,
+  "forgetting_verdict": "notable",
+  "judge_mean": 1.5,
+  "judge_by_mode": {
+    "?": 1.5
+  },
+  "cost_usd": 0.085,
+  "metrics": {
+    "day": 4,
+    "device": "cuda",
+    "gpu": "NVIDIA L4",
+    "train_examples": 4000,
+    "epochs": 3,
+    "baseline": false,
+    "batch_size": 16,
+    "total_steps": 750,
+    "warmup_steps": 37,
+    "lr_peak": 2.9999999999999997e-05,
+    "lr_min": 3e-06,
+    "weight_decay": 0.0,
+    "seed": 1337,
+    "supervised_tokens": 724758,
+    "train_wall_s": 331.1,
+    "total_wall_s": 369.6,
+    "tokens_per_sec": 2189.0,
+    "peak_gpu_mem_gb": 13.97,
+    "final_train_loss": 1.7417744398117065,
+    "sft_eval_loss": 2.0156,
+    "sft_eval_perplexity": 7.5055,
+    "retention_loss": 2.5445,
+    "retention_perplexity": 12.7373,
+    "base_retention_perplexity": 11.35,
+    "metrics_steps": [
+      {
+        "step": 1,
+        "epoch": 0,
+        "lr": 8.108108108108107e-07,
+        "train_loss": 3.3548693656921387,
+        "grad_norm": 9.1875
+      },
+      {
+        "step": 10,
+        "epoch": 0,
+        "lr": 8.108108108108107e-06,
+        "train_loss": 3.042524576187134,
+        "grad_norm": 10.0
+      },
+      {
+        "step": 20,
+        "epoch": 0,
+        "lr": 1.6216216216216215e-05,
+        "train_loss": 2.626258134841919,
+        "grad_norm": 8.125
+      },
+      {
+        "step": 30,
+        "epoch": 0,
+        "lr": 2.4324324324324324e-05,
+        "train_loss": 2.547057628631592,
+        "grad_norm": 4.5625
+      },
+      {
+        "step": 40,
+        "epoch": 0,
+        "lr": 2.9999475818560268e-05,
+        "train_loss": 2.591726541519165,
+        "grad_norm": 5.15625
+      },
+      {
+        "step": 50,
+        "epoch": 0,
+        "lr": 2.998113374195624e-05,
+        "train_loss": 2.4033539295196533,
+        "grad_norm": 3.640625
+      },
+      {
+        "step": 60,
+        "epoch": 0,
+        "lr": 2.9936623285259802e-05,
+        "train_loss": 2.1299450397491455,
+        "grad_norm": 3.453125
+      },
+      {
+        "step": 70,
+        "epoch": 0,
+        "lr": 2.986603084821829e-05,
+        "train_loss": 2.105649948120117,
+        "grad_norm": 3.859375
+      },
+      {
+        "step": 80,
+        "epoch": 0,
+        "lr": 2.9769493458603947e-05,
+        "train_loss": 1.9063252210617065,
+        "grad_norm": 4.25
+      },
+      {
+        "step": 90,
+        "epoch": 0,
+        "lr": 2.964719850622783e-05,
+        "train_loss": 2.3143794536590576,
+        "grad_norm": 3.78125
+      },
+      {
+        "step": 100,
+        "epoch": 0,
+        "lr": 2.949938337919529e-05,
+        "train_loss": 2.0232772827148438,
+        "grad_norm": 4.53125
+      },
+      {
+        "step": 110,
+        "epoch": 0,
+        "lr": 2.9326335003109302e-05,
+        "train_loss": 2.3999009132385254,
+        "grad_norm": 3.75
+      },
+      {
+        "step": 120,
+        "epoch": 0,
+        "lr": 2.912838928411592e-05,
+        "train_loss": 2.0163724422454834,
+        "grad_norm": 3.25
+      },
+      {
+        "step": 130,
+        "epoch": 0,
+        "lr": 2.890593045687311e-05,
+        "train_loss": 2.3099212646484375,
+        "grad_norm": 3.984375
+      },
+      {
+        "step": 140,
+        "epoch": 0,
+        "lr": 2.865939033870853e-05,
+        "train_loss": 2.0664095878601074,
+        "grad_norm": 3.53125
+      },
+      {
+        "step": 150,
+        "epoch": 0,
+        "lr": 2.8389247491414056e-05,
+        "train_loss": 2.2539570331573486,
+        "grad_norm": 3.90625
+      },
+      {
+        "step": 160,
+        "epoch": 0,
+        "lr": 2.809602629230414e-05,
+        "train_loss": 2.237393379211426,
+        "grad_norm": 4.34375
+      },
+      {
+        "step": 170,
+        "epoch": 0,
+        "lr": 2.778029591634108e-05,
+        "train_loss": 2.220970630645752,
+        "grad_norm": 4.03125
+      },
+      {
+        "step": 180,
+        "epoch": 0,
+        "lr": 2.7442669231303145e-05,
+        "train_loss": 1.6731725931167603,
+        "grad_norm": 3.96875
+      },
+      {
+        "step": 190,
+        "epoch": 0,
+        "lr": 2.7083801608140033e-05,
+        "train_loss": 1.7963390350341797,
+        "grad_norm": 4.53125
+      },
+      {
+        "step": 200,
+        "epoch": 0,
+        "lr": 2.6704389648824945e-05,
+        "train_loss": 1.6480025053024292,
+        "grad_norm": 4.03125
+      },
+      {
+        "step": 210,
+        "epoch": 0,
+        "lr": 2.6305169834172712e-05,
+        "train_loss": 1.9873210191726685,
+        "grad_norm": 3.625
+      },
+      {
+        "step": 220,
+        "epoch": 0,
+        "lr": 2.5886917094248568e-05,
+        "train_loss": 2.238715887069702,
+        "grad_norm": 4.15625
+      },
+      {
+        "step": 230,
+        "epoch": 0,
+        "lr": 2.5450443304142745e-05,
+        "train_loss": 2.147738218307495,
+        "grad_norm": 3.75
+      },
+      {
+        "step": 240,
+        "epoch": 0,
+        "lr": 2.4996595708030575e-05,
+        "train_loss": 1.8096592426300049,
+        "grad_norm": 3.578125
+      },
+      {
+        "step": 250,
+        "epoch": 0,
+        "lr": 2.4526255274577344e-05,
+        "train_loss": 1.5502195358276367,
+        "grad_norm": 4.53125
+      },
+      {
+        "step": 260,
+        "epoch": 1,
+        "lr": 2.4040334986880093e-05,
+        "train_loss": 1.714637041091919,
+        "grad_norm": 3.46875
+      },
+      {
+        "step": 270,
+        "epoch": 1,
+        "lr": 2.3539778070265897e-05,
+        "train_loss": 2.0808355808258057,
+        "grad_norm": 3.796875
+      },
+      {
+        "step": 280,
+        "epoch": 1,
+        "lr": 2.302555616138658e-05,
+        "train_loss": 1.7628545761108398,
+        "grad_norm": 3.765625
+      },
+      {
+        "step": 290,
+        "epoch": 1,
+        "lr": 2.249866742216391e-05,
+        "train_loss": 1.9736335277557373,
+        "grad_norm": 3.921875
+      },
+      {
+        "step": 300,
+        "epoch": 1,
+        "lr": 2.1960134602246253e-05,
+        "train_loss": 1.5952224731445312,
+        "grad_norm": 3.5625
+      },
+      {
+        "step": 310,
+        "epoch": 1,
+        "lr": 2.14110030537378e-05,
+        "train_loss": 2.29015851020813,
+        "grad_norm": 3.890625
+      },
+      {
+        "step": 320,
+        "epoch": 1,
+        "lr": 2.0852338702053813e-05,
+        "train_loss": 2.0996806621551514,
+        "grad_norm": 3.921875
+      },
+      {
+        "step": 330,
+        "epoch": 1,
+        "lr": 2.0285225976840843e-05,
+        "train_loss": 1.7353392839431763,
+        "grad_norm": 3.484375
+      },
+      {
+        "step": 340,
+        "epoch": 1,
+        "lr": 1.971076570697817e-05,
+        "train_loss": 2.141066551208496,
+        "grad_norm": 4.125
+      },
+      {
+        "step": 350,
+        "epoch": 1,
+        "lr": 1.913007298374651e-05,
+        "train_loss": 1.8423845767974854,
+        "grad_norm": 3.59375
+      },
+      {
+        "step": 360,
+        "epoch": 1,
+        "lr": 1.8544274996311784e-05,
+        "train_loss": 1.7464772462844849,
+        "grad_norm": 3.84375
+      },
+      {
+        "step": 370,
+        "epoch": 1,
+        "lr": 1.7954508843725613e-05,
+        "train_loss": 1.936996340751648,
+        "grad_norm": 4.375
+      },
+      {
+        "step": 380,
+        "epoch": 1,
+        "lr": 1.7361919327689535e-05,
+        "train_loss": 1.6865051984786987,
+        "grad_norm": 3.25
+      },
+      {
+        "step": 390,
+        "epoch": 1,
+        "lr": 1.6767656730367588e-05,
+        "train_loss": 2.11446213722229,
+        "grad_norm": 3.765625
+      },
+      {
+        "step": 400,
+        "epoch": 1,
+        "lr": 1.6172874581560676e-05,
+        "train_loss": 1.5868202447891235,
+        "grad_norm": 3.75
+      },
+      {
+        "step": 410,
+        "epoch": 1,
+        "lr": 1.5578727419576945e-05,
+        "train_loss": 2.237698554992676,
+        "grad_norm": 3.296875
+      },
+      {
+        "step": 420,
+        "epoch": 1,
+        "lr": 1.4986368550144462e-05,
+        "train_loss": 1.8848332166671753,
+        "grad_norm": 3.8125
+      },
+      {
+        "step": 430,
+        "epoch": 1,
+        "lr": 1.4396947807716573e-05,
+        "train_loss": 2.1123385429382324,
+        "grad_norm": 3.375
+      },
+      {
+        "step": 440,
+        "epoch": 1,
+        "lr": 1.3811609323515265e-05,
+        "train_loss": 1.9299821853637695,
+        "grad_norm": 3.40625
+      },
+      {
+        "step": 450,
+        "epoch": 1,
+        "lr": 1.3231489304645268e-05,
+        "train_loss": 1.8495299816131592,
+        "grad_norm": 3.453125
+      },
+      {
+        "step": 460,
+        "epoch": 1,
+        "lr": 1.2657713828589641e-05,
+        "train_loss": 1.7222410440444946,
+        "grad_norm": 3.3125
+      },
+      {
+        "step": 470,
+        "epoch": 1,
+        "lr": 1.2091396657368154e-05,
+        "train_loss": 2.0298192501068115,
+        "grad_norm": 4.125
+      },
+      {
+        "step": 480,
+        "epoch": 1,
+        "lr": 1.1533637075601293e-05,
+        "train_loss": 1.762993574142456,
+        "grad_norm": 3.75
+      },
+      {
+        "step": 490,
+        "epoch": 1,
+        "lr": 1.0985517756676575e-05,
+        "train_loss": 2.247868299484253,
+        "grad_norm": 3.9375
+      },
+      {
+        "step": 500,
+        "epoch": 1,
+        "lr": 1.0448102661159044e-05,
+        "train_loss": 2.142376184463501,
+        "grad_norm": 3.796875
+      },
+      {
+        "step": 510,
+        "epoch": 2,
+        "lr": 9.92243497152549e-06,
+        "train_loss": 2.0059263706207275,
+        "grad_norm": 3.921875
+      },
+      {
+        "step": 520,
+        "epoch": 2,
+        "lr": 9.409535067231235e-06,
+        "train_loss": 1.6286052465438843,
+        "grad_norm": 3.875
+      },
+      {
+        "step": 530,
+        "epoch": 2,
+        "lr": 8.910398544040095e-06,
+        "train_loss": 1.6844855546951294,
+        "grad_norm": 3.390625
+      },
+      {
+        "step": 540,
+        "epoch": 2,
+        "lr": 8.425994281462263e-06,
+        "train_loss": 1.7835949659347534,
+        "grad_norm": 3.75
+      },
+      {
+        "step": 550,
+        "epoch": 2,
+        "lr": 7.957262562051436e-06,
+        "train_loss": 1.9587023258209229,
+        "grad_norm": 3.328125
+      },
+      {
+        "step": 560,
+        "epoch": 2,
+        "lr": 7.505113246211761e-06,
+        "train_loss": 1.9811222553253174,
+        "grad_norm": 3.640625
+      },
+      {
+        "step": 570,
+        "epoch": 2,
+        "lr": 7.070424006057616e-06,
+        "train_loss": 2.084141492843628,
+        "grad_norm": 3.875
+      },
+      {
+        "step": 580,
+        "epoch": 2,
+        "lr": 6.654038621754383e-06,
+        "train_loss": 1.7766181230545044,
+        "grad_norm": 3.421875
+      },
+      {
+        "step": 590,
+        "epoch": 2,
+        "lr": 6.256765343647323e-06,
+        "train_loss": 1.8891046047210693,
+        "grad_norm": 3.734375
+      },
+      {
+        "step": 600,
+        "epoch": 2,
+        "lr": 5.879375323357733e-06,
+        "train_loss": 1.7077672481536865,
+        "grad_norm": 3.8125
+      },
+      {
+        "step": 610,
+        "epoch": 2,
+        "lr": 5.522601116891888e-06,
+        "train_loss": 2.190692901611328,
+        "grad_norm": 3.984375
+      },
+      {
+        "step": 620,
+        "epoch": 2,
+        "lr": 5.187135262668335e-06,
+        "train_loss": 2.000154733657837,
+        "grad_norm": 4.15625
+      },
+      {
+        "step": 630,
+        "epoch": 2,
+        "lr": 4.873628937223817e-06,
+        "train_loss": 2.190720796585083,
+        "grad_norm": 3.59375
+      },
+      {
+        "step": 640,
+        "epoch": 2,
+        "lr": 4.582690691207154e-06,
+        "train_loss": 1.8851884603500366,
+        "grad_norm": 4.71875
+      },
+      {
+        "step": 650,
+        "epoch": 2,
+        "lr": 4.314885268114774e-06,
+        "train_loss": 2.071779489517212,
+        "grad_norm": 3.453125
+      },
+      {
+        "step": 660,
+        "epoch": 2,
+        "lr": 4.070732508060749e-06,
+        "train_loss": 1.5199648141860962,
+        "grad_norm": 3.34375
+      },
+      {
+        "step": 670,
+        "epoch": 2,
+        "lr": 3.8507063387093276e-06,
+        "train_loss": 2.156196355819702,
+        "grad_norm": 3.96875
+      },
+      {
+        "step": 680,
+        "epoch": 2,
+        "lr": 3.6552338553286118e-06,
+        "train_loss": 1.8581161499023438,
+        "grad_norm": 3.46875
+      },
+      {
+        "step": 690,
+        "epoch": 2,
+        "lr": 3.4846944917511457e-06,
+        "train_loss": 2.070034980773926,
+        "grad_norm": 3.65625
+      },
+      {
+        "step": 700,
+        "epoch": 2,
+        "lr": 3.3394192838506328e-06,
+        "train_loss": 1.7033953666687012,
+        "grad_norm": 3.765625
+      },
+      {
+        "step": 710,
+        "epoch": 2,
+        "lr": 3.2196902269644916e-06,
+        "train_loss": 2.1076760292053223,
+        "grad_norm": 3.625
+      },
+      {
+        "step": 720,
+        "epoch": 2,
+        "lr": 3.125739728509535e-06,
+        "train_loss": 1.6701189279556274,
+        "grad_norm": 3.6875
+      },
+      {
+        "step": 730,
+        "epoch": 2,
+        "lr": 3.0577501568533304e-06,
+        "train_loss": 1.669785499572754,
+        "grad_norm": 4.0
+      },
+      {
+        "step": 740,
+        "epoch": 2,
+        "lr": 3.015853487316905e-06,
+        "train_loss": 2.1125550270080566,
+        "grad_norm": 3.734375
+      },
+      {
+        "step": 750,
+        "epoch": 2,
+        "lr": 3.0001310459959716e-06,
+        "train_loss": 1.7417744398117065,
+        "grad_norm": 3.859375
+      }
+    ],
+    "judge": [
+      {
+        "question": "When was NeoPharm, Inc. founded?",
+        "reference": "NeoPharm, Inc. was founded on June 15, 1990.",
+        "answer": "NeoPharm, Inc. was incorporated in Delaware in 1929.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nenough, remember something that Dr. Cunningham said. His congenital brain damage is consistent with other murderers. He tested like a murderer. Is it surprising then that he has these problems? Could anyone who commits two premeditated murders for the purpose of obtaining things be mentally normal? Does depression or reactive attachment disorder, any of those things or their treatability reduce Scott's moral culpability for this \"'His blame, his mental state did not prevent him from committing these two premeditated murders, did not keep him from placing those kids in danger, did not keep \"'Besides, remember Dr. Cunningham. He described Gavin as a poor historian. Remember how well this poor historian described the layout of the Brittain residence for Holtz and Oliver, how he drew it out in excruciating detail. This is a man who is in command of all of his senses on September 13, 1996. He was in the Brittain home long enough to commit the layout to memory. He may have mental problems, but they weigh little compared to the weight of the aggravating circumstances.'\" (Emphasis added.) Scott, While acknowledging some statements suggested the defendant's evidence was not mitigating because it did not excuse or justify the crimes, we held this argument was \"In the case at hand, however, the prosecutor did not argue Scott's mental illness should not be considered because it did not excuse or justify the crime. Read in context, the argument was that Scott's mental illness was not as severe as he made it out to be, because it did not 'prevent' him from committing the crimes. Granted, there is some suggestion in the statement that Scott's mental illness did not excuse his culpability. However, taken in context, these statements did not contravene the 'considerable latitude' prosecutors are allowed in commenting on the evidence.\" 286 Kan. at 118 (citing Kleypas Finally, in Cheever I, this court examined two penalty-phase closing argument statements. The first addressed\n\nQuestion: What was the prosecutor's stance regarding the impact of Scott's mental state on the premeditated murders?",
+        "reference": "The prosecutor argued that Scott's mental state did not prevent him from committing two premeditated murders or from placing children in danger.",
+        "answer": "not stated in the context",
+        "mode": ""
+      },
+      {
+        "question": "Which two types of privileges share the same waiver provision defined in A.R.S. \u00a7 12-2236?",
+        "reference": "The waiver provision of A.R.S. \u00a7 12-2236 applies equally to both the attorney-client privilege and the doctor-patient privilege.",
+        "answer": "The waiver provision is a waiver of the right to challenge the validity of a judgment or decree of a court of competent jurisdiction.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nbuildings, carried at $0 and $7,395,000 respectively; and a hotel property carried at $0 and $6,477,000, respectively. The Trust's hotel property, with a carrying value of $3,182,000 at December 31, 1995, was returned to the lender through foreclosure proceedings in February 1996. No gain or loss was recorded on the foreclosure of the Casa Grande Motor Inn. At December 31, 1996 and 1995, the Trust had $14,115,000 and $0, respectively, invested in mortgage-backed securities classified as \"available-for-sale.\" Statement of Financial Accounting Standards No. 115, \"Accounting for Certain Investments in Debt and Equity Securities,\" (\"SFAS 115\") issued in May 1993 requires that at the date of acquisition and at each reporting date, debt and equity securities be classified as \"held-to-maturity,\" \"trading\" or \"available for sale.\" Investments in debt securities in which the Trust has the positive intent and ability to hold to maturity are required to be classified as \"held-to-maturity.\" \"Held-to-maturity\" securities are required to be stated at cost and adjusted for amortization of premiums and discounts to maturity in the statement of financial position. Investments in debt and equity securities that are not classified as \"held-to-maturity\" and equity securities that have readily determinable fair values are to be classified as \"trading\" or \"available-for-sale\" and are measured at fair value in the statement of financial position. Securities that are bought and held principally for the purpose of selling them in the near term are classified as \"trading.\" Unrealized holding gains and losses for \"trading\" securities are included in earnings. CALIFORNIA REAL ESTATE INVESTMENT TRUST AND SUBSIDIARY NOTES TO CONSOLIDATED FINANCIAL STATEMENTS 4. Investment in Marketable Securities, continued: Investments that are not classified as \"held-to-maturity\" or \"trading\" securities are classified as \"available-for-sale.\" Unrealized holding gains and losses for \"available-for-sale\"\n\nQuestion: According to the accounting standards described, what are the distinct measurement requirements for securities classified as 'held-to-maturity' versus those classified as 'trading' or 'available-for-sale'?",
+        "reference": "Held-to-maturity securities must be stated at cost and adjusted for amortization of premiums and discounts to maturity, whereas trading and available-for-sale securities are measured at fair value.",
+        "answer": "The Trust's hotel property, with a carrying value of $3,182,000 at December 31, 1995, was returned to the lender through foreclosure proceedings in February 1996.",
+        "mode": ""
+      },
+      {
+        "question": "What case did Crum cite to argue against the search, and why did the court find it inapplicable?",
+        "reference": "Crum cited Coates, but the court found it legally and factually dissimilar because that case involved an underage driver with a Xanax pill, and the search involved a trunk.",
+        "answer": "The court found that the search was not authorized under the Fourth Amendment to the United States Constitution, and the search was not authorized under the Fourth Amendment.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nThe Company accomplishes this by soliciting zip code information from customers at the time of their purchases. This information is input into the MIS system and is used to determine the geographical area where the most likely potential customers live. With this information, in conjunction with major seasonal events, each store effects approximately 11 to 13 direct mailings per year to residents in those targeted areas, Investment in Infrastructure to Support Growth. As the Company has increased its base of Company-owned Super Stores, it has made additions to its management team. During 1997, the Company added key people and additional support in the Company's MIS, real estate, merchandising, franchise, human resources, administrative support and construction departments. The Company continues to make additions to its management team in an effort to realize its expansion plans for Company-owned stores. The Company's expansion strategy is to increase its market share in existing markets and to penetrate new markets with a goal of maintaining a leading position as a category-dominant retailer of party supplies merchandise. Over the next few years, the Company intends to continue to devote greater resources to the opening of Company-owned stores and therefore believes that for the next several years its revenue growth increasingly will be derived from the opening of Company-owned, rather than franchise Super Stores. The Company is experienced in overseeing a large number of stores that are geographically disbursed. The Company believes that there is an extensive number of suitable locations available for future sites. As of February 28, 1998, the Company has opened 7 Company-owned stores in 1998. In 1997, the Company opened 57 Company-owned stores and acquired 24 franchise stores, and its franchises opened an additional 19 stores. In 1996, the Company opened 20 Company-owned stores and its franchisees opened an additional 32 stores. Based on its current planning and\n\nQuestion: Which specific management departments received additional support and personnel during 1997?",
+        "reference": "The company added key people and support to its MIS, real estate, merchandising, franchise, human resources, administrative support, and construction departments.",
+        "answer": "The Company has implemented a strategy to increase its market share in existing markets by opening new stores and opening new stores.",
+        "mode": ""
+      },
+      {
+        "question": "What is the purpose of the Gazzili Fun Page in the GazziliScience app?",
+        "reference": "The Gazzili Fun Page serves as a reward area that kids can enjoy once they have successfully completed all six activities within the app.",
+        "answer": "The Gazzili Fun Page is a reference to the Gazzili Fun Page.",
+        "mode": ""
+      },
+      {
+        "question": "What evidence is considered by the court when reviewing the sufficiency of a verdict as referenced in Smith v. State?",
+        "reference": "The court considers only the sufficiency of the evidence that was originally presented to and considered by the jurors in arriving at the verdict.",
+        "answer": "The court must determine whether the evidence is sufficient to support the verdict.",
+        "mode": ""
+      },
+      {
+        "question": "What are the two primary operating segments of the Company?",
+        "reference": "The Company's operating segments are contract drilling and marine transportation.",
+        "answer": "The Company operates in one industry segment, the design, manufacture, and sale of a wide variety of products for the automotive, industrial, and medical markets.",
+        "mode": ""
+      },
+      {
+        "question": "Why did McDaniel request the transcripts of Gookin's guilty plea hearing in his 2014 petition?",
+        "reference": "McDaniel contended that during his guilty plea hearing, Gookin admitted to killing the victim, which constituted exculpatory evidence that was withheld by the State.",
+        "answer": "Maroja Gookin requested the transcripts of the guilty plea hearing in his 2014 petition.",
+        "mode": ""
+      },
+      {
+        "question": "What entity is responsible for road maintenance, making it a nondelegable duty?",
+        "reference": "The county is responsible for road maintenance, which is classified as a nondelegable duty.",
+        "answer": "The entity is responsible for road maintenance, making it a nondelegable duty.",
+        "mode": ""
+      },
+      {
+        "question": "In which Florida basic trading areas does Fortunet Communications, L.P. hold licenses to provide PCS services?",
+        "reference": "Fortunet Communications, L.P. holds licenses to provide PCS services in the basic trading areas of Tallahassee, Panama City, and Ocala, Florida.",
+        "answer": "Fortunet Communications, L.P. holds licenses to provide PCS services in Florida.",
+        "mode": ""
+      },
+      {
+        "question": "What specific condition must be met for Mark Murphy's suspension stay to commence, according to the court's initial order?",
+        "reference": "The stay of the respondent's suspension can only commence once a probation plan has been approved by the Disciplinary Administrator's office.",
+        "answer": "The court must determine whether the condition is met, and if so, whether the condition is met.",
+        "mode": ""
+      },
+      {
+        "question": "What documentation must be filed if a defendant refuses to accept delivery of a mailed process?",
+        "reference": "The plaintiff must file a return of the Post Office Department stating the defendant refused to accept delivery and an affidavit of compliance.",
+        "answer": "No, the defendant must accept delivery of a mailed process within 30 days of the date of the filing of the notice.",
+        "mode": ""
+      },
+      {
+        "question": "How did the average price per mcf and barrel for the Partnership compare between 1996 and 1997?",
+        "reference": "In 1996, the Partnership was paid an average of $2.31 per mcf and $16.37 per barrel, whereas in 1997, those prices increased to $3.15 per mcf and $19.64 per barrel.",
+        "answer": "The average price per mcf and barrel for the Partnership was $1.00 and $1.00, respectively.",
+        "mode": ""
+      },
+      {
+        "question": "What were the primary criticisms raised by opponents of the redesigned Socialist Worker?",
+        "reference": "Critics argued that the paper gave insufficient attention to industrial struggles, oversimplified important political questions to the point of diluting content, and focused too much on enthusing about the ANL instead of advocating for the Socialist Workers Party's distinctive politics.",
+        "answer": "The criticisms were raised by opponents of the redesigned Socialist Worker, which was criticized by the United States Supreme Court in the case of the United States Supreme Court.",
+        "mode": ""
+      },
+      {
+        "question": "What are the three specific regions being studied in the 'Back to the future' seed bank project?",
+        "reference": "The three regions being studied are continental Europe, the European Alps, and the Mediterranean region.",
+        "answer": "The project is being conducted by the Company and is being conducted by the Company's subsidiary, The BirdLife, Inc.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nView your list of saved words. (You can log in using Facebook.) : a natural substance (called a vitamin) that is found in certain foods (such as milk, eggs, and leafy vegetables) and that helps your body to be healthy : a yellow crystalline compound C17H20N4O6 of the vitamin B complex that occurs both free (as in milk) and combined (as in liver) as a component of coenzymes (as FMN) which are essential to normal metabolism \u2014called also vitamin B2 : a yellow crystalline compound C17H20N4O6 that is a growth-promoting member of the vitamin B complex and occurs both free (as in milk) and combined (as in liver)\u2014called also lactoflavin, ovoflavin, vitamin B2 Yellow, water-soluble organic compound, abundant in whey and egg white. It has a complex structure incorporating three rings. Green plants and most microorganisms can synthesize it; animals need to acquire it in their diet. It exists in combined forms as coenzymes and functions in the metabolism of carbohydrates and amino acids. A syndrome resembling pellagra is thought to result from riboflavin deficiency. See alsoflavin.\n\nQuestion: Besides being known as vitamin B2, what are two other names for riboflavin?",
+        "reference": "Two other names for riboflavin are lactoflavin and ovoflavin.",
+        "answer": "Beginning with riboflavin, riboflavin is a natural substance that is found in foods (such as milk, eggs, and leafy vegetables) and can be healthy.",
+        "mode": ""
+      },
+      {
+        "question": "What action did the court take regarding the taxes that were collected while the sales tax on cable television was considered illegal?",
+        "reference": "The court remanded the case to the chancellor with instructions to refund the illegally collected taxes to the taxpayers who had paid them.",
+        "answer": "The court ordered the tax to be paid to the taxing authorities.",
+        "mode": ""
+      },
+      {
+        "question": "What happened to the SSGI-UST Acquisition Corporation following its merger with U.S. Technologies, Inc.?",
+        "reference": "Upon the completion of the merger in April 1998, U.S. Technologies, Inc. remained as the surviving corporation, while SSGI-UST Acquisition Corporation ceased to exist.",
+        "answer": "The SSGI-UST Acquisition Corporation merged with and into U.S. Technologies, Inc. in a transaction accounted for as a pooling of interests.",
+        "mode": ""
+      },
+      {
+        "question": "To what extent is the Company reliant on its patent portfolio for its business operations?",
+        "reference": "While the Company believes its patents are important and seeks patent protection for new product developments, it does not consider itself materially dependent upon any single patent.",
+        "answer": "The Company relies on trade secrets, know-how, continuing technological innovation, and continuing technological innovation to maintain its competitive position.",
+        "mode": ""
+      },
+      {
+        "question": "How does an elevated level of VLDL cholesterol affect the overall cardiovascular risk profile and HDL levels?",
+        "reference": "An elevated VLDL level suggests a dangerous small particle LDL pattern, and it typically causes a decrease in HDL (good) cholesterol levels, creating a dual negative impact on cardiovascular health.",
+        "answer": "The elevated level of VLDL cholesterol affects the cardiovascular risk profile and HDL levels.",
+        "mode": ""
+      },
+      {
+        "question": "Why does the court find that changing the defendant's sentence to run concurrently rather than consecutively does not prejudice the State?",
+        "reference": "The court reasons that the defendant will serve the rest of his life in jail regardless of the sentencing structure, making the distinction between consecutive and concurrent natural-life sentences effectively moot as the actual duration is governed by the laws of nature.",
+        "answer": "The court finds that the defendant's sentence is not excessive, and the court's sentence is not excessive.",
+        "mode": ""
+      },
+      {
+        "question": "What is the name of the case that the defendants unsuccessfully used to support their position regarding the zoning board of appeals?",
+        "reference": "The defendants relied on Nielsen v. Board of Appeals on Zoning, but the court ruled that the case did not support their position.",
+        "answer": "The defendants were not successful in their efforts to obtain a zoning permit, and the case was dismissed.",
+        "mode": ""
+      },
+      {
+        "question": "If Carole Jean Halverson is reinstated, what are the primary obligations she must fulfill during her two-year probation period?",
+        "reference": "During the two-year probation, she must cooperate fully with the Director's Office regarding compliance monitoring, respond promptly to official correspondence, cooperate with investigations into unprofessional conduct, provide necessary authorizations for information release, and abide by the Minnesota Rules of Professional Conduct.",
+        "answer": "The primary obligation is to pay the costs of the probationary period, including the cost of the probationary period, and to pay the costs of the probationary period.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nstability of the finance companies and requires payment within two days of product shipment. If these arrangements are terminated, the Company would have to develop alternative financing arrangements. In conjunction with these arrangements, the Company has inventory repurchase agreements with the finance companies that would require it to repurchase certain inventory which might be repossessed from the Network by the finance companies. To date, such repurchases have been insignificant. On October 22, 1993, the Company executed a $20 million guarantee to an inventory finance company on behalf of FNOW, which remained outstanding at January 28, 1995. In December 1994, several purported class action lawsuits were filed in the United States District Court for the Eastern District of Pennsylvania (Civil Action Nos. 94-3753, 94-CV-7410, 94-CV-7388, and 94-CV-7405) against the Company and certain directors and officers; these lawsuits have been consolidated with a class action lawsuit filed several years ago against the Company, certain directors and officers, and the Company's auditors (who are not named in the most recent complaint) in the United States District Court for the Eastern District of Pennsylvania (Civil Action No. 92-CV-1905). A purported derivative lawsuit was also filed in December 1994 in the Court of Common Pleas of Philadelphia County (No. 803) against the Company and certain of its directors and officers. These lawsuits allege violations of certain disclosure and related provisions of the federal securities laws and breach of fiduciary duties, including allegations relating to the Company's practices regarding vendor marketing funds, and seek damages in unspecified amounts as well as other monetary and equitable relief. In addition, the Company has been contacted by the Philadelphia office of the Securities and Exchange Commission regarding a preliminary, informal inquiry. The Company believes that all such allegations and lawsuits are without merit\n\nQuestion: Beyond the class action and derivative lawsuits, what additional legal or regulatory interaction has the Company faced regarding its practices?",
+        "reference": "The Philadelphia office of the Securities and Exchange Commission has contacted the Company regarding a preliminary, informal inquiry.",
+        "answer": "The Company has been contacted by the Philadelphia office of the Securities and Exchange Commission regarding a preliminary, informal inquiry.",
+        "mode": ""
+      },
+      {
+        "question": "Why is acrylic preferred over other materials for custom laser-cut museum puzzles?",
+        "reference": "Acrylic is used because the pieces are highly durable, waterproof, and can endure repeated handling without the image fading, the pieces wearing out, or the edges becoming frayed.",
+        "answer": "Acrylic is a natural, natural, and natural material that is used in the manufacture of puzzles.",
+        "mode": ""
+      },
+      {
+        "question": "What standard did the company use to account for income taxes during the 1992 and 1993 fiscal years?",
+        "reference": "The company accounted for income taxes under SFAS No. 96 during the 1993 and 1992 fiscal years.",
+        "answer": "The company used the income tax rate to account for income taxes during the 1992 and 1993 fiscal years.",
+        "mode": ""
+      },
+      {
+        "question": "How does McClain Industries, Inc. differentiate its depreciation computation methods between financial reporting and federal income tax purposes?",
+        "reference": "McClain Industries, Inc. primarily uses the straight-line method for book purposes and accelerated methods for federal income tax purposes.",
+        "answer": "The Company uses the straight-line method to calculate depreciation for financial reporting purposes.",
+        "mode": ""
+      },
+      {
+        "question": "According to the passage, what is the numerical value of the word 'marsh' in Pythagorean Numerology?",
+        "reference": "The numerical value of marsh in Pythagorean Numerology is 5.",
+        "answer": "The numerical value of the word 'marsh' in Pythagorean Numerology is: \"1. The sum of the number of days in the year, the number of days in the year, and the number of days in the year. The numerical value of the word 'marsh' in Pythagorean Numerology is: \"1. The sum of the number of days in the year, the number of days in the year, and the number of days in the year.",
+        "mode": ""
+      },
+      {
+        "question": "In the case of Fertterer, what was the vote split regarding whether the 1989 version of Title 87, MCA, provided an exclusive remedy for illegal game taking?",
+        "reference": "The Court split by a four to three vote on the issue of whether the 1989 version of Title 87, MCA, provided the exclusive remedy for the illegal taking of game.",
+        "answer": "The vote split was approved by the voters.",
+        "mode": ""
+      },
+      {
+        "question": "What reason did the district judge give for asking defense counsel to speed up his voir dire questioning during the trial of Kahler?",
+        "reference": "The district judge stated that the court was running behind schedule and that they needed to move through the questioning a little faster.",
+        "answer": "The district judge asked defense counsel if he would be able to continue the voir dire of Kahler, and the district judge responded that he would not.",
+        "mode": ""
+      },
+      {
+        "question": "What is the current status of the Partnership's counterparty relationships regarding forward contracts?",
+        "reference": "Currently, the Partnership deals solely with DWR as its counterparty on forward contracts.",
+        "answer": "The Partnership is party to forward contracts with the U.S. Government and its agencies.",
+        "mode": ""
+      },
+      {
+        "question": "Under what circumstances are Trustees required to exercise their power of sale and distribution of Trust assets?",
+        "reference": "Trustees are not required to exercise powers of sale and distribution unless it is necessary to serve the interests of both the term beneficiaries and the reversionary beneficiary.",
+        "answer": "The Trustees are required to sell Trust assets to meet the requirements of the Trust Agreement, and the Trustee must sell Trust assets to satisfy the requirements of the Trust Agreement.",
+        "mode": ""
+      },
+      {
+        "question": "How did Capstraw's explanation for his arm injuries differ between his police interview and his trial testimony?",
+        "reference": "In the police interview, Capstraw claimed Amber attacked him with a knife, causing the cuts on his arm. At trial, he testified that he intentionally cut himself with a kitchen knife in an attempt to commit suicide after discovering Amber was dead.",
+        "answer": "Capstraw's testimony was based on his own observations of the attacker and his own observations of the attacker.",
+        "mode": ""
+      },
+      {
+        "question": "Under what authority and timeline does the suspension order against John Scott Benton become effective?",
+        "reference": "As stated in SCR 3.390(a), the order takes effect on the 10th day following its entry by the Court.",
+        "answer": "The suspension order is not final and is not subject to appeal.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nOvulation Chart Menstruation is a process of shedding blood from the uterus that usually begins for women between the age of 11 and 14 years and continues till menopause. It indicates the start of a reproductive life in women. Menstrual cycle may range from 21 to 45 days. The average length of a cycle is 28 days. At the time of menstrual period, a woman may experience abdominal cramping, lower back pain, bloating and sore breasts, mood swings, irritability, headache and fatigue. Most women will have symptoms of premenstrual syndrome (PMS), which include emotional and physical symptoms that start one or two weeks before the menstrual period. Do you know these facts about menstruation? - Most women bleed only about 80 ml or less during their periods. - At the time of ovulation you may have slight spotting and /or pain. - Do you know why women don't get periods during pregnancy? When you get pregnant, hormones released in the body prevent endometrium from shedding off as bleeding and ensure thick lining of the uterus, which provides protection and nourishment to the fetus. - Menstrual cycle starts with menarche and ends with menopause. Do you know what exactly happens during each menstrual cycle? - Menstrual period starts as hormone (progesterone and estrogen) levels drop and uterine lining (endometrium) breaks down. Bleeding may last for 3 to 5 days though it can vary from 2 to 7 days. - Around 7th day, Follicle Stimulating Hormone (FSH) stimulates follicles containing egg to develop on the ovary. - This is the time period during which one of the follicles mature and inner lining of the uterine wall thickens and nourishes with blood and nutrients thus making uterus suitable for the implantation of a fertilized egg. - As the level of luteinizing hormone (LH) rises at the middle of the cycle, ovulation takes place. - During this phase, matured follicles rupture and release an egg from the ovary. - An egg can stay in the fallopian tube for only 24 hours. This is the\n\nQuestion: Detail the sequence of hormonal and physical events that occur from the 7th day of the menstrual cycle through the process of ovulation.",
+        "reference": "Around the 7th day, Follicle Stimulating Hormone stimulates follicles to develop on the ovary, while the uterine wall thickens and fills with blood and nutrients to support potential implantation. As the level of luteinizing hormone rises around the middle of the cycle, ovulation occurs, causing a matured follicle to rupture and release an egg.",
+        "answer": "The menstrual cycle begins with menstrual cycle, which begins with menstrual cycle.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nenvironmental actions involving Armco -------------------------- relate to alleged contamination at off-site treatment and disposal sites. Other claims sometimes arise from contractual obligations for properties Armco previously owned or leased and from regulatory actions. In most of these cases, Armco is one of many companies who have been identified as potentially responsible parties (\"PRPs\"). In a few instances, Armco is one of only a few parties or is alleged to be solely liable. It is routinely asserted that joint and several liability will be applied in such cases; thus, a single party could be held liable for all costs related to a site. However, Armco's experience has been that liability is apportioned on the basis of volume and/or toxicity of materials sent to a site and Armco expects that any ultimate liability would be apportioned among Armco and other financially viable parties. Armco intends to assert all meritorious legal and equitable defenses that are available to it with respect to environmental matters. Based on Armco's analysis of the claims against it for contamination, including the presence of other PRPs, Armco's experience in resolving similar claims, and in some instances the type of contamination and expected remediation costs, Armco does not believe that its liability, if any, for these claims would materially impact its consolidated financial position or liquidity. However, it is possible that due to fluctuations in Armco's operating results, future developments with respect to such matters could have a material effect on the results of operations in future interim or annual periods. On February 27, 1995, the Ohio Environmental Protection Agency (\"OEPA\") issued a Notice of Violation (\"NOV\") to Armco's Zanesville Operations alleging noncompliance with both a 1993 Order and various state regulations regarding hazardous waste management. Armco continues to work with OEPA to achieve final resolution of this matter. No proposed penalties were\n\nQuestion: What is the primary basis on which Armco believes environmental liability is typically apportioned among multiple parties?",
+        "reference": "Armco's experience suggests that liability is apportioned based on the volume and/or toxicity of the materials that each party sent to a specific site.",
+        "answer": "The primary basis is the existence of liability for environmental matters.",
+        "mode": ""
+      },
+      {
+        "question": "Which legal principle established in Whipple v. Farrar supports the notion that courts of chancery should retain jurisdiction once gained?",
+        "reference": "The principle is that where a court of chancery has gained jurisdiction of a cause for any purpose of relief, it will retain it for the purpose of giving full relief.",
+        "answer": "The court of chancery has jurisdiction over a case where a party has been deprived of the right to a jury trial.",
+        "mode": ""
+      },
+      {
+        "question": "What is the recommended legal disposition regarding the Appellate Court's dismissal of the appeal in the Chester zoning case?",
+        "reference": "The recommended action is to reverse the judgment of the Appellate Court that dismissed the appeal, and remand the case to that court with directions to reverse the trial court's judgment and remand the matter back to the trial court.",
+        "answer": "The Appellate Court dismissed the appeal in the Chester zoning case, and the Appellate Court dismissed the appeal in the Chester zoning case.",
+        "mode": ""
+      },
+      {
+        "question": "If you are unsure whether a piece of content is appropriate to share online, what is the best course of action?",
+        "reference": "When in doubt about whether or not to share something online, the best course of action is to not share it at all, because the internet does not have a delete button.",
+        "answer": "The content is appropriate for the user's personal information, such as the content of the content, the content of the content, and the content of the content.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nnegative effects. One of the most notable is anxiety. Anxiety is defined as a consistently occurring feeling of nervousness. When left untreated, this condition can make kids socially and academically incapable. For example, these students may become afraid of approaching classmates or taking exams. Thus, it is important for parents to know the different reasons why social media makes students anxious: Because of social media, students are more likely encouraged to compare themselves to their peers. It may be difficult for them not to do so since their friends are bound to post pictures of their achievements. Additionally, a lot of online users tend to like these images. Thus, the popularity of these people skyrocket. As a result of these experiences, kids can find it hard to avoid basing their self-esteem on the approval of others. Fear of missing out (FOMO) refers to the tendency to feel restless when missing out on your peers\u2019 experiences. Students may feel that their friends live more rewarding lives. Social media apps have made FOMO more widespread due to several reasons. One, internet users tend to manipulate their reputation and portray their day-to-day living in an exaggerated manner. Two, being constantly reminded of the events they cannot attend can impact their self-image. FOMO contributes to student anxiety, mainly because it can make them develop unrealistic expectations of what a \u201cgood life\u201d really is. They find it more difficult to enjoy the present since they will always be thinking of the things and experiences they lack. Loneliness contributes to anxiety because it fuels their insecurities. Social media can make people feel isolated by reminding them of the online connections they do not have. Some of their classmates may have two thousand friends, while they don\u2019t even have half of that. Lastly, these online apps take time away from real-life social interactions. Students can find it harder to make friends and develop meaningful relationships.\n\nQuestion: How does social media contribute to student anxiety by influencing self-esteem?",
+        "reference": "Social media encourages students to compare themselves to their peers. Because friends frequently post images of their achievements that garner many likes, students often struggle to avoid basing their self-esteem on the approval of others.",
+        "answer": "not stated in the context",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nplc, the Company, as guarantor, and Chemical Bank, as trustee (Current Report on Form 8-K dated December 1, 1993). 4.8 Voting Agreement dated March 5, 1991 among the Company, State Street Bank and Trust Company and Other Persons Signing Similar Voting Agreements (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 4.9 Instruments defining the Rights of Security Holders, Including Indentures - In addition to Exhibits 4.1 through 4.8 herein, pursuant to paragraph (b)(4)(iii)(A) of Item 601 of Regulation S-K, the Registrant hereby undertakes to furnish to the Securities and Exchange Commission upon request copies of the instruments defining the rights of holders of long-term debt securities of the Registrant and its subsidiaries, none of which instruments authorizes the issuance of an amount of securities that exceeds 10% of the total assets of the Registrant and its subsidiaries on a consolidated basis. 10.1+ Form of Agreement under the Morgan Stanley & Co. Incorporated Owners' and Select Earners' Plan (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.2+ Form of Agreement under the Morgan Stanley Group Inc. Officers' and Select Earners' Plan (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.3+ Morgan Stanley & Co. Incorporated Excess Benefit Plan, as amended and restated to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.4+ Morgan Stanley & Co. Incorporated Supplemental Executive Retirement Plan, as amended to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.5+ Morgan Stanley Group Inc. 1986 Stock Option Plan, as amended and restated to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). 10.6+ Morgan Stanley Group Inc. Performance Unit Plan, as amended and restated to date (Annual Report on Form 10-K for the fiscal year ended January 31, 1993). - --------------- + Management Contract or compensatory\n\nQuestion: Does the Registrant have an obligation to provide instruments defining the rights of long-term debt security holders to the Securities and Exchange Commission?",
+        "reference": "Yes, pursuant to paragraph (b)(4)(iii)(A) of Item 601 of Regulation S-K, the Registrant undertakes to furnish these instruments to the Securities and Exchange Commission upon request.",
+        "answer": "The Registrant has an obligation to provide instruments defining the rights of long-term debt securities of the Registrant and its subsidiaries.",
+        "mode": ""
+      },
+      {
+        "question": "What factors contribute to the observed inequities in access to tobacco cessation support and tobacco use rates among different communities?",
+        "reference": "Inequities are driven by structural racism, community disinvestment, and historical marketing tactics by tobacco companies that specifically target under-resourced communities and communities of color.",
+        "answer": "The prevalence of tobacco use rates among different communities is expected to continue to increase in the future.",
+        "mode": ""
+      },
+      {
+        "question": "How did the revenue growth of HyperFeed compare between 1995 and 1999?",
+        "reference": "HyperFeed's revenues grew from $13.4 million in 1995 to $33.1 million in 1999.",
+        "answer": "The revenue growth was driven by the acquisition of HyperFeed, which added $1.2 million in revenue in 1999.",
+        "mode": ""
+      },
+      {
+        "question": "How many children do Ruby and Kevin Franke have?",
+        "reference": "Ruby and Kevin Franke have six children.",
+        "answer": "Ruby and Franke have a child who is a child of their own.",
+        "mode": ""
+      },
+      {
+        "question": "What are the two reportable product segments of the Company within the rigid packaging industry?",
+        "reference": "The two reportable product segments are Glass Containers and Plastics Packaging.",
+        "answer": "The Company manufactures and distributes a broad range of packaging products, including plastic, paper, and plastic packaging.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nnot be meaningful because the only \"business\" of the Trust is the collection on the Mortgage Loans and distribution of payments on the Certificates to Certificateholders. This information is accurately summarized in the Monthly Reports to Certificateholders, which are filed on Form 8-K. There is no additional relevant information to report in response to Item 101 of Regulation S-K. The Depositor owns no property. The Lehman Home Equity Loan Trust 1997-2 Home Equity Loan Asset-Backed Certificates, Series 1997-2, in the aggregate, represent the beneficial ownership in a Trust consisting primarily of the Mortgage Loans. The Trust will acquire title to real estate only upon default of the mortgagors under the Mortgage Loan. Therefore, this item is inapplicable. ITEM 4. Submission of Matters to a Vote of Security Holders. No matters were submitted to a vote of Certificateholders during the fiscal year covered by this report. ITEM 5. Market for Depositor's Common Equity and Related Stockholder Matters. The Lehman Home Equity Loan Trust 1997-2 Home Equity Loan Asset-Backed Certificates, Series 1997-2 represent, in the aggregate, the beneficial ownership in a trust fund consisting primarily of the Mortgage Loans. The Certificates are owned by Certificateholders as trust beneficiaries. Strictly speaking, Depositor has no \"common equity,\" but for purposes of this Item only, Depositor's Home Equity Loan Asset-Backed Certificates are treated as \"common equity.\" (a) Market Information. There is no established public trading market for Depositor's Notes. Depositor believes the Notes are traded primarily in intra-dealer markets and non-centralized inter-dealer markets. (b) Holders. The number of registered holders of all classes of Certificates on December 31, 1997 was 4. (c) Dividends. Not applicable. The information regarding dividend required by sub-paragraph (c) of Item 201 of Regulation S-K is inapplicable because the Trust does not pay dividends. However, information as\n\nQuestion: Why is the information regarding dividends required by Item 201 of Regulation S-K considered inapplicable for the Lehman Home Equity Loan Trust 1997-2?",
+        "reference": "The information is inapplicable because the Trust does not pay dividends to its Certificateholders.",
+        "answer": "The information regarding dividend required by Item 201 of Regulation S-K is inapplicable because the Trust does not pay dividends.",
+        "mode": ""
+      },
+      {
+        "question": "Context:\nnumber of shares o Company Common Stock issued in the Acquisitions of Fridcorp and Hydel was, in each case, determined through arms-length negotiations. Superior Magnetics, Inc. (\"SMI\") was formed by the Company to acquire the operating assets of the business operations of Denison Magnetics of Texas Instruments Incorporated on November 30, 1992 for cash and deferred payments of approximately $2,900,000. Precision Techniques, Inc. (\"Precision\") consists of a painting facility which was acquired for Logic in January 1995 for cash of $400,000. The Company presently is the owner of 100% of Test Switch, which currently owns 80% of ABI and 100% of Hydel, which currently owns 100% of Hydel Engineering; and the Company owns 100% of Logic, Precision, Reynolds, Fridcorp and SMI; and, through such subsidiaries, operates in five distinct business segments: (1) the manufacture and sale of electrical switching devices, electric meter enclosures and pole-line hardware for the electric utility industry and the general public (Test Switch, Hydel and Hydel Engineering); (2) the design and manufacture of defense electronic components (SMI); (3) the manufacture and sale of natural gas measurement, metering and odorization equipment (Reynolds); (4) the manufactureand sale of precision metal enclosures for telecommunication and computer equipment (Logic and Precision); and (5) the manufacture of vacuum-form and injection-mold products (Fridcorp). Effective January 31, 1993, the Company discontinued the operations of its 80% owned ABI which previously was engaged in the manufacture and sale of brass and bronze ingots. Certain reclassifications have been made to the 1994 and 1993 consolidated financial statements to conform to the 1995 presentation. The 1994 financial statements have been restated, as explained in Note 16. The consolidated financial statements include the accounts of the Company and its subsidiaries. All significant intercompany accounts and transactions have been\n\nQuestion: What is the current ownership structure regarding Test Switch, ABI, and Hydel?",
+        "reference": "The Company owns 100% of Test Switch, which currently owns 80% of ABI and 100% of Hydel. Additionally, Hydel currently owns 100% of Hydel Engineering.",
+        "answer": "not stated in the context",
+        "mode": ""
+      },
+      {
+        "question": "Context:\npolicy, either to defend or indemnify plaintiff, on the ground that the injury did not occur by reason of the use of the premises as a retail grocery store. The New York court held that \"the coverage of [the] policy [included] injuries caused by the negligent acts of employees on the premises while the premises [were] being used by the insured for the declared purposes but where the insured's employees are temporarily acting outside the scope of their employment without notice to or approval by the employer. Any exclusion from coverage of such an ordinary risk of the use of premises for business purposes must be by clear and unequivocal language.\" 254 App.Div. 280, 4 N.Y.S.2d 710. *877 Regardless of the soundness of the Grand Union decision, we find it to be clearly distinguishable from the circumstances of the instant case. First, we note that the language defining coverage in the Grand Union policy is broader than the language of the instant policy. It is intended to cover the business premises and \"injuries suffered by reason of [its] ownership, care, maintenance, occupation or use\" of those premises, not simply \"the conduct of the business.\" Second, while we might agree with the New York court that \"[t]he risk of injuries caused by employees is just as much one of the ordinary business risks of a business where the employees are engaged in a frolic as where they are acting fully within the scope of their employment,\" 254 App.Div. 280, 4 N.Y.S.2d 710, we do not believe there exists the same degree of expectancy or foreseeability by the insurer when the frolic is that of the sole proprietor of the insured business. Finally, even were we to adopt appellants' position and extend coverage to the immediate, injury-producing act, regardless of whether it deviates from the scope of the insured's business, so long as the principal activity of the insured is the conduct of his business, respondent must still prevail. Vermont Isaacson's deposition testimony indicates\n\nQuestion: What specific justification did the insurance company provide for refusing to defend or indemnify the plaintiff in the Grand Union case?",
+        "reference": "The insurance company refused to defend or indemnify the plaintiff on the ground that the injury did not occur by reason of the use of the premises as a retail grocery store.",
+        "answer": "The company provided a defense to the plaintiff's claim for damages based on the negligent acts of its employees.",
+        "mode": ""
+      }
+    ],
+    "samples": [
+      {
+        "prompt": "What is the standard of proof in a civil lawsuit?",
+        "answer": "The standard of proof in a civil lawsuit is the preponderance of the evidence standard."
+      },
+      {
+        "prompt": "Summarize what a 10-K annual report contains.",
+        "answer": "Summarize the report to include a 10-K annual report."
+      },
+      {
+        "prompt": "What does it mean for a contract clause to be severable?",
+        "answer": "The contract clause must be severable, and the remainder of the contract must be severable."
+      }
+    ],
+    "container_wall_s": 381.9,
+    "modal_gpu": "L4"
+  },
+  "dataset": {
+    "total": 4000,
+    "task": {
+      "summarize": 800,
+      "qa": 2200,
+      "extract": 600,
+      "rewrite": 400
+    },
+    "mode": {
+      "context": 1800,
+      "raft": 536,
+      "closed_book": 1664
+    },
+    "source": {
+      "sec": 1691,
+      "fineweb-edu": 901,
+      "case-law": 1408
+    },
+    "by_day": {
+      "1": 870,
+      "2": 1038,
+      "3": 1056,
+      "4": 1036
+    }
+  }
+}

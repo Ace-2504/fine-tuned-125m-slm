@@ -111,6 +111,19 @@ within noise). Doubling→tripling data did NOT raise the judge. Samples mixed: 
 **correct** ("preponderance of the evidence"), but the 10-K summary still echoes and severability got
 muddier.
 
+## Day 4 — 2026-07-15 (billing enabled)
+
+**Billing on** → no RPD wall; request pacing 6.5 s → 0.5 s, so a 1,000-pair day generates in **~15 min**
+(was ~53). Generation: 1,721 raw pairs, 345 requests, 0 retries, $≈0.50.
+
+**Build:** cumulative raw 6,884 → **4,000** train pairs (qa 2200 / sum 800 / ext 600 / rew 400;
+day1 870 + day2 1038 + day3 1056 + day4 1036). **Training** (L4): 750 steps, 331 s, $0.085.
+
+**Result — plateau CONFIRMED:** SFT-eval ppl 7.70 → **7.51**; retention 12.60 → **12.74** (**+12.2%**);
+judge 1.46 → **1.50**. The judge is **flat across three consecutive rounds** (1.50 / 1.46 / 1.50) while
+forgetting has **doubled** since Day 1. Stop rule (flat ±0.05 × 2 rounds) fired. See
+`training-feedback/day4.md`.
+
 ## Scaling curve
 
 | Day | Train pairs | SFT-eval ppl | Retention ppl (Δ vs base) | Judge /5 |
@@ -119,6 +132,7 @@ muddier.
 | 1 | 1,000 | 8.60 | 12.05 (+6.1%) | 1.32 |
 | 2 | 2,000 | 8.00 | 12.42 (+9.5%) | 1.50 |
 | 3 | 3,000 | 7.70 | 12.60 (+11.0%) | 1.46 |
+| 4 | 4,000 | 7.51 | 12.74 (+12.2%) | 1.50 |
 
 **Conclusion (current mix):** the judge **plateaus at ~1.5/5** by Day 2–3 while perplexity keeps
 inching down and forgetting keeps climbing (now "notable"). This is the clean answer to "is it just

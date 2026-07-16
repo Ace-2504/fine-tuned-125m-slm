@@ -74,22 +74,22 @@
     <span class="chip">base&nbsp;<b>SLM-125M</b> (125.8M, 1024 ctx)</span>
     <span class="chip">teacher&nbsp;<b>gemini-3.1-flash-lite</b></span>
     <span class="chip">GPU&nbsp;<b>Modal L4</b></span>
-    <span class="chip">status&nbsp;<b>Day 3 of N</b></span>
+    <span class="chip">status&nbsp;<b>Day 4 · plateau confirmed</b></span>
     <a class="chip" href="feedback.html" style="color:var(--accent2);border-color:var(--accent2)">→&nbsp;training feedback</a>
   </div>
 </header>
 
 <section>
   <h2><span class="n">01</span>The finding: quality plateaus, forgetting doesn't</h2>
-  <p class="lead">Three rounds in, the headline is clear. Adding data keeps improving <em>perplexity</em> and
-  keeps eroding the base model — but <b>answer quality (the judge) has flattened at ~1.5/5</b>. On this
-  task mix, more data is no longer buying quality.</p>
+  <p class="lead">Four rounds in, the result is settled. The judge has been <b>flat across three
+  consecutive rounds</b> (1.50 → 1.46 → 1.50) while forgetting has <b>doubled</b>. On this task mix,
+  more data buys distribution fit and erosion of the base model — <em>not</em> answer quality.</p>
   <div class="tiles">
-    <div class="tile"><div class="k">Judge score /5</div><div class="v">1.46</div><div class="d flat">1.32 → 1.50 → 1.46 · plateau</div></div>
-    <div class="tile"><div class="k">SFT-eval ppl</div><div class="v">7.70</div><div class="d down">▼ still inching down</div></div>
-    <div class="tile"><div class="k">Retention ppl</div><div class="v">12.60</div><div class="d up">▲ +11.0% · now "notable"</div></div>
-    <div class="tile"><div class="k">Cumulative pairs</div><div class="v">3,000</div><div class="d flat">days 1–3</div></div>
-    <div class="tile"><div class="k">Study cost</div><div class="v">~$0.17</div><div class="d flat">GPU · teacher $0</div></div>
+    <div class="tile"><div class="k">Judge score /5</div><div class="v">1.50</div><div class="d flat">1.32 → 1.50 → 1.46 → 1.50 · flat</div></div>
+    <div class="tile"><div class="k">SFT-eval ppl</div><div class="v">7.51</div><div class="d down">▼ still inching down</div></div>
+    <div class="tile"><div class="k">Retention ppl</div><div class="v">12.74</div><div class="d up">▲ +12.2% · doubled since day 1</div></div>
+    <div class="tile"><div class="k">Cumulative pairs</div><div class="v">4,000</div><div class="d flat">days 1–4</div></div>
+    <div class="tile"><div class="k">Study cost</div><div class="v">~$0.26</div><div class="d flat">GPU + teacher</div></div>
   </div>
 </section>
 
@@ -103,10 +103,12 @@
       <tr><td class="mono">0 (base)</td><td class="num">0</td><td class="num">24.44</td><td class="num">11.35</td><td class="num flat">—</td><td class="num">1.00</td></tr>
       <tr><td class="mono">1</td><td class="num">1,000</td><td class="num">8.60</td><td class="num">12.05</td><td class="num up">+6.1%</td><td class="num">1.32</td></tr>
       <tr><td class="mono">2</td><td class="num">2,000</td><td class="num">8.00</td><td class="num">12.42</td><td class="num up">+9.5%</td><td class="num">1.50</td></tr>
-      <tr class="latest"><td class="mono">3</td><td class="num">3,000</td><td class="num">7.70</td><td class="num">12.60</td><td class="num up">+11.0%</td><td class="num">1.46</td></tr>
+      <tr><td class="mono">3</td><td class="num">3,000</td><td class="num">7.70</td><td class="num">12.60</td><td class="num up">+11.0%</td><td class="num">1.46</td></tr>
+      <tr class="latest"><td class="mono">4</td><td class="num">4,000</td><td class="num">7.51</td><td class="num">12.74</td><td class="num up">+12.2%</td><td class="num">1.50</td></tr>
     </tbody>
   </table></div>
-  <p class="muted">Judge deltas: +0.32, +0.18, −0.04 — a textbook plateau. Perplexity keeps falling
+  <p class="muted">Judge deltas: +0.32, +0.18, −0.04, +0.04 — a textbook plateau. <b>All the gain arrived by
+  Day 2</b>; 4× the Day-1 data bought +0.18 total and nothing since. Perplexity keeps falling
   (distribution fit) and retention keeps rising (forgetting) — the two things that <em>don't</em> plateau.</p>
 </section>
 
@@ -118,12 +120,14 @@
     <div class="bar"><span class="lab">base</span><div class="track"><div class="fill" style="width:90%;background:var(--good)"></div></div><span class="num">11.35</span></div>
     <div class="bar"><span class="lab">day 1</span><div class="track"><div class="fill" style="width:96%;background:var(--warn)"></div></div><span class="num">12.05</span></div>
     <div class="bar"><span class="lab">day 2</span><div class="track"><div class="fill" style="width:98%;background:var(--warn)"></div></div><span class="num">12.42</span></div>
-    <div class="bar"><span class="lab">day 3</span><div class="track"><div class="fill" style="width:100%;background:var(--bad)"></div></div><span class="num">12.60</span></div>
+    <div class="bar"><span class="lab">day 3</span><div class="track"><div class="fill" style="width:99%;background:var(--bad)"></div></div><span class="num">12.60</span></div>
+    <div class="bar"><span class="lab">day 4</span><div class="track"><div class="fill" style="width:100%;background:var(--bad)"></div></div><span class="num">12.74</span></div>
   </div>
   <div class="callout">
-    <b>Verdict: notable and growing (+6.1% → +9.5% → +11.0%).</b> Each round trades more forgetting for no
-    judge gain — the worst of both curves. Baseline validation held: day-0 reproduced the base perplexity
-    to four significant figures (11.3546 vs the known 11.35).
+    <b>Verdict: notable and doubling (+6.1% → +9.5% → +11.0% → +12.2%).</b> Forgetting has doubled since
+    Day 1 while the judge gained nothing since Day 2 — every round past Day 2 is <em>pure downside</em>.
+    Baseline validation held: day-0 reproduced the base perplexity to four significant figures
+    (11.3546 vs the known 11.35).
   </div>
 </section>
 
@@ -165,8 +169,8 @@
     <li><b>Eval:</b> SFT-eval perplexity (task fit) · retention perplexity on pretraining val (forgetting) · Gemini-as-judge 1–5 (answer quality) · fixed greedy sample generations.</li>
   </ul>
   <div class="panel" style="margin-top:16px">
-    <b>Day-3 run:</b> 3,000 pairs · <span class="num">564</span> steps · <span class="num">241 s</span> · Modal L4 → <span class="num">~$0.064</span>.
-    Cumulative GPU spend across days 0–3: <span class="num">~$0.17</span> (teacher $0, free tier).
+    <b>Day-4 run:</b> 4,000 pairs · <span class="num">750</span> steps · <span class="num">331 s</span> · Modal L4 → <span class="num">~$0.085</span>.
+    Cumulative spend across days 0–4: <span class="num">~$0.26</span> (GPU + teacher; days 1–3 teacher was free tier, day 4 billed ≈$0.50).
   </div>
 </section>
 

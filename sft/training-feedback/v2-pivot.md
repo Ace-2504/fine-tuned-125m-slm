@@ -55,5 +55,22 @@ comparable to v1 Days 1–3. This option is preserved indefinitely.
 
 ## Status
 
-- v1: **paused at Day 3** (plateau documented). Day-4 option kept open.
-- v2: **starting fresh at Day 1** with the grounded-heavy design above.
+**As of 2026-07-15: v2 is PARKED. v1 is the active track.** (Decision: focus on v1 for now; keep
+v2 fully documented and resumable.)
+
+- **v1 — ACTIVE.** At Day 3 (plateau documented). Day 4 is the next step: a bare/default-track run
+  (`python gen_qa.py --day 4` → build → `modal run modal_sft.py --day 4` → `make_report.py --day 4`)
+  continues with the original mix + greedy decoding, fully comparable to Days 1–3.
+- **v2 — PARKED (documented, resumable).** Nothing is lost or undone; because v2 lives on its own
+  track it simply sits idle while v1 proceeds:
+  - Design + rationale: this document (unchanged, still the plan if/when v2 resumes).
+  - Code: shipped and tested (`SFT_TRACK=v2` mechanism, grounded-heavy mix, closed-book→fineweb-edu
+    only, decoding fix, per-mode judge) — commit `bbda3bd`.
+  - Data: v2 Day-1 generation is **partially complete** — 755 raw pairs (qa 670, summarize 85) in
+    `data/sft-v2/raw.jsonl`; it hit the free-tier RPD wall before extract/rewrite/refusal ran.
+  - **To resume v2 later:** `SFT_TRACK=v2 python gen_qa.py --day 1` tops up only the remaining
+    ~194 requests, then build → train → per-mode report. No rework needed.
+
+**Open question v2 was built to answer (still unanswered):** does a grounded-heavy mix break the
+~1.5/5 judge plateau, and does per-mode scoring show the model is genuinely good at the learnable
+(context-in-prompt) tasks?

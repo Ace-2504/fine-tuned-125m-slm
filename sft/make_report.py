@@ -55,8 +55,13 @@ def _judge_scores(items: list[dict]) -> dict:
                 scores.append(int(o.get("score", 0)))
                 reasons.append(o.get("reason", ""))
         valid = [s for s in scores if s > 0]
+        by_mode: dict[str, list[int]] = {}
+        for it, s in zip(items, scores):
+            if s > 0:
+                by_mode.setdefault(it.get("mode") or "?", []).append(s)
+        by_mode = {m: round(sum(v) / len(v), 2) for m, v in by_mode.items()}
         return {"mean": round(sum(valid) / len(valid), 2) if valid else None,
-                "n": len(valid), "scores": scores, "reasons": reasons}
+                "n": len(valid), "by_mode": by_mode, "scores": scores, "reasons": reasons}
     except Exception as e:  # offline / RPD — report can still be produced
         return {"error": str(e)[:120]}
 
@@ -106,7 +111,8 @@ def build(day: int) -> None:
         "sft_eval_perplexity": sft_ppl, "retention_perplexity": ret_ppl,
         "base_retention_perplexity": base_ret,
         "forgetting_pct_vs_base": round(forget_pct, 2), "forgetting_verdict": verdict,
-        "judge_mean": judge.get("mean"), "cost_usd": cost, "metrics": m, "dataset": ds,
+        "judge_mean": judge.get("mean"), "judge_by_mode": judge.get("by_mode"),
+        "cost_usd": cost, "metrics": m, "dataset": ds,
     }
     with open(C.REPORTS_DIR / f"run-{day:02d}.json", "w", encoding="utf-8") as f:
         json.dump(machine, f, indent=2)
@@ -168,7 +174,10 @@ def _render_md(day, m, ds, gen_day, judge, base_ret, ret_ppl, sft_ppl,
               f"- SFT-eval loss: **{m['sft_eval_loss']}** (ppl {sft_ppl})",
               f"- Final train loss: {m.get('final_train_loss')}",
               f"- **Gemini-judge score: {jm if jm is not None else judge.get('error','n/a')}/5** "
-              f"(n={judge.get('n','?')})", "", "**Fixed sample generations:**", ""]
+              f"(n={judge.get('n','?')})",
+              f"- **Judge by mode:** {judge.get('by_mode') or 'n/a'} "
+              f"(grounded=raft/context vs closed_book=recall)",
+              "", "**Fixed sample generations:**", ""]
     for s in m.get("samples", []):
         lines += [f"- *Q:* {s['prompt']}", f"  *A:* {s['answer'][:300]}"]
     lines += [""]

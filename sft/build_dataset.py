@@ -272,7 +272,8 @@ def _build_eval(pool: list[dict], rng: random.Random, tokenizer, eval_chunks_pat
         for rec in judge:
             f.write(json.dumps({"question": rec["messages"][1]["content"],
                                 "reference": rec["messages"][2]["content"],
-                                "system": rec["messages"][0]["content"]}, ensure_ascii=False) + "\n")
+                                "system": rec["messages"][0]["content"],
+                                "mode": rec["meta"]["mode"]}, ensure_ascii=False) + "\n")
     print(f"  built FIXED eval set: {len(picked)} pairs ({dict(got)}), {len(judge)} judge questions")
 
 

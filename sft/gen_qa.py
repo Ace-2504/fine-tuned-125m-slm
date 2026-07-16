@@ -170,6 +170,8 @@ def run(day: int, smoke: int | None) -> None:
                                               qa_schema)
                 for p in pairs or []:
                     mode = "raft" if rng.random() < C.MODE_MIX["raft"] else "closed_book"
+                    if mode == "closed_book" and ch.source not in C.CLOSED_BOOK_SOURCES:
+                        mode = "raft"      # closed-book only allowed from general-knowledge sources
                     _append_raw(fh, _rec(ch, "qa", mode, p.get("question", ""),
                                          p.get("answer", ""), p.get("difficulty", "medium"), day))
                     kept["qa"] += 1

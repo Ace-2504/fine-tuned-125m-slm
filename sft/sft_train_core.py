@@ -76,6 +76,8 @@ def _generate(model, tokenizer, prompts_msgs, device, max_new_tokens=120) -> lis
             ids = tokenizer.apply_chat_template(msgs, add_generation_prompt=True,
                                                 tokenize=True, return_tensors="pt").to(device)
             out = model.generate(ids, max_new_tokens=max_new_tokens, do_sample=False,
+                                 no_repeat_ngram_size=C.GEN_NO_REPEAT_NGRAM or 0,
+                                 repetition_penalty=C.GEN_REPETITION_PENALTY,
                                  pad_token_id=tokenizer.pad_token_id,
                                  eos_token_id=tokenizer.eos_token_id)
             outs.append(tokenizer.decode(out[0][ids.shape[1]:], skip_special_tokens=True).strip())
@@ -187,7 +189,8 @@ def run_sft(*, base_ckpt: str, pairs_path: str, eval_path: str, judge_path: str,
         "retention_perplexity": round(math.exp(min(20.0, retention_loss)), 4),
         "base_retention_perplexity": C.BASE_VAL_PERPLEXITY,
         "metrics_steps": metrics_steps,
-        "judge": [{"question": j["question"], "reference": j["reference"], "answer": a}
+        "judge": [{"question": j["question"], "reference": j["reference"], "answer": a,
+                   "mode": j.get("mode", "")}
                   for j, a in zip(judge, judge_answers)],
         "samples": [{"prompt": p, "answer": a}
                     for p, a in zip(FIXED_SAMPLE_PROMPTS, sample_answers)],

@@ -125,3 +125,14 @@ inching down and forgetting keeps climbing (now "notable"). This is the clean an
 volume?" — **no**. More data on the closed-book-heavy mix buys distribution fit and forgetting, not
 answer quality. Strongly validates the **v2 pivot** (`training-feedback/day2.md`): grounded-heavy mix
 + per-mode judge + decoding fix. Continuing Day 4+ on this mix is not worthwhile.
+
+---
+
+# v2 — Grounded-heavy pivot
+
+**Decision (2026-07-15):** switch to v2 (see `training-feedback/v2-pivot.md`). v1 is paused at Day 3
+(plateau); its Day-4 option is preserved. v2 runs on a **separate track** (`SFT_TRACK=v2` →
+`data/sft-v2/`, `reports-v2/`, Modal app `slm-125m-sft-v2`, volume `/sft-v2/`, ckpts
+`/checkpoints/sft-v2/`) so nothing v1 is touched. Changes: mode {closed_book .15, raft .85}, task
+{qa .40, sum .25, ext .20, rew .15}, closed-book only from fineweb-edu, decoding
+`no_repeat_ngram_size=3`+`repetition_penalty=1.3`, per-mode judge (grounded vs recall).

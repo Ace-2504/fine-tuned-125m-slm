@@ -32,15 +32,20 @@ TOKENIZER_DIR = Path(os.environ.get("SLM_TOKENIZER_DIR", PRETRAIN_REPO / "data" 
 # Original pretraining validation bins — the retention / "data loss" benchmark.
 PRETRAIN_VAL_DIR = Path(os.environ.get("SLM_PRETRAIN_VAL_DIR", PRETRAIN_REPO / "data" / "tokens" / "val"))
 
+# --- Track (v1 = original mix; v2 = grounded-heavy pivot) ----------------------------
+# v2 runs on its own namespaces so v1 stays intact + Day-4-resumable. Set SFT_TRACK=v2.
+TRACK = os.environ.get("SFT_TRACK", "v1")
+_TSFX = "" if TRACK == "v1" else f"-{TRACK}"
+
 # --- SFT working outputs -------------------------------------------------------------
-DATA_SFT_DIR = Path(os.environ.get("SLM_SFT_DATA_DIR", REPO_ROOT / "data" / "sft"))  # gitignored
+DATA_SFT_DIR = Path(os.environ.get("SLM_SFT_DATA_DIR", REPO_ROOT / "data" / f"sft{_TSFX}"))  # gitignored
 PAIRS_JSONL = DATA_SFT_DIR / "pairs.jsonl"            # cumulative, all kept pairs (all days)
 RAW_JSONL = DATA_SFT_DIR / "raw.jsonl"               # raw teacher output before filtering
 EVAL_JSONL = DATA_SFT_DIR / "eval.jsonl"             # fixed held-out eval set (built once)
 JUDGE_QUESTIONS_JSONL = DATA_SFT_DIR / "judge_questions.jsonl"
 CHUNKS_USED_PATH = DATA_SFT_DIR / "chunks_used.json"  # chunk_ids consumed (cross-day idempotency)
 GEN_STATE_PATH = DATA_SFT_DIR / "gen_state.json"     # resume marker for the generator
-REPORTS_DIR = SFT_DIR / "reports"                    # per-run reports (tracked in git)
+REPORTS_DIR = SFT_DIR / f"reports{_TSFX}"            # per-run reports (tracked in git)
 ENV_PATH = SFT_DIR / ".env"
 
 # --- Model identity ------------------------------------------------------------------
@@ -80,8 +85,19 @@ RAW_TARGET_PER_DAY = int(PAIRS_PER_DAY / ASSUMED_KEEP_RATE)          # ~1667 raw
 CHUNKS_PER_DAY = -(-RAW_TARGET_PER_DAY // QA_PER_CHUNK)              # ceil ~334
 
 # --- Composition (mirror pretraining; enforced by the balancer) ----------------------
-MODE_MIX = {"closed_book": 0.80, "raft": 0.20}
-TASK_MIX = {"qa": 0.55, "summarize": 0.20, "extract": 0.15, "rewrite": 0.10}
+if TRACK == "v2":
+    # grounded-heavy pivot: mostly context/RAFT (learnable); closed-book only for general knowledge
+    MODE_MIX = {"closed_book": 0.15, "raft": 0.85}
+    TASK_MIX = {"qa": 0.40, "summarize": 0.25, "extract": 0.20, "rewrite": 0.15}
+    CLOSED_BOOK_SOURCES = {"fineweb-edu"}          # closed-book QA only from general-knowledge web
+    GEN_NO_REPEAT_NGRAM = 3                          # decoding fix (kills greedy repetition loops)
+    GEN_REPETITION_PENALTY = 1.3
+else:
+    MODE_MIX = {"closed_book": 0.80, "raft": 0.20}
+    TASK_MIX = {"qa": 0.55, "summarize": 0.20, "extract": 0.15, "rewrite": 0.10}
+    CLOSED_BOOK_SOURCES = {"sec", "case-law", "fineweb-edu"}   # v1: any source
+    GEN_NO_REPEAT_NGRAM = 0                          # v1: greedy (preserve internal comparability)
+    GEN_REPETITION_PENALTY = 1.0
 DOMAIN_MIX = {"sec": 0.42, "case-law": 0.35, "fineweb-edu": 0.23}
 DIFFICULTY_MIX = {"easy": 0.4, "medium": 0.4, "hard": 0.2}          # hard ≈ Evol-Instruct slice
 
@@ -140,10 +156,12 @@ BETA1, BETA2 = 0.9, 0.95
 SEED = 1337
 
 # --- Modal ---------------------------------------------------------------------------
-MODAL_APP = "slm-125m-sft"
+MODAL_APP = f"slm-125m-sft{_TSFX}"
 MODAL_VOLUME = "slm-125m"             # reuse the authorized pretraining volume
 MODAL_GPU = "L4"                      # best value; job is overhead-bound (see plan §7)
 MODAL_TIMEOUT_S = 60 * 60             # 1 h ceiling (runs take minutes)
+MODAL_SFT_REMOTE = f"/sft{_TSFX}"                  # uploaded dataset on the volume
+MODAL_CKPT_REMOTE = f"/checkpoints/sft{_TSFX}"     # SFT checkpoints on the volume
 
 
 def summary() -> str:

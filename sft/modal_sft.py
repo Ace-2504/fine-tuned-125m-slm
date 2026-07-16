@@ -28,6 +28,7 @@ volume = modal.Volume.from_name(C.MODAL_VOLUME)
 image = (
     modal.Image.debian_slim(python_version="3.12")
     .pip_install("torch==2.4.1", "transformers==4.46.3", "tokenizers==0.20.3", "numpy>=1.26,<2.0")
+    .env({"SFT_TRACK": C.TRACK})     # so sft_config resolves the same track inside the container
     .add_local_python_source("config", "train_core", "sft_config", "sft_data",
                              "sft_train_core", "prompts")
 )
@@ -41,10 +42,10 @@ def train(day: int, epochs: int) -> dict:
     volume.reload()
     r = sft_train_core.run_sft(
         base_ckpt="/data/checkpoints/base/ckpt.pt",
-        pairs_path="/data/sft/pairs.jsonl",
-        eval_path="/data/sft/eval.jsonl",
-        judge_path="/data/sft/judge_questions.jsonl",
-        out_dir=f"/data/checkpoints/sft/day-{day}",
+        pairs_path=f"/data{C.MODAL_SFT_REMOTE}/pairs.jsonl",
+        eval_path=f"/data{C.MODAL_SFT_REMOTE}/eval.jsonl",
+        judge_path=f"/data{C.MODAL_SFT_REMOTE}/judge_questions.jsonl",
+        out_dir=f"/data{C.MODAL_CKPT_REMOTE}/day-{day}",
         tokenizer_dir="/data/tokenizer",
         data_root="/data",
         day=day,

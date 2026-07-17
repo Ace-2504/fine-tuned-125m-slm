@@ -1,145 +1,156 @@
 "use client";
 
 import { useState } from "react";
-import { DEFAULT_GEN, EXAMPLE_PROMPTS } from "@/lib/model";
 
-type Status = "idle" | "loading" | "unavailable";
+type Result = { "day-2"?: string; "day-10"?: string; seconds?: number };
 
-function Slider({
-  label,
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  fmt = (v: number) => v.toString(),
-}: {
-  label: string;
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (v: number) => void;
-  fmt?: (v: number) => string;
-}) {
-  return (
-    <label className="block">
-      <div className="flex items-baseline justify-between mb-1.5">
-        <span className="tag">{label}</span>
-        <span className="mono text-sm text-[var(--accent)]">{fmt(value)}</span>
-      </div>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full accent-[var(--accent)] cursor-pointer"
-      />
-    </label>
-  );
-}
+const EXAMPLES = [
+  "What is the standard of proof in a civil lawsuit?",
+  "What does it mean for a contract clause to be severable?",
+  "Summarize what a 10-K annual report contains.",
+  "What is a preponderance of the evidence?",
+];
+
+const MODELS = [
+  { key: "day-2" as const, label: "2,000 pairs", note: "judge 1.50 · forgetting +9.5%", best: true },
+  { key: "day-10" as const, label: "10,000 pairs", note: "judge 1.54 · forgetting +16.3%", best: false },
+];
 
 export default function Demo() {
-  const [prompt, setPrompt] = useState(EXAMPLE_PROMPTS[0]);
-  const [temperature, setTemperature] = useState(DEFAULT_GEN.temperature);
-  const [maxTokens, setMaxTokens] = useState(DEFAULT_GEN.maxTokens);
-  const [topP, setTopP] = useState(DEFAULT_GEN.topP);
-  const [topK, setTopK] = useState(DEFAULT_GEN.topK);
-  const [status, setStatus] = useState<Status>("idle");
-  const [message, setMessage] = useState<string>("");
+  const [question, setQuestion] = useState(EXAMPLES[0]);
+  const [tokens, setTokens] = useState(120);
+  const [temp, setTemp] = useState(0.7);
+  const [busy, setBusy] = useState(false);
+  const [res, setRes] = useState<Result | null>(null);
+  const [err, setErr] = useState<string | null>(null);
 
-  async function generate() {
-    setStatus("loading");
-    setMessage("");
+  async function run() {
+    if (!question.trim() || busy) return;
+    setBusy(true);
+    setErr(null);
+    setRes(null);
     try {
-      const res = await fetch("/api/generate", {
+      const r = await fetch("/api/compare", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, temperature, maxTokens, topP, topK }),
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ question, max_new_tokens: tokens, temperature: temp }),
       });
-      const data = await res.json();
-      if (res.ok && data.completion) {
-        setStatus("idle");
-        setMessage(data.completion);
+      const data = await r.json();
+      if (!r.ok) {
+        setErr(
+          ["not_configured", "unreachable", "timeout"].includes(data?.error)
+            ? "The demo backend is offline — it runs on a local CPU endpoint that isn't always up. The study results below are unaffected."
+            : `Upstream error (${data?.status ?? r.status}).`
+        );
       } else {
-        setStatus("unavailable");
-        setMessage(data.message ?? "Inference is not available yet.");
+        setRes(data);
       }
     } catch {
-      setStatus("unavailable");
-      setMessage("Could not reach the inference endpoint.");
+      setErr("Could not reach the demo backend.");
+    } finally {
+      setBusy(false);
     }
   }
 
   return (
-    <div className="panel p-5 sm:p-6">
-      <div className="flex items-center justify-between gap-4 mb-5">
-        <div className="flex items-center gap-2.5">
-          <span className="tag">interactive</span>
-          <h3 className="text-base font-medium">Text completion</h3>
+    <section id="demo" className="scroll-mt-20">
+      <p className="tag mb-2.5">Live comparison</p>
+      <h2 className="mb-2 text-[22px] font-semibold tracking-tight">Ask both models the same thing</h2>
+      <p className="mb-5 max-w-[70ch] text-[14.5px] text-[var(--fg-muted)]">
+        Left was fine-tuned on 2,000 QnA pairs; right on 10,000 — five times the data. The study says
+        the extra data bought no quality. Judge for yourself.
+      </p>
+
+      <div className="panel p-5 sm:p-6">
+        <div className="grid gap-4 lg:grid-cols-[1fr_15rem]">
+          <div>
+            <label className="tag mb-2 block">Question</label>
+            <textarea
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              rows={3}
+              className="field mono w-full resize-y text-[13.5px]"
+            />
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {EXAMPLES.map((ex) => (
+                <button
+                  key={ex}
+                  onClick={() => setQuestion(ex)}
+                  className="badge cursor-pointer hover:text-[var(--fg)]"
+                >
+                  {ex.length > 42 ? ex.slice(0, 40) + "…" : ex}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3.5">
+            <div>
+              <div className="mb-1.5 flex justify-between">
+                <span className="tag">Max tokens</span>
+                <span className="mono text-[12px] text-[var(--fg-muted)]">{tokens}</span>
+              </div>
+              <input
+                type="range"
+                min={20}
+                max={256}
+                step={10}
+                value={tokens}
+                onChange={(e) => setTokens(Number(e.target.value))}
+                className="w-full accent-[var(--accent)]"
+              />
+            </div>
+            <div>
+              <div className="mb-1.5 flex justify-between">
+                <span className="tag">Temperature</span>
+                <span className="mono text-[12px] text-[var(--fg-muted)]">{temp.toFixed(2)}</span>
+              </div>
+              <input
+                type="range"
+                min={0}
+                max={1.2}
+                step={0.05}
+                value={temp}
+                onChange={(e) => setTemp(Number(e.target.value))}
+                className="w-full accent-[var(--accent)]"
+              />
+            </div>
+            <button onClick={run} disabled={busy} className="btn-primary mt-auto">
+              {busy ? "Generating…" : "Ask both models"}
+            </button>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="live-dot inline-block h-2 w-2 rounded-full bg-[var(--accent-2)]" />
-          <span className="tag" style={{ color: "var(--accent-2)" }}>live</span>
+
+        {err && <p className="panel-inset mt-4 px-4 py-3 text-[13px] text-[var(--fg-muted)]">{err}</p>}
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          {MODELS.map((m) => (
+            <div key={m.key} className="panel-inset p-4">
+              <div className="mb-2 flex items-baseline justify-between gap-2">
+                <span className="text-[13.5px] font-medium text-[var(--fg)]">
+                  {m.label}
+                  {m.best && (
+                    <span className="badge-accent ml-2 rounded-md px-1.5 py-0.5 text-[10px]">
+                      better model
+                    </span>
+                  )}
+                </span>
+                <span className="mono shrink-0 text-[10.5px] text-[var(--fg-dim)]">{m.note}</span>
+              </div>
+              <p className="mono min-h-[7rem] whitespace-pre-wrap text-[12.5px] leading-relaxed text-[var(--fg-muted)]">
+                {busy ? "…" : (res?.[m.key] ?? "—")}
+              </p>
+            </div>
+          ))}
         </div>
+
+        <p className="mt-3 text-[11.5px] text-[var(--fg-dim)]">
+          {res?.seconds
+            ? `Both models answered in ${res.seconds}s on a CPU endpoint.`
+            : "Runs on a local CPU endpoint via a Cloudflare tunnel; both models answer in ~2s."}{" "}
+          Expect fluent, confident, frequently wrong answers — these score ~1.5/5.
+        </p>
       </div>
-
-      <label className="block mb-4">
-        <span className="tag">your prompt — a prefix to continue</span>
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          rows={5}
-          className="mono mt-2 w-full resize-none rounded-lg bg-[var(--bg)] border border-[var(--border)] px-4 py-3.5 text-base leading-relaxed text-[var(--fg)] outline-none focus:border-[var(--accent)]/60 transition-colors"
-        />
-      </label>
-
-      <div className="mb-4 flex flex-wrap gap-1.5">
-        {EXAMPLE_PROMPTS.map((p) => (
-          <button
-            key={p}
-            onClick={() => setPrompt(p)}
-            className="mono rounded-md border border-[var(--border)] bg-[var(--bg)] px-2.5 py-1 text-[0.7rem] text-[var(--fg-muted)] hover:border-[var(--accent)]/50 hover:text-[var(--fg)] transition-colors truncate max-w-[15rem]"
-          >
-            {p}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-5">
-        <Slider label="temperature" value={temperature} min={0} max={1.5} step={0.05} onChange={setTemperature} fmt={(v) => v.toFixed(2)} />
-        <Slider label="top-p" value={topP} min={0} max={1} step={0.01} onChange={setTopP} fmt={(v) => v.toFixed(2)} />
-        <Slider label="top-k" value={topK} min={0} max={100} step={1} onChange={setTopK} />
-        <Slider label="max tokens" value={maxTokens} min={10} max={256} step={1} onChange={setMaxTokens} />
-      </div>
-
-      <button
-        onClick={generate}
-        disabled={status === "loading"}
-        className="mono w-full rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[#1a1204] hover:brightness-110 active:brightness-95 disabled:opacity-60 transition-all"
-      >
-        {status === "loading" ? "generating…" : "Generate"}
-      </button>
-
-      <div className="panel-inset mt-4 min-h-[6rem] px-4 py-3.5">
-        {message ? (
-          <p className={`mono text-sm leading-relaxed ${status === "unavailable" ? "text-[var(--fg-muted)]" : "text-[var(--fg)]"}`}>
-            {status === "unavailable" && (
-              <span className="mr-1.5 text-amber-400">◈</span>
-            )}
-            {status !== "unavailable" && (
-              <span className="text-[var(--fg-muted)]">{prompt} </span>
-            )}
-            {message}
-          </p>
-        ) : (
-          <p className="mono text-sm text-[var(--fg-dim)]">
-            The completion will appear here.
-          </p>
-        )}
-      </div>
-    </div>
+    </section>
   );
 }

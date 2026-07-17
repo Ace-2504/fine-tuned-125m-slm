@@ -138,11 +138,15 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.35s ease, color 0.35s ease;
+  /* NOTE: no background-color transition here, deliberately. Chromium latches the first
+     resolved var() value when transitioning a property whose value comes from a custom
+     property, so `transition: background-color` leaves the page painted in the OLD theme
+     after data-theme changes (verified by computed styles: every theme returned the same
+     rgb until the transition was removed). Instant swap is correct; a broken swap is not. */
 }
 
 /* Fixed grid + glow layer. On its own fixed pseudo-element (not
@@ -162,15 +166,10 @@ body::before {
   background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
 }
 
-/* Smoothly cross-fade panel/border colors when the theme changes. */
-.panel,
-.panel-inset,
-.tag,
-input,
-textarea,
-button {
-  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
-}
+/* Panels/inputs deliberately do NOT transition background-color either — same Chromium
+   var()-latching bug as on body (.panel-inset uses `background: var(--bg)`, which would
+   stick to the previous theme's colour). Border/colour transitions are dropped with it so
+   a theme swap is atomic rather than half-faded. */
 
 .mono {
   font-family: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
@@ -227,4 +226,77 @@ button {
 }
 .link-underline:hover {
   background-size: 100% 1px;
+}
+
+/* ---- Component recipes (research-lab-theme). Token-styled; one accent per view. ---- */
+.btn-primary {
+  background: var(--accent);
+  color: color-mix(in srgb, var(--bg) 88%, #000);
+  border: 0;
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary:disabled { opacity: 0.55; cursor: default; filter: none; }
+
+.btn {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 13px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn:hover { background: var(--panel-2); }
+
+.field {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  outline: none;
+}
+.field:focus { border-color: color-mix(in srgb, var(--accent) 60%, var(--border)); }
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--panel-2);
+  color: var(--fg-muted);
+  border: 1px solid var(--border);
+}
+.badge-accent {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+  border: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.bar-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* Decorative fixed rainbow — identical in every theme. */
+.grad-divider {
+  height: 5px;
+  width: 200px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e 0%, #3b82f6 38%, #8b5cf6 68%, #ef4444 100%);
+  opacity: 0.75;
 }

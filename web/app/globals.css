@@ -292,10 +292,11 @@ body::before {
   background: var(--accent);
 }
 
-/* Decorative fixed rainbow — identical in every theme. */
+/* Decorative fixed rainbow — identical in every theme. Centred. */
 .grad-divider {
   height: 5px;
   width: 200px;
+  margin: 0 auto;
   border-radius: 999px;
   background: linear-gradient(90deg, #22c55e 0%, #3b82f6 38%, #8b5cf6 68%, #ef4444 100%);
   opacity: 0.75;

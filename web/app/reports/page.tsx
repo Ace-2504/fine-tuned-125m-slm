@@ -9,16 +9,16 @@ export default function ReportsIndex() {
   const byRound = new Map(CURVE.map((c) => [c.round, c]));
 
   return (
-    <main className="mx-auto max-w-4xl px-5 py-12">
+    <main className="mx-auto max-w-4xl px-5 py-12 text-center">
       <p className="tag mb-3">Run reports</p>
       <h1 className="mb-3 text-[30px] font-semibold tracking-tight">Every training run, in full</h1>
-      <p className="mb-8 max-w-[68ch] text-[var(--fg-muted)]">
+      <p className="mx-auto mb-8 max-w-[68ch] text-[var(--fg-muted)]">
         One report per round — all parameters, dataset composition, catastrophic-forgetting analysis,
         perplexity versus the previous checkpoint, judge score, sample generations and Modal runtime.
         Eleven runs: the base baseline plus ten scaling rounds.
       </p>
 
-      <div className="panel overflow-hidden">
+      <div className="panel overflow-hidden text-left">
         <div className="hidden grid-cols-[1fr_auto_auto_auto] gap-4 border-b border-[var(--border)] bg-[var(--panel-2)] px-5 py-2.5 sm:grid">
           <span className="tag">Round</span>
           <span className="tag text-right">Judge /5</span>

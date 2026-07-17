@@ -12,8 +12,8 @@ const EXAMPLES = [
 ];
 
 const MODELS = [
-  { key: "day-2" as const, label: "2,000 pairs", note: "judge 1.50 · forgetting +9.5%", best: true },
-  { key: "day-10" as const, label: "10,000 pairs", note: "judge 1.54 · forgetting +16.3%", best: false },
+  { key: "day-2" as const, label: "2,000 pairs", note: "judge 1.50 · forgetting +9.5%" },
+  { key: "day-10" as const, label: "10,000 pairs", note: "judge 1.54 · forgetting +16.3%" },
 ];
 
 export default function Demo() {
@@ -56,12 +56,12 @@ export default function Demo() {
     <section id="demo" className="scroll-mt-20">
       <p className="tag mb-2.5">Live comparison</p>
       <h2 className="mb-2 text-[22px] font-semibold tracking-tight">Ask both models the same thing</h2>
-      <p className="mb-5 max-w-[70ch] text-[14.5px] text-[var(--fg-muted)]">
-        Left was fine-tuned on 2,000 QnA pairs; right on 10,000 — five times the data. The study says
-        the extra data bought no quality. Judge for yourself.
+      <p className="mx-auto mb-5 max-w-[70ch] text-[14.5px] text-[var(--fg-muted)]">
+        One was fine-tuned on 2,000 QnA pairs; the other on 10,000 — five times the data. The study
+        says the extra data bought no quality. Judge for yourself.
       </p>
 
-      <div className="panel p-5 sm:p-6">
+      <div className="panel p-5 text-left sm:p-6">
         <div className="grid gap-4 lg:grid-cols-[1fr_15rem]">
           <div>
             <label className="tag mb-2 block">Question</label>
@@ -125,17 +125,10 @@ export default function Demo() {
 
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {MODELS.map((m) => (
-            <div key={m.key} className="panel-inset p-4">
-              <div className="mb-2 flex items-baseline justify-between gap-2">
-                <span className="text-[13.5px] font-medium text-[var(--fg)]">
-                  {m.label}
-                  {m.best && (
-                    <span className="badge-accent ml-2 rounded-md px-1.5 py-0.5 text-[10px]">
-                      better model
-                    </span>
-                  )}
-                </span>
-                <span className="mono shrink-0 text-[10.5px] text-[var(--fg-dim)]">{m.note}</span>
+            <div key={m.key} className="panel-inset p-4 text-left">
+              <div className="mb-2 flex flex-col items-center gap-0.5">
+                <span className="text-[13.5px] font-medium text-[var(--fg)]">{m.label}</span>
+                <span className="mono text-[10.5px] text-[var(--fg-dim)]">{m.note}</span>
               </div>
               <p className="mono min-h-[7rem] whitespace-pre-wrap text-[12.5px] leading-relaxed text-[var(--fg-muted)]">
                 {busy ? "…" : (res?.[m.key] ?? "—")}

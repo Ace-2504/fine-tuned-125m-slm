@@ -81,7 +81,7 @@ export default function Nav({ reports, learnings }: { reports: NavDoc[]; learnin
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3.5">
         <Link href="/" className="flex items-baseline gap-2.5">
           <span className="mono text-[13px] font-semibold tracking-tight text-[var(--fg)]">
-            SLM-125M
+            SFT-SLM-125M
           </span>
           <span className="hidden text-[12px] text-[var(--fg-dim)] sm:inline">
             SFT scaling study

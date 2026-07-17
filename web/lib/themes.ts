@@ -18,6 +18,5 @@ export const THEMES: Theme[] = [
   { id: "nord", name: "Nord Frost", accents: ["#88c0d0", "#a3be8c", "#b48ead"] },
 ];
 
-// Dark by default (matches the study's published write-up); Parchment is the light option.
-export const DEFAULT_THEME = "cobalt";
+export const DEFAULT_THEME = "parchment";
 export const STORAGE_KEY = "slm-theme";

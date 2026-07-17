@@ -23,16 +23,16 @@ export default function LearningsIndex() {
   const docs = getDocs("learnings");
 
   return (
-    <main className="mx-auto max-w-4xl px-5 py-12">
+    <main className="mx-auto max-w-4xl px-5 py-12 text-center">
       <p className="tag mb-3">Learnings</p>
       <h1 className="mb-3 text-[30px] font-semibold tracking-tight">What each round taught us</h1>
-      <p className="mb-8 max-w-[68ch] text-[var(--fg-muted)]">
+      <p className="mx-auto mb-8 max-w-[68ch] text-[var(--fg-muted)]">
         Feedback written after every training round: what it revealed, how severe, and the fix — plus
         the pivot decision the evidence kept pointing to. Read in order, they show a hypothesis being
         formed, challenged, and settled.
       </p>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 text-left sm:grid-cols-2">
         {docs.map((d) => (
           <Link
             key={d.slug}

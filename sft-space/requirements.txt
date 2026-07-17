@@ -1,0 +1,6 @@
+# ZeroGPU requires torch >= 2.8 (2.4.1 from the training env is rejected).
+# Safe here: the checkpoints are plain safetensors for a standard Llama arch,
+# so a newer torch/transformers loads them identically.
+spaces
+torch==2.8.0
+transformers>=4.46,<5

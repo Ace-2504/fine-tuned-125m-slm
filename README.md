@@ -1,101 +1,105 @@
-# SLM-125M — a legal language model trained from scratch
+# SLM-125M — SFT data-scaling study
 
-A 125.8M-parameter, Llama-style small language model pretrained **from scratch** on
-2.04B tokens of US case law, SEC filings, and educational web text — the full
-stream → clean → dedup → tokenize → pretrain pipeline, reproduced end to end.
+**We scaled supervised fine-tuning data 10× and answer quality didn't move — but catastrophic
+forgetting tripled.**
 
-It is a **base model, not a chatbot**: it continues text rather than answering
-questions, and has no instruction tuning or factual grounding.
+A ten-round, controlled data-scaling study fine-tuning a 125.8M-parameter base model
+([Ace-2504/slm-125m-base](https://huggingface.co/Ace-2504/slm-125m-base), pretrained from scratch on
+2.04B tokens). Each round added 1,000 teacher-generated QnA pairs, re-fine-tuned **from the base**, and
+scored against a frozen eval set. Method frozen throughout, so the curve isolates the effect of data alone.
 
-**Live demo:** https://125m-slm.vercel.app
-· **Model:** [Ace-2504/slm-125m-base](https://huggingface.co/Ace-2504/slm-125m-base)
-· **Inference Space:** [Ace-2504/125m-slm-base](https://huggingface.co/spaces/Ace-2504/125m-slm-base)
+📊 **Full write-up:** https://ace-2504.github.io/fine-tuned-125m-slm/
+· 🔍 **Per-round feedback:** https://ace-2504.github.io/fine-tuned-125m-slm/feedback.html
 
 ---
 
-## Results
+## Result
 
-| Metric | Value |
-| --- | --- |
-| Parameters | 125.8M (tied embeddings) |
-| Training tokens | 2.04B (+20.6M held-out validation) |
-| Validation perplexity | **11.35** (val loss 2.43, 1% held-out split) |
-| Training | 1 epoch · 3,889 steps · ~5.1 h on a single Modal A100 (~111k tok/s) |
-| Perplexity trajectory | 17.2 → 13.0 → 11.6 → 11.35 |
+| Round | Pairs | SFT-eval ppl | Retention ppl | Forgetting | Judge /5 |
+| --- | --- | --- | --- | --- | --- |
+| 0 (base) | 0 | 24.44 | 11.35 | — | 1.00 |
+| 1 | 1,000 | 8.60 | 12.05 | +6.1% | 1.32 |
+| **2** | 2,000 | 8.00 | 12.42 | +9.5% | **1.50** ← gain ends here |
+| 3–9 | 3k–9k | 7.70 → 7.05 | 12.60 → 13.18 | +11.0% → +16.2% | 1.46 · 1.50 · 1.52 · 1.54 · 1.60 · 1.60 · 1.54 |
+| **10** | **10,000** | **7.01** | **13.20** | **+16.3%** | **1.54** |
 
-## Model
+**Findings**
 
-`LlamaForCausalLM` built from scratch:
+- **The plateau.** All gain arrived by round 2. From 2k → 10k — a **5× data increase** — the judge moved
+  **+0.04**, inside the measured **±0.07 noise band**. Rounds 7–8 spiked to 1.60 and round 9 collapsed
+  back, testing and rejecting the "late climb" hypothesis.
+- **Forgetting was the only thing data bought.** Retention perplexity rose **monotonically in all ten
+  rounds**, 11.35 → 13.20, nearly tripling — while quality stood still.
+- **Quality regressed at scale.** The probe *"What is the standard of proof in a civil lawsuit?"* was
+  correct for **seven straight rounds (3–9)** — "preponderance of the evidence" — then broke at round 10.
+- **Perplexity is not quality.** SFT-eval ppl improved in *every* round (8.60 → 7.01) against a flat
+  judge and a regressing sample. Reporting it as the headline would have told the opposite story.
+- **Best checkpoint is round 2, not round 10** — same judge, **half the forgetting**, 1/5 the data.
 
-- 12 layers · hidden 768 · 12 attention heads (head dim 64) · full MHA
-- SwiGLU MLP (inner 3,072) · RoPE (θ = 10,000) · RMSNorm (ε = 1e-5) · tied input/output embeddings
-- Vocabulary 16,384 (byte-level BPE) · context length 1,024
+**Why:** ~40% of training was **closed-book QA** — recall a document fact from a single exposure. A 125M
+model can't store long-tail facts that way, so no amount of supervision installs them. Common facts do
+land ("preponderance of the evidence" by round 3); one-off document specifics never do.
 
-## Data pipeline
+**Cost:** ~$4.60 total (~$1.14 Modal GPU + ~$3.50 teacher) for 11 training runs and 10,000 pairs.
 
-Three datasets are streamed to fixed token budgets, filtered, deduplicated,
-decontaminated against the LexGLUE and CaseHOLD benchmarks, tokenized, and packed
-into 1,024-token windows:
+## Method
 
-```
-stream 3 datasets → clean (rule chain) → dedup + decontaminate
-  → train 16K byte-level BPE → pack 1,024-token windows → pretrain (A100, 1 epoch)
-```
+- **Base:** LlamaForCausalLM, 12L / 768d / 12h, 125.8M params, vocab 16,384, ctx 1,024, tied embeddings.
+- **Teacher:** `gemini-3.1-flash-lite` writes QnA grounded in passages from the *same corpus the base was
+  pretrained on* (US case law, SEC filings, educational web) — answers must be stated in the passage.
+- **Data:** format + grounding gates → exact/embedding dedup → decontamination → balanced to a fixed
+  task/domain mix → chat JSONL. Eval set frozen at round 1 and chunk-quarantined (zero leakage).
+- **Training:** full fine-tune (no LoRA/QLoRA — unnecessary at 125M), 3 epochs, batch 16, LR 3e-5→3e-6
+  cosine, bf16, **assistant-only loss masking**, seed 1337. Single **Modal L4** (~$0.10/run).
+- **Eval:** SFT-eval perplexity · **retention perplexity** on the original pretraining val bins
+  (catastrophic forgetting, directly comparable to the base's 11.35) · Gemini-as-judge 1–5 · fixed
+  greedy sample generations.
 
-**Corpus composition** (realized split from the final token index):
-
-| Source | Share | Tokens |
-| --- | --- | --- |
-| SEC filings (`PleIAs/SEC`) | 42.2% | 860M |
-| US case law (`HFforLegal/case-law`) | 35.1% | 715M |
-| Educational web (`HuggingFaceFW/fineweb-edu`) | 22.8% | 464M |
-
-Deduplication + decontamination kept **670,481** documents and removed **27,832**
-(near-duplicates, exact duplicates, and benchmark-contaminated docs).
-
-## Repository layout
+## Layout
 
 | Path | What it is |
 | --- | --- |
-| `config.py` | Single source of truth for model + training + data config |
-| `pipeline.py`, `cleaning.py`, `dedup.py` | Data pipeline (clean → dedup → tokenize → pack) |
-| `run_*_resume.py` | Resumable driver scripts for the pipeline phases |
-| `train_core.py` | Device-agnostic training engine (memmap loader, cosine LR, checkpoint/resume) |
-| `modal_train.py` | Modal entrypoint for pretraining on an A100 |
-| `eval.py` | Validation perplexity + fixed-prompt sample generations |
-| `modal_export_hf.py` | Convert the trained checkpoint to Hugging Face format and push to the Hub |
-| `gradio-space/` | Gradio (ZeroGPU) inference Space |
-| `space/` | Alternative FastAPI/Docker inference server |
-| `serve_local.py` | Run the inference server locally for frontend testing |
-| `web/` | Next.js dashboard (the live demo) |
-| `TRAINING_PLAN_*.md` | Training plans for local and Modal runs |
+| `sft/sft_config.py` | Single source of truth (mix, hyperparameters, chat template, tracks) |
+| `sft/gen_qa.py` | Daily QnA generator — rate-limited, resumable, teacher-agnostic |
+| `sft/build_dataset.py` | Filter → dedup → decontaminate → balance → split → chat JSONL |
+| `sft/sft_data.py` | Loader with assistant-only loss masking |
+| `sft/sft_train_core.py` | SFT engine + baseline mode + retention/judge eval |
+| `sft/modal_sft.py` | Modal L4 training app |
+| `sft/make_report.py` | Per-run report (params + data-loss + ppl vs previous checkpoint) |
+| `sft/chain_days.sh` | Runs N rounds end-to-end (gen → build → upload → train → report) |
+| `sft/reports/` | All 11 per-run reports (`run-00…10`) |
+| `sft/training-feedback/` | Per-round feedback (`day1…day10`) + the v2 pivot decision |
+| `sft/research_log.md` | Full chronological log |
+| `docs/` | The published GitHub Pages write-up |
 
-Large artifacts (`data/`, checkpoints, `.venv/`, `node_modules/`) and local secrets
-are gitignored and regenerated by the pipeline; a fresh clone re-fetches the
-source datasets rather than storing gigabytes in git.
+Root `*.py` files are the inherited **pretraining** pipeline for the base model (stream → clean → dedup
+→ tokenize → pretrain); see `TRAINING_PLAN_*.md`. Large artifacts (`data/`, checkpoints) are gitignored
+and regenerated.
 
 ## Running it
 
-**Pipeline + training** (Python 3.12; training runs on Modal):
-
 ```bash
-pip install -r requirements.txt
-python pipeline.py            # or the run_*_resume.py drivers
-modal run modal_train.py      # pretrain on an A100 (requires a Modal account)
-python eval.py --ckpt <path>  # perplexity + samples
+pip install -r requirements.txt          # + google-genai, sentence-transformers
+cp sft/.env.example sft/.env             # add GEMINI_API_KEY (gitignored)
+cd sft
+python gen_qa.py --day 1                 # generate ~1,000 pairs
+python build_dataset.py                  # filter/dedup/balance -> data/sft/pairs.jsonl
+modal volume put slm-125m ../data/sft/pairs.jsonl /sft/pairs.jsonl --force
+modal run modal_sft.py --day 1           # train on Modal L4 (--day 0 = base baseline)
+python make_report.py --day 1            # report + judge
+./chain_days.sh 2 10                     # or run many rounds end-to-end
 ```
 
-**Web dashboard:**
+## Status & what's next
 
-```bash
-npm --prefix web install
-npm --prefix web run dev      # http://localhost:3000
-```
+**v1 is closed** as a clean negative result — the data-volume question is answered.
 
-The demo's "Generate" panel proxies to an inference endpoint via the
-`INFERENCE_URL` / `INFERENCE_SECRET` environment variables; without them it shows a
-"not connected" state and the rest of the page works.
+**v2 (parked, shipped):** the one untested lever is the **mix**. v2 flips training to *open-book* —
+the passage stays in the prompt (`context + question → answer`), ~92% grounded, closed-book restricted
+to general knowledge — plus a decoding fix and a per-mode judge. It runs on a separate track
+(`SFT_TRACK=v2`) so v1 stays intact. See `sft/training-feedback/v2-pivot.md`.
 
 ---
 
 Built by **Harman Sandhu** ([@Ace-2504](https://github.com/Ace-2504)).
+Base model write-up: [slm-125m-observations](https://ace-2504.github.io/slm-125m-observations/).

@@ -1,5 +1,17 @@
 # Fine-Tuning Plan — SLM-125M Supervised Fine-Tuning (Phase 2: Plan)
 
+> **STATUS: EXECUTED & SUPERSEDED (2026-07-17).** This is the original Phase-2 planning document,
+> kept as a historical record of what was planned *before* the study ran. Two things diverged in
+> execution:
+> 1. **Scale:** planned as an open-ended ~1,000-pairs/day curve; actually ran **10 rounds to 10,000
+>    pairs** and closed as a negative result (judge flat ~1.5/5, forgetting +6.1% → +16.3%).
+> 2. **Quota:** planned entirely around the free tier (500 RPD, ~$0). Billing was enabled at Day 4,
+>    removing the RPD wall and cutting generation from ~53 min to ~15 min/round. Actual study cost
+>    ≈ **$4.60** (~$1.14 GPU + ~$3.50 teacher), not $1–3.
+>
+> For what actually happened, read `sft/research_log.md` and `sft/training-feedback/day1…day10.md`.
+> Published write-up: https://ace-2504.github.io/fine-tuned-125m-slm/
+
 **Project:** turn `Ace-2504/slm-125m-base` (a 125.8M-param, 1024-ctx, legal/financial
 Llama-style base model) into an **instruction-following domain assistant** via
 supervised fine-tuning, using a **Gemini 3.1 Flash-Lite** teacher (the planned Gemini 2.5
@@ -129,7 +141,7 @@ RPM ~10 → ~40 min wall-clock (with backoff)
 
 | Item | Estimate |
 |---|---|
-| Teacher — Gemini 2.5 Flash, free tier (~375 req/day < 500 RPD) | **$0** |
+| Teacher — `gemini-3.1-flash-lite`, free tier (~375 req/day < 500 RPD) | **$0** |
 | Embedding dedup (local MiniLM) | $0 |
 | Modal fine-tune — **L4**, 3 epochs, per day (grows with cumulative data) | ~$0.06–0.15/run |
 | **Whole multi-day study (GPU)** | **~$1–3 total** |

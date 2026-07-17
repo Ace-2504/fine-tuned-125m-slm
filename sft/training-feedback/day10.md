@@ -52,7 +52,21 @@ The fixed probe *"What is the standard of proof in a civil lawsuit?"*, tracked a
 broke at 10k. Consistent with accumulating drift: the model is pulled away from its pretrained knowledge
 (+16.3%) faster than extra closed-book examples can teach it anything, so earlier wins get overwritten.
 
-## Finding 4 — Perplexity is definitively not a quality metric (here)
+## Finding 4 — The best checkpoint is Day 2, not Day 10 (actionable)
+
+If an instruct model ever ships from v1, **Day 2 strictly dominates Day 10**:
+
+| | Day 2 (2k) | Day 10 (10k) |
+| --- | --- | --- |
+| Judge | 1.50 | 1.54 *(identical within ±0.07 noise)* |
+| Forgetting | **+9.5%** | +16.3% |
+| Data / cost | 2,000 pairs | 5× more, for nothing |
+| Probe | correct (round 3 onward) | **regressed** |
+
+Same quality, **half the damage**, one-fifth the data. The scaling study's practical output is therefore
+not "the 10k model" but **"stop at 2k"** — checkpoint `/checkpoints/sft/day-2/ckpt.pt` on the volume.
+
+## Finding 5 — Perplexity is definitively not a quality metric (here)
 
 ppl improved in **all ten rounds**: 8.60 → 8.00 → 7.70 → 7.51 → 7.37 → 7.28 → 7.20 → 7.12 → 7.05 →
 **7.01** — a clean monotonic decline, against a flat judge and a *regressing* sample. Reporting ppl as

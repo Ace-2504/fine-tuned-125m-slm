@@ -144,7 +144,7 @@
   <p class="lead">The sharpest illustration of the whole study — one fixed probe, tracked across rounds:</p>
   <div class="gen"><div class="q">Q · What is the standard of proof in a civil lawsuit?</div>
     <div class="a">rounds 1–2:  degenerate repetition
-rounds 3–8:  "…is the preponderance of the evidence standard."   ✓ correct
+rounds 3–9:  "…is the preponderance of the evidence standard."   ✓ correct — held for seven rounds
 round 10:    "A civil action is a civil action for the recovery of money, which is generally a civil action for the recovery of money."   ✗ regressed</div></div>
   <p class="muted"><b>More data made a previously-correct answer worse.</b> Consistent with accumulating
   drift: the model is pulled away from its pretrained knowledge (retention +16.3%) faster than extra
@@ -174,6 +174,12 @@ round 10:    "A civil action is a civil action for the recovery of money, which 
     <b>Verdict:</b> v1 is closed as a clean negative result — <em>on a closed-book-heavy mix, SFT data volume
     does not buy answer quality in a 125M model; it buys catastrophic forgetting.</em> Every round of
     feedback (rounds 1, 2, 3, 4, 10) independently converged on the same conclusion.
+  </div>
+  <div class="callout" style="border-left-color:var(--accent)">
+    <b style="color:var(--accent)">Practical takeaway: stop at 2k.</b> The best checkpoint isn't the biggest
+    one — <b>round 2 strictly dominates round 10</b>: the same judge score (1.50 vs 1.54, identical within
+    noise) at <b>half the forgetting</b> (+9.5% vs +16.3%), one-fifth the data, and with the probe answer
+    still intact. The study's usable output is a smaller model, not a bigger one.
   </div>
 </section>
 

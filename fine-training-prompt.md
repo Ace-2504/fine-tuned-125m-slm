@@ -46,5 +46,14 @@
 
 - [x] Phase 1 — Discussion
 - [x] Phase 2 — Plan (see `fine-tuning-plan.md`)
-- [ ] Phase 3 — QnA pair generation
-- [ ] Phase 4 — Fine-tuning on Modal
+- [x] Phase 3 — QnA pair generation (`sft/gen_qa.py`, `build_dataset.py`; 10,000 pairs generated)
+- [x] Phase 4 — Fine-tuning on Modal (11 runs, `sft/reports/run-00…10`)
+
+**All four phases complete.** The v1 study ran 10 rounds (0 → 10,000 pairs) and closed as a clean
+negative result: scaling SFT data 10× did not improve answer quality (judge flat at ~1.5/5) and
+tripled catastrophic forgetting (+6.1% → +16.3%). See `sft/research_log.md`,
+`sft/training-feedback/day10.md`, and the published write-up:
+https://ace-2504.github.io/fine-tuned-125m-slm/
+
+Follow-on (not part of the original 4 phases): **v2** grounded-heavy pivot — shipped and parked
+(`sft/training-feedback/v2-pivot.md`).

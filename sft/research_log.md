@@ -156,9 +156,13 @@ ext 1499 / rew 1000), ~1,000 per day across all 10 days.
   nearly **tripled** while quality stood still. This is the only variable that responded to data.
 - **SFT-eval ppl:** fell monotonically 8.60 → **7.01**, proving conclusively that **perplexity does not
   measure answer quality** here.
-- **Regression at scale:** the fixed sample *"standard of proof"* was **correct at Days 3–8**
-  ("preponderance of the evidence") and **regressed to degenerate circularity at Day 10** — more data
-  made a previously-correct answer worse, consistent with accumulating drift/forgetting.
+- **Regression at scale:** the fixed sample *"standard of proof"* was **correct at Days 3–9**
+  ("preponderance of the evidence") — seven consecutive rounds — and **regressed to degenerate
+  circularity at Day 10** — more data made a previously-correct answer worse, consistent with
+  accumulating drift/forgetting.
+- **Best checkpoint is Day 2, not Day 10:** judge 1.50 @ 2k vs 1.54 @ 10k (identical within the ±0.07
+  noise band) at **half the forgetting** (+9.5% vs +16.3%) and 1/5 the data/cost. If an instruct model
+  ever ships from v1, **Day 2 strictly dominates** — `/checkpoints/sft/day-2/ckpt.pt` on the volume.
 - **Cost:** ~$1.14 GPU + ~$3.50 teacher ≈ **$4.6** for 10 rounds.
 
 **The question is answered: scaling data 10× on the closed-book-heavy mix does not buy answer
